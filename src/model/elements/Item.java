@@ -2,10 +2,13 @@ package model.elements;
 
 /**
  * 表示游戏中的一个可拾取物品
- * 不知道怎么存储, 用HashMap可以标注物品数量, 如果这样的话
- * 需要写hash 和 equalTo
+ * 疑问1:不知道怎么存储, 用HashMap可以标注物品数量, 如果这样的话,需要写hash 和 equalTo
+ * 回答: 不用用object存就行
+ *
+ *   //TODO item名字必须唯一
  */
 public class Item {
+  //picture: 图片（HW8 不用） HW9 图形版用
   // 物品名称
   private String name;
 
@@ -27,6 +30,7 @@ public class Item {
   /**
    * 构造函数
    */
+
   public Item(String name, double weight, int maxUses, int usesRemaining, int value, String whenUsed) {
     this.name = name;
     this.weight = weight;

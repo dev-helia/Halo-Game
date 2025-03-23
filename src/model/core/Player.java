@@ -23,7 +23,7 @@ public class Player {
   // 玩家当前所在的房间
   private Room currentRoom;
 
-  // 背包最大负重
+  // 背包最大负重 "玩家背包最多13单位"
   private final double MAX_WEIGHT = 13.0;
 
   /**
