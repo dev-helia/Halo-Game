@@ -12,7 +12,7 @@ import java.util.*;
 /**
  * WorldEngine：负责加载 JSON 数据、生成游戏地图、提供世界状态
  */
-// Json object 需要导入
+// Json object 需要导入 在app里面
 public class WorldEngine {
   // 可选：用于生成不同地图（暂不实现）
   private int seed;
