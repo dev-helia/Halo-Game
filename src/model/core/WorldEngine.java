@@ -11,13 +11,15 @@ import java.util.*;
 
 /**
  * WorldEngine：负责加载 JSON 数据、生成游戏地图、提供世界状态
+ * 只负责读 JSON + 构建 world map，没依赖 controller
+ * Render the game
  */
-// Json object 需要导入 在app里面
+
 public class WorldEngine {
   // 可选：用于生成不同地图（暂不实现）
-  private int seed;
+  // private int seed;
 
-  // 整个房间地图，房间编号 -> Room 对象
+  // 整个房间地图: 房间编号 -> Room 对象
   private Map<Integer, Room> worldMap;
 
   // 构造器（无 seed 默认构建）
