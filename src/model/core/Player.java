@@ -2,66 +2,91 @@ package model.core;
 
 import model.elements.Item;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Iterator;
+
+import model.obstacle.Puzzle;
 
 /**
- * 表示玩家角色，包含名字、健康值、分数、物品、当前位置等
+ * Representing a player in the game.
+ * A player can:
+ *  - Move between rooms, pick up and drop items, carry items (with max total weight of 13),
+ *  - Take damage from monsters, solve puzzles and defeat monsters, use items with limited uses.
+ *  Maintain a health status and end-game ranking based on total score.
  */
 public class Player {
-  // 玩家名字
-  private String name;
 
-  // 当前生命值（范围 0 - 100）
-  private double health;
-
-  // 当前积分
+  private final String name;
+  private int health;
+  private Room currentRoom;
+  private final List<Item> inventory;
   private double score;
 
-  // 背包：拥有的物品
-  private List<Item> inventory;
-
-  // 玩家当前所在的房间
-  private Room currentRoom;
-
-  // 背包最大负重 "玩家背包最多13单位"
-  private final double MAX_WEIGHT = 13.0;
+  private static final int MAX_HEALTH = 100;
+  private static final int MAX_WEIGHT = 13;
 
   /**
-   * 构造函数
+   * Constructor of a new player.
+   *
+   * @param name         The player's name.
+   * @param startingRoom The room where the player begins.
    */
   public Player(String name, Room startingRoom) {
     this.name = name;
-    this.health = 100.0;
-    this.score = 0.0;
-    this.inventory = new ArrayList<>();
+    this.health = MAX_HEALTH;
     this.currentRoom = startingRoom;
+    this.inventory = new ArrayList<>();
+    this.score = 0;
   }
 
   /**
-   * 玩家移动到指定方向，如果该方向有出口且没有障碍，就更新房间
+   * The player moves to the specified direction.
+   * If there is a room in that direction and  no obstacles, update the room.
+   *
+   * @param direction the direction (e.g. "N", "S", "E", "W")
+   * @param roomMap   the map of roomNumber → Room
+   * @return true if the move was successful
    */
   public boolean move(String direction, Map<Integer, Room> roomMap) {
     int nextRoomNumber = currentRoom.getExit(direction);
-    if (nextRoomNumber <= 0) return false;
+    // If no pathway
+    if (nextRoomNumber <= 0) {
+      return false;
+    }
 
-    Room targetRoom = roomMap.get(nextRoomNumber);
-    if (targetRoom == null) return false;
-
-    if (targetRoom.hasObstacle()) return false;
-
-    currentRoom = targetRoom;
+    Room nextRoom = roomMap.get(nextRoomNumber);
+    if (nextRoom == null) {
+      return false;
+    }
+    // Update the current room.
+    this.currentRoom = nextRoom;
     return true;
   }
 
   /**
-   * 玩家拾取物品
+   * Gets the current room the player is in.
+   *
+   * @return current room
+   */
+  public Room getCurrentRoom() {
+    return currentRoom;
+  }
+
+  /**
+   * Attempts to pick up an item from the current room by name.
+   * Will only succeed if total weight does not exceed MAX_WEIGHT.
+   *
+   * @param itemName name of the item
+   * @return true if item picked up
    */
   public boolean pickItem(String itemName) {
     Item item = currentRoom.removeItem(itemName);
     if (item == null) return false;
 
     if (getTotalWeight() + item.getWeight() > MAX_WEIGHT) {
-      // 放回去
+      // Return item to room if overweight
       currentRoom.addItem(item);
       return false;
     }
@@ -71,7 +96,10 @@ public class Player {
   }
 
   /**
-   * 玩家丢弃物品
+   * Drops an item by name into the current room.
+   *
+   * @param itemName the name of the item to drop
+   * @return true if dropped successfully
    */
   public boolean dropItem(String itemName) {
     Iterator<Item> it = inventory.iterator();
@@ -87,13 +115,16 @@ public class Player {
   }
 
   /**
-   * 使用某个物品
+   * Uses an item by name (if usable).
+   *
+   * @param itemName the item to use
+   * @return the result message
    */
   public String useItem(String itemName) {
     for (Item i : inventory) {
       if (i.getName().equalsIgnoreCase(itemName)) {
         if (i.isUsable()) {
-          return i.use();
+          return i.use(); // decrements uses and returns action text
         } else {
           return "You can't use that item anymore.";
         }
@@ -103,10 +134,74 @@ public class Player {
   }
 
   /**
-   * 用文字解答谜题（由 Puzzle 检查答案）
+   * Calculates the total weight the player is currently carrying.
+   *
+   * @return total weight of inventory
+   */
+  public double getTotalWeight() {
+    return inventory.stream().mapToDouble(Item::getWeight).sum();
+  }
+
+  /**
+   * Returns the list of items currently held by the player.
+   *
+   * @return inventory list
+   */
+  public List<Item> getInventory() {
+    return inventory;
+  }
+
+  /**
+   * Returns the player's current health.
+   *
+   * @return health value
+   */
+  public double getHealth() {
+    return health;
+  }
+
+  /**
+   * Sets the player's health.
+   * Value is capped between 0 and MAX_HEALTH.
+   *
+   * @param health new health value
+   */
+  public void setHealth(int health) {
+    this.health = Math.max(0, Math.min(health, MAX_HEALTH));
+  }
+
+  /**
+   * Reduces player's health by the damage amount.
+   *
+   * @param damage the amount of health lost
+   */
+  public void takeDamage(int damage) {
+    setHealth(this.health - damage);
+  }
+
+  /**
+   * Gets the player's health status based on health thresholds.
+   *
+   * @return health status
+   */
+  public HealthStatus getHealthStatus() {
+    return HealthStatus.fromHealth(this.health);
+  }
+
+  public boolean isAlive() {
+    return this.health > 0;
+  }
+
+  /**
+   * Attempts to answer a puzzle in the given room.
+   * If successful, deactivates the puzzle and adds score.
+   *
+   * @param answer the user's answer
+   * @param room   the current room
+   * @return true if answer was correct
    */
   public boolean answerCorrect(String answer, Room room) {
-    if (room.hasObstacle() && room.getObstacle() instanceof model.obstacle.Puzzle puzzle) {
+    if (room.hasObstacle() && room.getObstacle() instanceof Puzzle puzzle) {
       if (puzzle.isSolved(answer)) {
         puzzle.deactivate();
         updateScore(puzzle.getValue());
@@ -117,45 +212,39 @@ public class Player {
   }
 
   /**
-   * 计算当前背包总重量
-   */
-  private double getTotalWeight() {
-    return inventory.stream().mapToDouble(Item::getWeight).sum();
-  }
-
-  /**
-   * 获取背包清单
-   */
-  public List<Item> getInventory() {
-    return inventory;
-  }
-
-  /**
-   * 更新分数
+   * Updates the player's score.
+   *
+   * @param points points to add
    */
   public void updateScore(int points) {
     this.score += points;
   }
 
-  // 🧠 Getter & Setter
-
-  public Room getCurrentRoom() {
-    return currentRoom;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public double getHealth() {
-    return health;
-  }
-
-  public void setHealth(double health) {
-    this.health = Math.max(0, Math.min(health, 100));
-  }
-
+  /**
+   * Gets the player's total score.
+   *
+   * @return current score
+   */
   public double getScore() {
     return score;
   }
+
+  /**
+   * Gets the player's end-game rank based on score.
+   *
+   * @return rank enum
+   */
+  public PlayerRank getRank() {
+    return PlayerRank.fromScore((int) score);
+  }
+
+  /**
+   * Gets the player's name.
+   *
+   * @return name
+   */
+  public String getName() {
+    return name;
+  }
 }
+
