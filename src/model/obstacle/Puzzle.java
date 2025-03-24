@@ -4,21 +4,36 @@ package model.obstacle;
  * 表示一个谜题类，是游戏中阻挡玩家的障碍之一
  * 玩家可以通过“物品”或“输入文字答案”来解决它
  */
+//TODO 名字必须唯一
 public class Puzzle extends GameObstacle {
+
+  // ✅ 是否影响玩家（当前版本中不需要实现）
+  //private boolean affectsPlayer;
+
+  //picture	🚫
+
+  //是否激活	Puzzle.isActive =	true 表示未解锁
+  private boolean isActive;
+
   // ✅ 解谜的方式：可能是道具名称，也可能是文字答案
   private String solution;
 
   // ✅ 是否影响目标（一般是房间通路）
+  // true 表示阻断房间描述或方向
   private boolean affectsTarget;
-
-  // ✅ 是否影响玩家（当前版本中不需要实现）
-  private boolean affectsPlayer;
 
   // ✅ 当前谜题的“效果”描述，会覆盖房间原本的文本
   private String effects;
 
   // ✅ 被这个谜题影响的房间编号（用于后续可能的状态更新）
   private int targetRoomNumber;
+
+  // 	解开得分	Puzzle.value	加到玩家得分
+  private int value;
+
+  // 被查看时展示	Puzzle.description	X 查看
+  private String description;
+
 
   /**
    * 构造函数

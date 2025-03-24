@@ -5,11 +5,13 @@ import model.core.Player;
 /**
  * 表示游戏中的一个怪物，会阻挡路径并攻击玩家
  */
+
+// TODO 名字唯一
 public class Monster extends GameObstacle {
   // ✅ 每次攻击造成的伤害
   private int damage;
 
-  // ✅ 是否具有攻击能力（可选项）
+  // ✅ 是否具有攻击能力（可选项） false 就只吓人不打人
   private boolean canAttack;
 
   // ✅ 攻击时的文字描述（例如：“泰迪熊甩你一巴掌！”）
