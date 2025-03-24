@@ -11,11 +11,9 @@ import model.obstacle.Puzzle;
 
 /**
  * Representing a player in the game.
- *
  * A player can:
  *  - Move between rooms, pick up and drop items, carry items (with max total weight of 13),
  *  - Take damage from monsters, solve puzzles and defeat monsters, use items with limited uses.
- *
  *  Maintain a health status and end-game ranking based on total score.
  */
 public class Player {
@@ -187,7 +185,7 @@ public class Player {
    * @return health status
    */
   public HealthStatus getHealthStatus() {
-    return HealthStatus.fromHealth((int) this.health);
+    return HealthStatus.fromHealth(this.health);
   }
 
   public boolean isAlive() {

@@ -2,7 +2,6 @@ package model.core;
 
 /**
  * Enum representing the player's rank based on their score.
- *
  * Scoring thresholds:
  * - NOVICE (0–59)
  * - INTERMEDIATE (60–119)

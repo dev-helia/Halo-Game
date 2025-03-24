@@ -2,7 +2,6 @@ package model.core;
 
 /**
  * Enum representing the player's health status.
- *
  * Thresholds:
  *  - SLEEP (<= 0): Player lost all points and go to "SLEEP" mode.
  *  - WOOZY (<40): Player's score lower than 40: Low Health.
