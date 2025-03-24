@@ -16,34 +16,70 @@ import java.util.*;
  */
 
 public class WorldEngine {
-  // 可选：用于生成不同地图（暂不实现）
-  // private int seed;
-
+  // fields and the default constructor
   // 整个房间地图: 房间编号 -> Room 对象
   private Map<Integer, Room> worldMap;
 
-  // 构造器（无 seed 默认构建）
+  // 构造器（无 seed 默认构建）initialize the object 键是房间编号，值是 Room 对象
   public WorldEngine() {
     this.worldMap = new HashMap<>();
   }
 
   /**
    * 从 JSON 文件生成世界（地图 + 元素）
+   * main function
+   * 读取文件 → 解析房间 → 解析 items / fixtures / puzzles → 塞回房间
    */
   public void generateWorld(String jsonFilePath) throws IOException {
-    // 读取 JSON 内容
+    // 1. 读取 JSON 内容
+    // read the file
     Reader reader = new FileReader(jsonFilePath);
+    // Gson 解析 JSON 文件
+    // root 是你整个 JSON 的最外层对象（也就是含有 "rooms", "items" 的那一层）
+    // 从你用 FileReader 打开的 JSON 文件里，把内容读取出来，
+    // 然后转成一个 JsonObject，你就可以像访问字典一样操作这个 JSON 结构了！
+    //JsonParser parser = new JsonParser();
+    //JsonElement element = parser.parseReader(reader);
+    //JsonObject root = element.getAsJsonObject();
+    // TODO ht
+    //  你必须确保 JSON 文件的根是一个 {} 对象，而不是数组 []，否则 getAsJsonObject() 会报错！
+    //  reader 的内容必须是标准 JSON 格式，否则也会 JsonSyntaxException 崩掉！
     JsonObject root = JsonParser.parseReader(reader).getAsJsonObject();
 
-    // 先解析房间
+    // 2. 先解析房间 most important
+    // put rooms into worldMap
+    /**
+     * "rooms":[
+     *     { "room_name":"Courtyard", "room_number": "1",
+     *       "description":"A beautiful courtyard with flowers on both sides of the stone walkway. \nThe walkway leads north. A billboard is in the distance.",
+     *       "N": "2", "S": "0", "E": "0", "W": "0","puzzle": null, "monster": null, "items": "Hair Clippers", "fixtures": "Billboard","picture": "courtyard.png" },
+     *     { "room_name":"Mansion Entrance", "room_number": "2",
+     *       "description":"Entrance to an old, musty-smelling mansion. Some people have entered, to never return. \nThe door to the north is open. The courtyard is to your south and a foyer to your north. A chandelier hangs from the ceiling.",
+     *       "N": "3", "S": "1", "E": "0", "W": "0","puzzle": null, "monster": null, "items": "Thumb Drive, Modulo 2", "fixtures": "Chandelier", "picture": "entrance.png" },
+     *       ]
+     */
+    // TODO ht
+    //  ❌ NullPointerException	JSON 文件有没有 "rooms" 字段？roomObj 中字段名是否拼错？
+    // ❌ IllegalStateException	调用了 getAsJsonObject() 但其实是数组或 null
+    // ❌ JsonSyntaxException	JSON 格式不标准，缺逗号、引号不闭合等问题
+    // ❌ Map.put() 报错	是否有重复房间号？或者 room 为 null？
+
+    // 👉 从 JSON 根对象中获取 "rooms" 字段，它必须是一个数组！
     JsonArray roomsArray = root.getAsJsonArray("rooms");
+    // 👉 遍历这个数组，每一个元素是 JsonElement，代表一个房间对象！
     for (JsonElement element : roomsArray) {
+      // 👉 把这个元素（其实是一个 JSON 对象）转换成 JsonObject 类型！
       JsonObject roomObj = element.getAsJsonObject();
+      // 调用你自己写的 parseRoom 方法，把 JSON 转成 Java 对象 Room！
+      // TODO parseRoom
       Room room = parseRoom(roomObj);
+      //  room 放进 Map<Integer, Room> 类型的 worldMap 中，key 是房间号！
       worldMap.put(room.getRoomNumber(), room);
     }
+    // worldMap done
 
-    // 解析 items（用于与房间匹配）
+    //TODO 1
+    // 3.解析 items（用于与房间匹配）
     Map<String, Item> globalItems = new HashMap<>();
     if (root.has("items")) {
       JsonArray itemsArray = root.getAsJsonArray("items");
@@ -58,8 +94,8 @@ public class WorldEngine {
         globalItems.put(name, new Item(name, weight, maxUses, usesRemaining, value, whenUsed));
       }
     }
-
-    // 解析 fixtures（用于装入房间）
+    // todo 1
+    // 4.解析 fixtures（用于装入房间）
     Map<String, Fixture> globalFixtures = new HashMap<>();
     if (root.has("fixtures")) {
       JsonArray fixturesArray = root.getAsJsonArray("fixtures");
@@ -71,8 +107,8 @@ public class WorldEngine {
         globalFixtures.put(name, new Fixture(name, desc, weight));
       }
     }
-
-    // 解析 puzzles（用于匹配房间障碍）
+    // todo 2
+    // 5.解析 puzzles（用于匹配房间障碍）
     if (root.has("puzzles")) {
       JsonArray puzzlesArray = root.getAsJsonArray("puzzles");
       for (JsonElement element : puzzlesArray) {
@@ -93,8 +129,9 @@ public class WorldEngine {
       }
     }
 
-    // TODO: 可选解析怪物 monster（方式类似 Puzzle）
+    // TODO: 2 解析怪物 monster（方式类似 Puzzle）
 
+    // todo ht
     // 第二轮：给房间塞入 items 和 fixtures
     for (Room room : worldMap.values()) {
       // 添加 items
@@ -117,23 +154,37 @@ public class WorldEngine {
     reader.close();
   }
 
+  // ==== getter ====
+
   /**
-   * 获取某个房间
+   * Room getter.
+   *
+   * @param roomNumber the room number
+   * @return the room
    */
   public Room getRoom(int roomNumber) {
     return worldMap.get(roomNumber);
   }
 
   /**
-   * 获取完整地图
+   * worldMap getter.
+   *
+   * @return the world map
    */
   public Map<Integer, Room> getWorldMap() {
     return worldMap;
   }
 
-  // ==== 辅助方法区 ====
+  // ==== helper ====
 
-  // 👇 解析单个 Room 对象
+  // todo 4
+  /**
+   * { "room_name":"Courtyard", "room_number": "1",
+   *  "description":"A beautiful courtyard with flowers on both sides of the stone walkway. \nThe walkway leads north. A billboard is in the distance.",
+   * "N": "2", "S": "0", "E": "0", "W": "0","puzzle": null, "monster": null, "items": "Hair Clippers", "fixtures": "Billboard","picture": "courtyard.png" },
+   * }
+   */
+  // 👇 解析单个 Room 对象 提取基本字段（名字/编号/出口）
   private Room parseRoom(JsonObject obj) {
     int num = obj.get("room_number").getAsInt();
     String name = obj.get("room_name").getAsString();
@@ -159,18 +210,19 @@ public class WorldEngine {
   }
 
   // 提取以逗号分隔的名字列表
+  // 你还没实现：需要你去 Room 类存储原始 "Pen, Eraser" 这样的字符串字段
   private List<String> extractNames(Room room, String field) {
     List<String> names = new ArrayList<>();
     // 我们需要 room 对应字段的“原始字符串”，你可以设计一个 fieldToString() 方法来存储原始数据
     return names;
   }
 
-  // 拷贝物品（避免同一个 item 被多个房间引用）
+  // 拷贝物品（避免同一个 item 被多个房间引用） 避免共享引用造成冲突
   private Item cloneItem(Item i) {
     return new Item(i.getName(), i.getWeight(), i.getMaxUses(), i.getUsesRemaining(), i.getValue(), i.getWhenUsed());
   }
 
-  // 解析 room target 格式 “1:RoomName” → 1
+  // 解析 room target 格式 “1:RoomName” → 1 只提取前面的房间号
   private int parseRoomNumber(String input) {
     String[] parts = input.split(":");
     return Integer.parseInt(parts[0].trim());
