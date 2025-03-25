@@ -13,7 +13,7 @@ import java.util.*;
 /**
  * WorldEngine: Responsible for loading JSON data,
  * generating game maps,
- * and providing world status
+ * and providing world status.
  */
 public class WorldEngine {
   // fields and the default constructor
@@ -95,7 +95,7 @@ public class WorldEngine {
     // TODO: red veab 解析怪物 monster（方式类似 Puzzle）
 
     // todo ht
-    // 第二轮：给房间塞入 items 和 fixtures
+    // 第二轮：给房间塞入 items 和 fixtures puzzles monsters
     for (Room room : worldMap.values()) {
       // 添加 items
       if (room.getItems() == null) continue;
