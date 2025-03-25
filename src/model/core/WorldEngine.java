@@ -113,8 +113,6 @@ public class WorldEngine {
         }
       }
     }
-
-    reader.close();
   }
 
   /**
