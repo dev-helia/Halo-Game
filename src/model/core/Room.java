@@ -17,6 +17,7 @@ import java.util.*;
 public class Room {
   private final int roomNumber;
   private final String name;
+  private String description;
 
   // Direction → Target room number
   private final Map<String, Integer> exits;
@@ -38,6 +39,7 @@ public class Room {
   public Room(int roomNumber, String name) {
     this.roomNumber = roomNumber;
     this.name = name;
+
     this.exits = new HashMap<>();
     this.items = new ArrayList<>();
     this.fixtures = new ArrayList<>();
@@ -186,6 +188,13 @@ public class Room {
     return name;
   }
 
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
   @Override
   public String toString() {
     return "Room " + roomNumber + ": " + name;
