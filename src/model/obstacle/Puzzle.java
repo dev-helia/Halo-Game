@@ -35,6 +35,9 @@ public class Puzzle extends GameObstacle {
   private String description;
 
 
+  // ✅ 给予玩家谜题提示
+  private String hintMessage;
+
   /**
    * 构造函数
    */
@@ -46,7 +49,8 @@ public class Puzzle extends GameObstacle {
                 boolean affectsTarget,
                 boolean affectsPlayer,
                 String effects,
-                int targetRoomNumber) {
+                int targetRoomNumber,
+                String hintMessage) {  // 新增 hintMessage 参数
 
     super(name, description, active, value); // 调用 GameObstacle 的构造器
 
@@ -55,6 +59,7 @@ public class Puzzle extends GameObstacle {
     this.affectsPlayer = affectsPlayer;
     this.effects = effects;
     this.targetRoomNumber = targetRoomNumber;
+    this.hintMessage = hintMessage;
   }
 
   /**
@@ -90,5 +95,19 @@ public class Puzzle extends GameObstacle {
 
   public int getTargetRoomNumber() {
     return targetRoomNumber;
+  }
+
+  /**
+   * 获取谜题提示信息
+   */
+  public String getHintMessage() {
+    return hintMessage;
+  }
+
+  /**
+   * 可选：根据状态返回当前的谜题描述（默认描述或效果）
+   */
+  public String getCurrentDescription() {
+    return isActive() ? effects : description;
   }
 }
