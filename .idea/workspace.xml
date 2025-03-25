@@ -4,22 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8d4d7e65-7785-4faa-95c3-42c7f771e535" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2025_3_25,_15_51_[Changes]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2025_3_25__15_51__Changes_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/model/elements/GameElements.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/RoomParser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/RoomsParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/core/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/core/Room.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/core/WorldEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/core/WorldEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/elements/Fixture.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/elements/Fixture.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/elements/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/elements/Item.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/obstacle/Monster.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/obstacle/Monster.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/obstacle/Puzzle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/obstacle/Puzzle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/JsonUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/JsonUtils.java" afterDir="false" />
-    </list>
+    <list default="true" id="8d4d7e65-7785-4faa-95c3-42c7f771e535" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -62,7 +47,7 @@
     "Application.GameEngineApp.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "Merging helia-parse",
+    "git-widget-placeholder": "helia-parse",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -100,7 +85,7 @@
       <workItem from="1742743611374" duration="5551000" />
       <workItem from="1742750018313" duration="977000" />
       <workItem from="1742776989384" duration="24317000" />
-      <workItem from="1742931534472" duration="5348000" />
+      <workItem from="1742931534472" duration="5680000" />
     </task>
     <servers />
   </component>
