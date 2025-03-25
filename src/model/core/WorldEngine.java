@@ -1,11 +1,11 @@
 package model.core;
 
 import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
 
 import model.elements.*;
 import model.obstacle.*;
 import utils.JsonUtils;
+import utils.RoomsParser;
 
 import java.io.*;
 import java.util.*;
@@ -17,7 +17,7 @@ import java.util.*;
  */
 public class WorldEngine {
   // fields and the default constructor
-  private Map<Integer, Room> worldMap; // Whole room map: Room number -> Room object
+  private final Map<Integer, Room> worldMap; // Whole room map: Room number -> Room object
 
   /**
    * Constructor (no seed default build)
@@ -37,7 +37,7 @@ public class WorldEngine {
    */
   public void generateWorld(String jsonFilePath) throws IOException {
     JsonObject root = JsonUtils.safeParseJson(jsonFilePath);
-    parseRooms(root);
+    RoomsParser.parseRooms(root, worldMap);
 
 
     //TODO Han
@@ -171,101 +171,6 @@ public class WorldEngine {
   }
 
   // ==== helper ====
-
-  /**
-   * Safely parse rooms from root object.
-   *
-   * @param root the root json object
-   * @throws IOException file not found
-   */
-  private void parseRooms(JsonObject root) throws IOException {
-    // Check if the rooms field is included
-    if (!root.has("rooms") || !root.get("rooms").isJsonArray()) {
-      throw new IOException("Invalid JSON file: Missing 'rooms' field, or the field is not an array!");
-    }
-
-    JsonArray roomsArray = root.getAsJsonArray("rooms");
-
-    for (JsonElement element : roomsArray) {
-      // Make sure each element is an object
-      if (!element.isJsonObject()) {
-        throw new IOException("There are illegal elements (not objects) in the rooms array:" + element);
-      }
-
-      JsonObject roomObj = element.getAsJsonObject();
-
-      try {
-        // Call parseRoom and handle exceptions
-        Room room = parseRoom(roomObj);
-
-        if (room == null) {
-          throw new IOException("parseRoom returns null, please check the field:" + roomObj);
-        }
-
-        int number = room.getRoomNumber();
-        if (worldMap.containsKey(number)) {
-          throw new IOException("Repeated room numbers: " + number + ". Please check the JSON configuration!");
-        }
-
-        worldMap.put(number, room);
-
-      } catch (Exception e) {
-        throw new IOException("Failed to parse the room: " + roomObj + ", reason:" + e.getMessage(), e);
-      }
-    }
-  }
-
-
-
-  // todo sue
-  /**
-   * Parse a single Room object from a JSON object.
-   * { "room_name":"Courtyard", "room_number": "1",
-   *  "description":"A beautiful courtyard with flowers on both sides of the stone walkway. \nThe walkway leads north. A billboard is in the distance.",
-   * "N": "2", "S": "0", "E": "0", "W": "0","puzzle": null, "monster": null, "items": "Hair Clippers", "fixtures": "Billboard","picture": "courtyard.png" },
-   * }
-   */
-  // 👇 解析单个 Room 对象 提取基本字段（名字/编号/出口）
-  private Room parseRoom(JsonObject obj) {
-    // Get the room number from JSON file.
-    int num = obj.get("room_number").getAsInt();
-    // Get the room name from JSON file.
-    String name = obj.get("room_name").getAsString();
-    // Create a Room object using room number and name.
-    Room r = new Room(num, name);
-
-    // Set the room description if it exists
-    if (obj.has("description") && !obj.get("description").isJsonNull()) {
-      r.setDescription(obj.get("description").getAsString());
-    }
-
-    // Set exits (N/S/E/W) to their target room numbers
-    for (String dir : List.of("N", "S", "E", "W")) {
-      if (obj.has(dir) && !obj.get(dir).isJsonNull()) {
-        try {
-          int targetRoom = obj.get(dir).getAsInt();
-          if (targetRoom != 0) {
-            r.setExit(dir, targetRoom); // only set exit if it's not 0
-          }
-        } catch (NumberFormatException e) {
-          System.err.println("Exit from direction " + dir + " in room " + num + "is not valid");
-        }
-      }
-    }
-
-    // Temporarily store the raw "items" string (e.g. "Lamp, Key")
-    if (obj.has("items") && !obj.get("items").isJsonNull()) {
-      r.setRawField("items", obj.get("items").getAsString()); // You'll implement this in the Room class
-    }
-
-    // Temporarily store the raw "fixtures" string (e.g. "Desk, Painting")
-    if (obj.has("fixtures") && !obj.get("fixtures").isJsonNull()) {
-      r.setRawField("fixtures", obj.get("fixtures").getAsString()); // Also to be added in Room class
-    }
-
-    // Done parsing this Room
-    return r;
-  }
 
   // 提取以逗号分隔的名字列表
   // 你还没实现：需要你去 Room 类存储原始 "Pen, Eraser" 这样的字符串字段

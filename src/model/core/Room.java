@@ -14,11 +14,11 @@ import java.util.*;
  * - Optional items, fixtures, and an obstacle (puzzle or monster)
  * - Raw field strings to be parsed later
  */
-//TODO 把name改成roomName
+
 public class Room {
   private final int roomNumber;
   private final String name;
-  private final String roomDescription;
+  private String roomDescription;
 
 
   // Direction → Target room number
@@ -38,10 +38,9 @@ public class Room {
    * @param roomNumber the unique room number
    * @param name       the name of the room
    */
-  public Room(int roomNumber, String name, String roomDescription) {
+  public Room(int roomNumber, String name) {
     this.roomNumber = roomNumber;
     this.name = name;
-    this.roomDescription = roomDescription;
     this.exits = new HashMap<>();
     this.items = new ArrayList<>();
     this.fixtures = new ArrayList<>();
@@ -197,5 +196,9 @@ public class Room {
   @Override
   public String toString() {
     return "Room " + roomNumber + ": " + name;
+  }
+
+  public void setDescription(String description) {
+    this.roomDescription = description;
   }
 }
