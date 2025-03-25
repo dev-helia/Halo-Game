@@ -5,80 +5,42 @@ import com.google.gson.reflect.TypeToken;
 
 import model.elements.*;
 import model.obstacle.*;
+import utils.JsonUtils;
 
 import java.io.*;
 import java.util.*;
 
 /**
- * WorldEngine：负责加载 JSON 数据、生成游戏地图、提供世界状态
- * 只负责读 JSON + 构建 world map，没依赖 controller
- * Render the game
+ * WorldEngine: Responsible for loading JSON data,
+ * generating game maps,
+ * and providing world status
  */
-
 public class WorldEngine {
   // fields and the default constructor
-  // 整个房间地图: 房间编号 -> Room 对象
-  private Map<Integer, Room> worldMap;
+  private Map<Integer, Room> worldMap; // Whole room map: Room number -> Room object
 
-  // 构造器（无 seed 默认构建）initialize the object 键是房间编号，值是 Room 对象
+  /**
+   * Constructor (no seed default build)
+   * Initialize the world map object:
+   * key is the room number and the value is the Room object.
+   */
   public WorldEngine() {
     this.worldMap = new HashMap<>();
   }
 
   /**
-   * 从 JSON 文件生成世界（地图 + 元素）
-   * main function
-   * 读取文件 → 解析房间 → 解析 items / fixtures / puzzles → 塞回房间
+   * Main function to generate worlds from JSON files (map + elements).
+   * Read the file → parse the room → parse items / fixtures / puzzles → stuff back to the room.
+   *
+   * @param jsonFilePath the file path of the target json file
+   * @throws IOException input and output exception
    */
   public void generateWorld(String jsonFilePath) throws IOException {
-    // 1. 读取 JSON 内容
-    // read the file
-    Reader reader = new FileReader(jsonFilePath);
-    // Gson 解析 JSON 文件
-    // root 是你整个 JSON 的最外层对象（也就是含有 "rooms", "items" 的那一层）
-    // 从你用 FileReader 打开的 JSON 文件里，把内容读取出来，
-    // 然后转成一个 JsonObject，你就可以像访问字典一样操作这个 JSON 结构了！
-    //JsonParser parser = new JsonParser();
-    //JsonElement element = parser.parseReader(reader);
-    //JsonObject root = element.getAsJsonObject();
-    // TODO ht
-    //  你必须确保 JSON 文件的根是一个 {} 对象，而不是数组 []，否则 getAsJsonObject() 会报错！
-    //  reader 的内容必须是标准 JSON 格式，否则也会 JsonSyntaxException 崩掉！
-    JsonObject root = JsonParser.parseReader(reader).getAsJsonObject();
+    JsonObject root = JsonUtils.safeParseJson(jsonFilePath);
+    parseRooms(root);
 
-    // 2. 先解析房间 most important
-    // put rooms into worldMap
-    /**
-     * "rooms":[
-     *     { "room_name":"Courtyard", "room_number": "1",
-     *       "description":"A beautiful courtyard with flowers on both sides of the stone walkway. \nThe walkway leads north. A billboard is in the distance.",
-     *       "N": "2", "S": "0", "E": "0", "W": "0","puzzle": null, "monster": null, "items": "Hair Clippers", "fixtures": "Billboard","picture": "courtyard.png" },
-     *     { "room_name":"Mansion Entrance", "room_number": "2",
-     *       "description":"Entrance to an old, musty-smelling mansion. Some people have entered, to never return. \nThe door to the north is open. The courtyard is to your south and a foyer to your north. A chandelier hangs from the ceiling.",
-     *       "N": "3", "S": "1", "E": "0", "W": "0","puzzle": null, "monster": null, "items": "Thumb Drive, Modulo 2", "fixtures": "Chandelier", "picture": "entrance.png" },
-     *       ]
-     */
-    // TODO ht
-    //  ❌ NullPointerException	JSON 文件有没有 "rooms" 字段？roomObj 中字段名是否拼错？
-    // ❌ IllegalStateException	调用了 getAsJsonObject() 但其实是数组或 null
-    // ❌ JsonSyntaxException	JSON 格式不标准，缺逗号、引号不闭合等问题
-    // ❌ Map.put() 报错	是否有重复房间号？或者 room 为 null？
 
-    // 👉 从 JSON 根对象中获取 "rooms" 字段，它必须是一个数组！
-    JsonArray roomsArray = root.getAsJsonArray("rooms");
-    // 👉 遍历这个数组，每一个元素是 JsonElement，代表一个房间对象！
-    for (JsonElement element : roomsArray) {
-      // 👉 把这个元素（其实是一个 JSON 对象）转换成 JsonObject 类型！
-      JsonObject roomObj = element.getAsJsonObject();
-      // 调用你自己写的 parseRoom 方法，把 JSON 转成 Java 对象 Room！
-      // TODO parseRoom
-      Room room = parseRoom(roomObj);
-      //  room 放进 Map<Integer, Room> 类型的 worldMap 中，key 是房间号！
-      worldMap.put(room.getRoomNumber(), room);
-    }
-    // worldMap done
-
-    //TODO 1
+    //TODO Han
     // 3.解析 items（用于与房间匹配）
     Map<String, Item> globalItems = new HashMap<>();
     if (root.has("items")) {
@@ -94,7 +56,8 @@ public class WorldEngine {
         globalItems.put(name, new Item(name, weight, maxUses, usesRemaining, value, whenUsed));
       }
     }
-    // todo 1
+
+    // todo han
     // 4.解析 fixtures（用于装入房间）
     Map<String, Fixture> globalFixtures = new HashMap<>();
     if (root.has("fixtures")) {
@@ -107,7 +70,7 @@ public class WorldEngine {
         globalFixtures.put(name, new Fixture(name, desc, weight));
       }
     }
-    // todo 2
+    // todo red bean
     // 5.解析 puzzles（用于匹配房间障碍）
     if (root.has("puzzles")) {
       JsonArray puzzlesArray = root.getAsJsonArray("puzzles");
@@ -129,7 +92,7 @@ public class WorldEngine {
       }
     }
 
-    // TODO: 2 解析怪物 monster（方式类似 Puzzle）
+    // TODO: red veab 解析怪物 monster（方式类似 Puzzle）
 
     // todo ht
     // 第二轮：给房间塞入 items 和 fixtures
@@ -150,8 +113,40 @@ public class WorldEngine {
         }
       }
     }
+  }
 
-    reader.close();
+  /**
+   * Print the current world map for simple smoke testing.
+   */
+  public void printWorldMap() {
+    System.out.println("=== Game World Map ===");
+    // print rooms
+    for (Map.Entry<Integer, Room> entry : worldMap.entrySet()) {
+      Room room = entry.getValue();
+      System.out.println("Room " + room.getRoomNumber() + ": " + room.getName());
+      System.out.println("Description " + room.getRoomDescription());
+      System.out.println("  Exits -> N: " + room.getExit("N")
+              + ", S: " + room.getExit("S")
+              + ", E: " + room.getExit("E")
+              + ", W: " + room.getExit("W"));
+
+      // items and fixtures in the current room
+      if (room.getItems() != null && !room.getItems().isEmpty()) {
+        System.out.println("  Items: ");
+        for (Item item : room.getItems()) {
+          System.out.println("    - " + item.getName());
+        }
+      }
+
+      if (room.getFixtures() != null && !room.getFixtures().isEmpty()) {
+        System.out.println("  Fixtures: ");
+        for (Fixture fixture : room.getFixtures()) {
+          System.out.println("    - " + fixture.getName());
+        }
+      }
+
+      System.out.println();
+    }
   }
 
   // ==== getter ====
@@ -177,7 +172,52 @@ public class WorldEngine {
 
   // ==== helper ====
 
-  // todo 4
+  /**
+   * Safely parse rooms from root object.
+   *
+   * @param root the root json object
+   * @throws IOException file not found
+   */
+  private void parseRooms(JsonObject root) throws IOException {
+    // Check if the rooms field is included
+    if (!root.has("rooms") || !root.get("rooms").isJsonArray()) {
+      throw new IOException("Invalid JSON file: Missing 'rooms' field, or the field is not an array!");
+    }
+
+    JsonArray roomsArray = root.getAsJsonArray("rooms");
+
+    for (JsonElement element : roomsArray) {
+      // Make sure each element is an object
+      if (!element.isJsonObject()) {
+        throw new IOException("There are illegal elements (not objects) in the rooms array:" + element);
+      }
+
+      JsonObject roomObj = element.getAsJsonObject();
+
+      try {
+        // Call parseRoom and handle exceptions
+        Room room = parseRoom(roomObj);
+
+        if (room == null) {
+          throw new IOException("parseRoom returns null, please check the field:" + roomObj);
+        }
+
+        int number = room.getRoomNumber();
+        if (worldMap.containsKey(number)) {
+          throw new IOException("Repeated room numbers: " + number + ". Please check the JSON configuration!");
+        }
+
+        worldMap.put(number, room);
+
+      } catch (Exception e) {
+        throw new IOException("Failed to parse the room: " + roomObj + ", reason:" + e.getMessage(), e);
+      }
+    }
+  }
+
+
+
+  // todo sue
   /**
    * Parse a single Room object from a JSON object.
    * { "room_name":"Courtyard", "room_number": "1",
