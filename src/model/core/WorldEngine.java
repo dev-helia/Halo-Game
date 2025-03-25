@@ -70,29 +70,93 @@ public class WorldEngine {
         globalFixtures.put(name, new Fixture(name, desc, weight));
       }
     }
+
+
     // todo red bean
     // 5.解析 puzzles（用于匹配房间障碍）
     if (root.has("puzzles")) {
       JsonArray puzzlesArray = root.getAsJsonArray("puzzles");
+
       for (JsonElement element : puzzlesArray) {
         JsonObject p = element.getAsJsonObject();
         String name = p.get("name").getAsString();
         boolean active = p.get("active").getAsBoolean();
+        int value = p.get("value").getAsInt();
+
+        // 谜题机制
+        String solution = p.get("solution").getAsString();
         boolean affectsTarget = p.get("affects_target").getAsBoolean();
         boolean affectsPlayer = p.get("affects_player").getAsBoolean();
-        String solution = p.get("solution").getAsString();
-        int value = p.get("value").getAsInt();
         String effects = p.get("effects").getAsString();
+
+        // 房间 & 提示
         int targetRoom = parseRoomNumber(p.get("target").getAsString());
+        String hintMessage = p.has("hintMessage") && !p.get("hintMessage").isJsonNull()
+                ? p.get("hintMessage").getAsString()
+                : "";
 
-        Puzzle puzzle = new Puzzle(name, name, active, value, solution, affectsTarget, affectsPlayer, effects, targetRoom);
+        Puzzle puzzle = new Puzzle(
+                name,
+                name,
+                active,
+                value,
+                solution,
+                affectsTarget,
+                affectsPlayer,
+                effects,
+                targetRoom,
+                hintMessage
+        );
 
+        // 谜题与房间连接
         Room r = worldMap.get(targetRoom);
-        if (r != null) r.setObstacle(puzzle);
+        if (r != null) {
+          r.setObstacle(puzzle);
+        } else {
+          System.err.printf("Room #%d not found — puzzle '%s' not assigned.\n", targetRoom, name);
+        }
       }
     }
 
     // TODO: red veab 解析怪物 monster（方式类似 Puzzle）
+    if (root.has("monsters")) {
+      JsonArray monstersArray = root.getAsJsonArray("monsters");
+
+      for (JsonElement element : monstersArray) {
+        JsonObject m = element.getAsJsonObject();
+
+        String name = m.get("name").getAsString();
+        String description = m.get("description").getAsString();
+        boolean active = m.get("active").getAsBoolean();
+        int value = m.get("value").getAsInt();
+        int damage = m.get("damage").getAsInt();
+        boolean canAttack = m.get("can_attack").getAsBoolean();
+        String attackMessage = m.get("attack_message").getAsString();
+        String defeatItem = m.get("defeat_item").getAsString();
+        int targetRoom = parseRoomNumber(m.get("target").getAsString());
+
+        // 创建怪物列表
+        Monster monster = new Monster(
+                name,
+                description,
+                active,
+                value,
+                damage,
+                canAttack,
+                attackMessage,
+                defeatItem
+        );
+
+        // 怪物与谜题连接
+        Room r = worldMap.get(targetRoom);
+        if (r != null) {
+          r.setObstacle(monster);
+        } else {
+          System.err.printf("Room #%d not found — monster '%s' not assigned.\n", targetRoom, name);
+        }
+      }
+    }
+
 
     // todo ht
     // 第二轮：给房间塞入 items 和 fixtures
