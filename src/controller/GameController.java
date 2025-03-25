@@ -4,6 +4,7 @@ import model.core.Player;
 import model.core.WorldEngine;
 import model.core.Room;
 import model.elements.Item;
+import model.elements.Fixture;
 import model.obstacle.GameObstacle;
 import model.obstacle.Monster;
 import view.View;
@@ -35,6 +36,7 @@ public class GameController {
 
     while (true) {
       Room currentRoom = player.getCurrentRoom();
+      view.showMessage("Health Status: " + player.getHealthStatus());
       view.renderGame(player, currentRoom);
 
       // 如果房间里有怪物 & 还活跃 → 自动攻击
@@ -53,7 +55,11 @@ public class GameController {
       view.showMessage("\nEnter command: ");
       if (!scanner.hasNextLine()) break;
       String line = scanner.nextLine().trim();
-      if (line.equalsIgnoreCase("Q")) break;
+      if (line.equalsIgnoreCase("Q")) {
+        world.saveState("savegame.json", player);
+        view.showMessage("Game saved before quitting.");
+        break;
+      }
 
       // 解析命令
       String[] parts = line.split(" ", 2);
@@ -106,7 +112,15 @@ public class GameController {
           } else {
             view.showMessage("You see nothing interesting about that.");
           }
+
+          Fixture fix = currentRoom.getFixture(arg);
+          if (fix != null) {
+            view.showMessage(fix.getDescription());
+          } else {
+            view.showMessage("You see nothing interesting about that.");
+          }
         }
+
         case "A" -> {
           if (arg == null) {
             view.showMessage("Answer what?");
@@ -116,9 +130,21 @@ public class GameController {
           view.showMessage(solved ? "Puzzle solved!" : "That didn't work.");
         }
         default -> view.showMessage("Unknown command: " + cmd);
+
+        case "SAVE" -> {
+          boolean saved = world.saveState("savegame.json", player);
+          view.showMessage(saved ? "Game saved." : "Failed to save game.");
+        }
+        case "RESTORE" -> {
+          boolean loaded = world.restoreState("savegame.json", player);
+          view.showMessage(loaded ? "Game restored." : "Failed to restore game.");
+        }
       }
     }
 
     view.showMessage("Thanks for playing! Goodbye~");
+    view.showMessage("Final Score: " + player.getScore());
+    view.showMessage("Your Rank: " + player.getRank());
   }
 }
+

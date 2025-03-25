@@ -4,6 +4,7 @@ import model.elements.Fixture;
 import model.elements.Item;
 import model.obstacle.GameObstacle;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -15,7 +16,7 @@ import java.util.*;
  * - Raw field strings to be parsed later
  */
 //TODO 把name改成roomName
-public class Room {
+public class Room implements Serializable {
   private final int roomNumber;
   private final String name;
   private final String roomDescription;

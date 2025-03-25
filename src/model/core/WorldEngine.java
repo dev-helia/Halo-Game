@@ -15,7 +15,7 @@ import java.util.*;
  * generating game maps,
  * and providing world status
  */
-public class WorldEngine {
+public class WorldEngine implements Serializable {
   // fields and the default constructor
   private Map<Integer, Room> worldMap; // Whole room map: Room number -> Room object
 
@@ -231,13 +231,12 @@ public class WorldEngine {
     int num = obj.get("room_number").getAsInt();
     // Get the room name from JSON file.
     String name = obj.get("room_name").getAsString();
-    // Create a Room object using room number and name.
-    Room r = new Room(num, name);
-
     // Set the room description if it exists
-    if (obj.has("description") && !obj.get("description").isJsonNull()) {
-      r.setDescription(obj.get("description").getAsString());
-    }
+    String description = (obj.has("description") && !obj.get("description").isJsonNull())
+            ? obj.get("description").getAsString()
+            : null;
+    // Create a Room object using room number and name.
+    Room r = new Room(num, name, description);
 
     // Set exits (N/S/E/W) to their target room numbers
     for (String dir : List.of("N", "S", "E", "W")) {
@@ -297,5 +296,28 @@ public class WorldEngine {
   private int parseRoomNumber(String input) {
     String[] parts = input.split(":");
     return Integer.parseInt(parts[0].trim());
+  }
+
+  public boolean saveState(String filePath, Player player) {
+    try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filePath))) {
+      out.writeObject(this);
+      out.writeObject(player);
+      return true;
+    } catch (IOException e) {
+      return false;
+    }
+  }
+
+  public boolean restoreState(String filePath, Player playerRef) {
+    try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filePath))) {
+      WorldEngine loadedWorld = (WorldEngine) in.readObject();
+      Player loadedPlayer = (Player) in.readObject();
+
+      this.worldMap = loadedWorld.worldMap;
+      playerRef.copyFrom(loadedPlayer);
+      return true;
+    } catch (IOException | ClassNotFoundException e) {
+      return false;
+    }
   }
 }
