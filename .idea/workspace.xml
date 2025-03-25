@@ -5,7 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8d4d7e65-7785-4faa-95c3-42c7f771e535" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2025_3_25,_15_51_[Changes]/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2025_3_25__15_51__Changes_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/model/elements/GameElements.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/RoomParser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/RoomsParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/core/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/core/Room.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/core/WorldEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/core/WorldEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/elements/Fixture.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/elements/Fixture.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/elements/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/elements/Item.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/obstacle/Monster.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/obstacle/Monster.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/obstacle/Puzzle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/obstacle/Puzzle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/JsonUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/JsonUtils.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,8 +59,10 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.GameEngineApp.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "helia-parse",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "Merging helia-parse",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -85,6 +100,7 @@
       <workItem from="1742743611374" duration="5551000" />
       <workItem from="1742750018313" duration="977000" />
       <workItem from="1742776989384" duration="24317000" />
+      <workItem from="1742931534472" duration="5348000" />
     </task>
     <servers />
   </component>
@@ -115,39 +131,9 @@
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/model/core/WorldEngine.java</url>
-          <line>132</line>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/model/core/WorldEngine.java</url>
-          <line>129</line>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/model/core/Room.java</url>
           <line>44</line>
           <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/model/core/WorldEngine.java</url>
-          <line>134</line>
-          <option name="timeStamp" value="13" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/model/core/WorldEngine.java</url>
-          <line>142</line>
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/model/core/WorldEngine.java</url>
-          <line>147</line>
-          <option name="timeStamp" value="15" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/model/core/WorldEngine.java</url>
-          <line>140</line>
-          <option name="timeStamp" value="16" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/controller/GameController.java</url>
@@ -161,8 +147,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/model/core/WorldEngine.java</url>
-          <line>204</line>
-          <option name="timeStamp" value="19" />
+          <line>39</line>
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/model/core/WorldEngine.java</url>
+          <line>125</line>
+          <option name="timeStamp" value="21" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

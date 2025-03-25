@@ -1,11 +1,11 @@
 package model.core;
 
 import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
 
 import model.elements.*;
 import model.obstacle.*;
 import utils.JsonUtils;
+import utils.RoomsParser;
 
 import java.io.*;
 import java.util.*;
@@ -17,7 +17,7 @@ import java.util.*;
  */
 public class WorldEngine {
   // fields and the default constructor
-  private Map<Integer, Room> worldMap; // Whole room map: Room number -> Room object
+  private final Map<Integer, Room> worldMap; // Whole room map: Room number -> Room object
 
   /**
    * Constructor (no seed default build)
@@ -37,7 +37,7 @@ public class WorldEngine {
    */
   public void generateWorld(String jsonFilePath) throws IOException {
     JsonObject root = JsonUtils.safeParseJson(jsonFilePath);
-    parseRooms(root);
+    RoomsParser.parseRooms(root, worldMap);
 
 
     //TODO Han
@@ -172,95 +172,30 @@ public class WorldEngine {
 
   // ==== helper ====
 
-  /**
-   * Safely parse rooms from root object.
-   *
-   * @param root the root json object
-   * @throws IOException file not found
-   */
-  private void parseRooms(JsonObject root) throws IOException {
-    // Check if the rooms field is included
-    if (!root.has("rooms") || !root.get("rooms").isJsonArray()) {
-      throw new IOException("Invalid JSON file: Missing 'rooms' field, or the field is not an array!");
-    }
-
-    JsonArray roomsArray = root.getAsJsonArray("rooms");
-
-    for (JsonElement element : roomsArray) {
-      // Make sure each element is an object
-      if (!element.isJsonObject()) {
-        throw new IOException("There are illegal elements (not objects) in the rooms array:" + element);
-      }
-
-      JsonObject roomObj = element.getAsJsonObject();
-
-      try {
-        // Call parseRoom and handle exceptions
-        Room room = parseRoom(roomObj);
-
-        if (room == null) {
-          throw new IOException("parseRoom returns null, please check the field:" + roomObj);
-        }
-
-        int number = room.getRoomNumber();
-        if (worldMap.containsKey(number)) {
-          throw new IOException("Repeated room numbers: " + number + ". Please check the JSON configuration!");
-        }
-
-        worldMap.put(number, room);
-
-      } catch (Exception e) {
-        throw new IOException("Failed to parse the room: " + roomObj + ", reason:" + e.getMessage(), e);
-      }
-    }
-  }
-
-
-
-  // todo sue
-  /**
-   * { "room_name":"Courtyard", "room_number": "1",
-   *  "description":"A beautiful courtyard with flowers on both sides of the stone walkway. \nThe walkway leads north. A billboard is in the distance.",
-   * "N": "2", "S": "0", "E": "0", "W": "0","puzzle": null, "monster": null, "items": "Hair Clippers", "fixtures": "Billboard","picture": "courtyard.png" },
-   * }
-   */
-  // 👇 解析单个 Room 对象 提取基本字段（名字/编号/出口）
-  private Room parseRoom(JsonObject obj) {
-    int roomNumber = obj.get("room_number").getAsInt();
-    String roomName = obj.get("room_name").getAsString();
-    String roomDescription = obj.get("room_description").getAsString();
-    Room r = new Room(roomNumber, roomName, roomDescription);
-
-    // 设置出口
-    for (String dir : List.of("N", "S", "E", "W")) {
-      if (obj.has(dir)) {
-        r.setExit(dir, obj.get(dir).getAsInt());
-      }
-    }
-
-    // 临时保存 items / fixtures 字符串（之后处理） /monsters/puzzles
-    if (obj.has("items") && !obj.get("items").isJsonNull()) {
-      r.getItems().addAll(new ArrayList<>()); // 后续填充
-    }
-
-    if (obj.has("fixtures") && !obj.get("fixtures").isJsonNull()) {
-      r.getFixtures().addAll(new ArrayList<>()); // 后续填充
-    }
-
-    return r;
-  }
-
   // 提取以逗号分隔的名字列表
   // 你还没实现：需要你去 Room 类存储原始 "Pen, Eraser" 这样的字符串字段
   private List<String> extractNames(Room room, String field) {
     List<String> names = new ArrayList<>();
-    // 我们需要 room 对应字段的“原始字符串”，你可以设计一个 fieldToString() 方法来存储原始数据
+    String raw = room.getRawField(field);  // gets the raw string like "Key, Lamp"
+    if (raw != null && !raw.isBlank()) {
+      for (String name : raw.split(",")) { // splits into ["Key", " Lamp"]
+        names.add(name.trim());            // trims whitespace: "Key", "Lamp"
+      }
+    }
     return names;
   }
 
   // 拷贝物品（避免同一个 item 被多个房间引用） 避免共享引用造成冲突
   private Item cloneItem(Item i) {
-    return new Item(i.getName(), i.getWeight(), i.getMaxUses(), i.getUsesRemaining(), i.getValue(), i.getWhenUsed());
+    return new Item(
+            i.getName(),
+            i.getDescription(),    // 2nd argument
+            i.getWeight(),         // double
+            i.getMaxUses(),
+            i.getUsesRemaining(),
+            i.getValue(),
+            i.getWhenUsed()
+    );
   }
 
   // 解析 room target 格式 “1:RoomName” → 1 只提取前面的房间号

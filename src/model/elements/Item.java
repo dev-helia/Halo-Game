@@ -1,38 +1,20 @@
 package model.elements;
 
 /**
- * 表示游戏中的一个可拾取物品
- * 疑问1:不知道怎么存储, 用HashMap可以标注物品数量, 如果这样的话,需要写hash 和 equalTo
- * 回答: 不用用object存就行
- *
- *   //TODO item名字必须唯一
+ * Item 类代表游戏中的物品，玩家可以拾取、使用或丢弃这些物品。
  */
-public class Item {
-  //picture: 图片（HW8 不用） HW9 图形版用
-  // 物品名称
-  private String name;
-
-  // 物品重量（用于背包负重判断）
-  private double weight;
-
-  // 物品最多可以使用的次数（上限）
-  private int maxUses;
-
-  // 当前剩余可使用次数
-  private int usesRemaining;
-
-  // 物品的价值，用于积分加分
-  private int value;
-
-  // 使用物品时输出的文本（反馈）
-  private String whenUsed;
+public class Item extends GameElements {
+  private double weight; // 重量
+  private int maxUses; // 最大使用次数
+  private int usesRemaining; // 剩余使用次数
+  private int value; // 价值
+  private String whenUsed; //使用时的描述
 
   /**
-   * 构造函数
+   * 初始化物品的名称、描述、重量、最大使用次数、剩余使用次数、价值及使用时的描述
    */
-
-  public Item(String name, double weight, int maxUses, int usesRemaining, int value, String whenUsed) {
-    this.name = name;
+  public Item(String name, String description, double weight, int maxUses, int usesRemaining, int value, String whenUsed) {
+    super(name, description);  // 调用parents类的构造函数
     this.weight = weight;
     this.maxUses = maxUses;
     this.usesRemaining = usesRemaining;
@@ -40,51 +22,81 @@ public class Item {
     this.whenUsed = whenUsed;
   }
 
-  // 🧠 判断这个物品还能不能用
+  /**
+   * 使用物品，减少剩余使用次数并显示描述
+   */
+  public String use() {
+    if (usesRemaining > 0) {
+      usesRemaining--;
+      return whenUsed;  // 返回使用时的描述
+    } else {
+      return getName() + " has no remaining uses.";  // 没有剩余使用次数时
+    }
+  }
+
+  /**
+   * 判断物品是否仍然可以使用
+   */
   public boolean isUsable() {
     return usesRemaining > 0;
   }
 
-  // ✨ 使用物品时调用，减少剩余次数，返回效果描述
-  public String use() {
-    if (isUsable()) {
-      usesRemaining--;
-      return whenUsed;
-    } else {
-      return "The item is empty or cannot be used anymore.";
-    }
+  /**
+   * 丢弃物品
+   */
+  public void dropItem() {
+    System.out.println("You dropped the " + getName() + ".");
   }
 
-  // 👜 获取物品重量
+  /**
+   * 展示物品的详细信息
+   */
+  @Override
+  public void displayDetails() {
+    System.out.println("Item: " + getName());
+    System.out.println("Description: " + getDescription());
+    System.out.println("Weight: " + weight + "kg");
+    System.out.println("Uses remaining: " + usesRemaining);
+    System.out.println("Value: " + value);
+  }
+
   public double getWeight() {
     return weight;
   }
 
-  // 💰 获取物品价值
-  public int getValue() {
-    return value;
+  public void setWeight(double weight) {
+    this.weight = weight;
   }
 
-  // 🧾 丢弃物品时显示信息
-  public String dropItem() {
-    return "You dropped " + name + ".";
+  public int getMaxUses() {
+    return maxUses;
   }
 
-  // 📎 getter（你们可能后面需要）
-  public String getName() {
-    return name;
+  public void setMaxUses(int maxUses) {
+    this.maxUses = maxUses;
   }
 
   public int getUsesRemaining() {
     return usesRemaining;
   }
 
+  public void setUsesRemaining(int usesRemaining) {
+    this.usesRemaining = usesRemaining;
+  }
+
+  public int getValue() {
+    return value;
+  }
+
+  public void setValue(int value) {
+    this.value = value;
+  }
+
   public String getWhenUsed() {
     return whenUsed;
   }
 
-  public String getDescription() {
-    return String.format("Item: %s, Uses left: %d, Weight: %.2f", name, usesRemaining, weight);
+  public void setWhenUsed(String whenUsed) {
+    this.whenUsed = whenUsed;
   }
-
 }
