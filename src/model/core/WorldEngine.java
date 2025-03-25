@@ -219,6 +219,7 @@ public class WorldEngine {
 
   // todo sue
   /**
+   * Parse a single Room object from a JSON object.
    * { "room_name":"Courtyard", "room_number": "1",
    *  "description":"A beautiful courtyard with flowers on both sides of the stone walkway. \nThe walkway leads north. A billboard is in the distance.",
    * "N": "2", "S": "0", "E": "0", "W": "0","puzzle": null, "monster": null, "items": "Hair Clippers", "fixtures": "Billboard","picture": "courtyard.png" },
@@ -226,27 +227,43 @@ public class WorldEngine {
    */
   // 👇 解析单个 Room 对象 提取基本字段（名字/编号/出口）
   private Room parseRoom(JsonObject obj) {
-    int roomNumber = obj.get("room_number").getAsInt();
-    String roomName = obj.get("room_name").getAsString();
-    String roomDescription = obj.get("room_description").getAsString();
-    Room r = new Room(roomNumber, roomName, roomDescription);
+    // Get the room number from JSON file.
+    int num = obj.get("room_number").getAsInt();
+    // Get the room name from JSON file.
+    String name = obj.get("room_name").getAsString();
+    // Create a Room object using room number and name.
+    Room r = new Room(num, name);
 
-    // 设置出口
+    // Set the room description if it exists
+    if (obj.has("description") && !obj.get("description").isJsonNull()) {
+      r.setDescription(obj.get("description").getAsString());
+    }
+
+    // Set exits (N/S/E/W) to their target room numbers
     for (String dir : List.of("N", "S", "E", "W")) {
-      if (obj.has(dir)) {
-        r.setExit(dir, obj.get(dir).getAsInt());
+      if (obj.has(dir) && !obj.get(dir).isJsonNull()) {
+        try {
+          int targetRoom = obj.get(dir).getAsInt();
+          if (targetRoom != 0) {
+            r.setExit(dir, targetRoom); // only set exit if it's not 0
+          }
+        } catch (NumberFormatException e) {
+          System.err.println("Exit from direction " + dir + " in room " + num + "is not valid");
+        }
       }
     }
 
-    // 临时保存 items / fixtures 字符串（之后处理） /monsters/puzzles
+    // Temporarily store the raw "items" string (e.g. "Lamp, Key")
     if (obj.has("items") && !obj.get("items").isJsonNull()) {
-      r.getItems().addAll(new ArrayList<>()); // 后续填充
+      r.setRawField("items", obj.get("items").getAsString()); // You'll implement this in the Room class
     }
 
+    // Temporarily store the raw "fixtures" string (e.g. "Desk, Painting")
     if (obj.has("fixtures") && !obj.get("fixtures").isJsonNull()) {
-      r.getFixtures().addAll(new ArrayList<>()); // 后续填充
+      r.setRawField("fixtures", obj.get("fixtures").getAsString()); // Also to be added in Room class
     }
 
+    // Done parsing this Room
     return r;
   }
 
@@ -254,13 +271,26 @@ public class WorldEngine {
   // 你还没实现：需要你去 Room 类存储原始 "Pen, Eraser" 这样的字符串字段
   private List<String> extractNames(Room room, String field) {
     List<String> names = new ArrayList<>();
-    // 我们需要 room 对应字段的“原始字符串”，你可以设计一个 fieldToString() 方法来存储原始数据
+    String raw = room.getRawField(field);  // gets the raw string like "Key, Lamp"
+    if (raw != null && !raw.isBlank()) {
+      for (String name : raw.split(",")) { // splits into ["Key", " Lamp"]
+        names.add(name.trim());            // trims whitespace: "Key", "Lamp"
+      }
+    }
     return names;
   }
 
   // 拷贝物品（避免同一个 item 被多个房间引用） 避免共享引用造成冲突
   private Item cloneItem(Item i) {
-    return new Item(i.getName(), i.getWeight(), i.getMaxUses(), i.getUsesRemaining(), i.getValue(), i.getWhenUsed());
+    return new Item(
+            i.getName(),
+            i.getDescription(),    // 2nd argument
+            i.getWeight(),         // double
+            i.getMaxUses(),
+            i.getUsesRemaining(),
+            i.getValue(),
+            i.getWhenUsed()
+    );
   }
 
   // 解析 room target 格式 “1:RoomName” → 1 只提取前面的房间号

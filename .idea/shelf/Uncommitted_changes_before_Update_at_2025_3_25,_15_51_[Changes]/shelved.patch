@@ -1,0 +1,99 @@
+Index: src/model/obstacle/Monster.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package model.obstacle;\n\nimport model.core.Player;\n\n/**\n * 表示游戏中的一个怪物，会阻挡路径并攻击玩家\n */\npublic class Monster extends GameObstacle {\n  // ✅ 每次攻击造成的伤害\n  private int damage;\n\n  // ✅ 是否具有攻击能力（可选项）\n  private boolean canAttack;\n\n  // ✅ 攻击时的文字描述（例如：“泰迪熊甩你一巴掌！”）\n  private String attackMessage;\n\n  // ✅ 打败它需要的物品名称（比如 \"Sword\", \"Slippers\"）\n  private String defeatItem;\n\n  /**\n   * 构造函数\n   */\n  public Monster(String name,\n                 String description,\n                 boolean active,\n                 int value,\n                 int damage,\n                 boolean canAttack,\n                 String attackMessage,\n                 String defeatItem) {\n\n    super(name, description, active, value);\n    this.damage = damage;\n    this.canAttack = canAttack;\n    this.attackMessage = attackMessage;\n    this.defeatItem = defeatItem;\n  }\n\n  /**\n   * 怪物攻击玩家\n   */\n  public void attack(Player player) {\n    if (canAttack && isActive()) {\n      // 扣血！\n      double currentHealth = player.getHealth();\n      player.setHealth(currentHealth - damage);\n    }\n  }\n\n  /**\n   * 玩家是否能用某个物品击败该怪物\n   */\n  public boolean isDefeatedByItem(String itemName) {\n    return defeatItem != null && defeatItem.equalsIgnoreCase(itemName);\n  }\n\n  public String getAttackMessage() {\n    return attackMessage;\n  }\n\n  public boolean canAttack() {\n    return canAttack;\n  }\n\n  public int getDamage() {\n    return damage;\n  }\n\n  public String getDefeatItem() {\n    return defeatItem;\n  }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/model/obstacle/Monster.java b/src/model/obstacle/Monster.java
+--- a/src/model/obstacle/Monster.java	(revision 18c6c98af8ee002a5e6e56dcd7019ff865ebbc36)
++++ b/src/model/obstacle/Monster.java	(date 1742780295134)
+@@ -70,4 +70,4 @@
+   public String getDefeatItem() {
+     return defeatItem;
+   }
+-}
++}
+\ No newline at end of file
+Index: src/model/obstacle/Puzzle.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package model.obstacle;\n\n/**\n * 表示一个谜题类，是游戏中阻挡玩家的障碍之一\n * 玩家可以通过“物品”或“输入文字答案”来解决它\n */\npublic class Puzzle extends GameObstacle {\n  // ✅ 解谜的方式：可能是道具名称，也可能是文字答案\n  private String solution;\n\n  // ✅ 是否影响目标（一般是房间通路）\n  private boolean affectsTarget;\n\n  // ✅ 是否影响玩家（当前版本中不需要实现）\n  private boolean affectsPlayer;\n\n  // ✅ 当前谜题的“效果”描述，会覆盖房间原本的文本\n  private String effects;\n\n  // ✅ 被这个谜题影响的房间编号（用于后续可能的状态更新）\n  private int targetRoomNumber;\n\n  /**\n   * 构造函数\n   */\n  public Puzzle(String name,\n                String description,\n                boolean active,\n                int value,\n                String solution,\n                boolean affectsTarget,\n                boolean affectsPlayer,\n                String effects,\n                int targetRoomNumber) {\n\n    super(name, description, active, value); // 调用 GameObstacle 的构造器\n\n    this.solution = solution;\n    this.affectsTarget = affectsTarget;\n    this.affectsPlayer = affectsPlayer;\n    this.effects = effects;\n    this.targetRoomNumber = targetRoomNumber;\n  }\n\n  /**\n   * 判断谜题是否被正确解答（答案可以是物品名或文字）\n   */\n  public boolean isSolved(String answer) {\n    if (solution == null) return false;\n\n    // 如果解谜方式是文字（以 ' 引号包围）\n    if (solution.startsWith(\"'\") && solution.endsWith(\"'\")) {\n      String trimmed = solution.substring(1, solution.length() - 1);\n      return trimmed.equalsIgnoreCase(answer.trim());\n    } else {\n      // 否则视为物品名匹配\n      return solution.equalsIgnoreCase(answer.trim());\n    }\n  }\n\n  /**\n   * 返回谜题的效果文本（比如力场挡住你）\n   */\n  public String getEffects() {\n    return effects;\n  }\n\n  public boolean affectsTarget() {\n    return affectsTarget;\n  }\n\n  public boolean affectsPlayer() {\n    return affectsPlayer;\n  }\n\n  public int getTargetRoomNumber() {\n    return targetRoomNumber;\n  }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/model/obstacle/Puzzle.java b/src/model/obstacle/Puzzle.java
+--- a/src/model/obstacle/Puzzle.java	(revision 18c6c98af8ee002a5e6e56dcd7019ff865ebbc36)
++++ b/src/model/obstacle/Puzzle.java	(date 1742780295139)
+@@ -20,6 +20,9 @@
+   // ✅ 被这个谜题影响的房间编号（用于后续可能的状态更新）
+   private int targetRoomNumber;
+ 
++  // ✅ 给予玩家谜题提示
++  private String hintMessage;
++
+   /**
+    * 构造函数
+    */
+@@ -31,7 +34,8 @@
+                 boolean affectsTarget,
+                 boolean affectsPlayer,
+                 String effects,
+-                int targetRoomNumber) {
++                int targetRoomNumber,
++                String hintMessage) {  // 新增 hintMessage 参数
+ 
+     super(name, description, active, value); // 调用 GameObstacle 的构造器
+ 
+@@ -40,6 +44,7 @@
+     this.affectsPlayer = affectsPlayer;
+     this.effects = effects;
+     this.targetRoomNumber = targetRoomNumber;
++    this.hintMessage = hintMessage;
+   }
+ 
+   /**
+@@ -76,4 +81,18 @@
+   public int getTargetRoomNumber() {
+     return targetRoomNumber;
+   }
++
++  /**
++   * 获取谜题提示信息
++   */
++  public String getHintMessage() {
++    return hintMessage;
++  }
++
++  /**
++   * 可选：根据状态返回当前的谜题描述（默认描述或效果）
++   */
++  public String getCurrentDescription() {
++    return isActive() ? effects : description;
++  }
+ }
+Index: src/model/core/WorldEngine.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package model.core;\n\nimport com.google.gson.*;\nimport com.google.gson.reflect.TypeToken;\n\nimport model.elements.*;\nimport model.obstacle.*;\n\nimport java.io.*;\nimport java.util.*;\n\n/**\n * WorldEngine：负责加载 JSON 数据、生成游戏地图、提供世界状态\n */\n// Json object 需要导入 在app里面\npublic class WorldEngine {\n  // 可选：用于生成不同地图（暂不实现）\n  private int seed;\n\n  // 整个房间地图，房间编号 -> Room 对象\n  private Map<Integer, Room> worldMap;\n\n  // 构造器（无 seed 默认构建）\n  public WorldEngine() {\n    this.worldMap = new HashMap<>();\n  }\n\n  /**\n   * 从 JSON 文件生成世界（地图 + 元素）\n   */\n  public void generateWorld(String jsonFilePath) throws IOException {\n    // 读取 JSON 内容\n    Reader reader = new FileReader(jsonFilePath);\n    JsonObject root = JsonParser.parseReader(reader).getAsJsonObject();\n\n    // 先解析房间\n    JsonArray roomsArray = root.getAsJsonArray(\"rooms\");\n    for (JsonElement element : roomsArray) {\n      JsonObject roomObj = element.getAsJsonObject();\n      Room room = parseRoom(roomObj);\n      worldMap.put(room.getRoomNumber(), room);\n    }\n\n    // 解析 items（用于与房间匹配）\n    Map<String, Item> globalItems = new HashMap<>();\n    if (root.has(\"items\")) {\n      JsonArray itemsArray = root.getAsJsonArray(\"items\");\n      for (JsonElement element : itemsArray) {\n        JsonObject i = element.getAsJsonObject();\n        String name = i.get(\"name\").getAsString();\n        double weight = i.get(\"weight\").getAsDouble();\n        int maxUses = i.get(\"max_uses\").getAsInt();\n        int usesRemaining = i.get(\"uses_remaining\").getAsInt();\n        int value = i.get(\"value\").getAsInt();\n        String whenUsed = i.get(\"when_used\").getAsString();\n        globalItems.put(name, new Item(name, weight, maxUses, usesRemaining, value, whenUsed));\n      }\n    }\n\n    // 解析 fixtures（用于装入房间）\n    Map<String, Fixture> globalFixtures = new HashMap<>();\n    if (root.has(\"fixtures\")) {\n      JsonArray fixturesArray = root.getAsJsonArray(\"fixtures\");\n      for (JsonElement element : fixturesArray) {\n        JsonObject f = element.getAsJsonObject();\n        String name = f.get(\"name\").getAsString();\n        String desc = f.get(\"description\").getAsString();\n        int weight = f.get(\"weight\").getAsInt();\n        globalFixtures.put(name, new Fixture(name, desc, weight));\n      }\n    }\n\n    // 解析 puzzles（用于匹配房间障碍）\n    if (root.has(\"puzzles\")) {\n      JsonArray puzzlesArray = root.getAsJsonArray(\"puzzles\");\n      for (JsonElement element : puzzlesArray) {\n        JsonObject p = element.getAsJsonObject();\n        String name = p.get(\"name\").getAsString();\n        boolean active = p.get(\"active\").getAsBoolean();\n        boolean affectsTarget = p.get(\"affects_target\").getAsBoolean();\n        boolean affectsPlayer = p.get(\"affects_player\").getAsBoolean();\n        String solution = p.get(\"solution\").getAsString();\n        int value = p.get(\"value\").getAsInt();\n        String effects = p.get(\"effects\").getAsString();\n        int targetRoom = parseRoomNumber(p.get(\"target\").getAsString());\n\n        Puzzle puzzle = new Puzzle(name, name, active, value, solution, affectsTarget, affectsPlayer, effects, targetRoom);\n\n        Room r = worldMap.get(targetRoom);\n        if (r != null) r.setObstacle(puzzle);\n      }\n    }\n\n    // TODO: 可选解析怪物 monster（方式类似 Puzzle）\n\n    // 第二轮：给房间塞入 items 和 fixtures\n    for (Room room : worldMap.values()) {\n      // 添加 items\n      if (room.getItems() == null) continue;\n\n      for (String itemName : extractNames(room, \"items\")) {\n        if (globalItems.containsKey(itemName)) {\n          room.addItem(cloneItem(globalItems.get(itemName))); // 深拷贝\n        }\n      }\n\n      // 添加 fixtures\n      for (String fixName : extractNames(room, \"fixtures\")) {\n        if (globalFixtures.containsKey(fixName)) {\n          room.addFixture(globalFixtures.get(fixName)); // fixtures 可以复用\n        }\n      }\n    }\n\n    reader.close();\n  }\n\n  /**\n   * 获取某个房间\n   */\n  public Room getRoom(int roomNumber) {\n    return worldMap.get(roomNumber);\n  }\n\n  /**\n   * 获取完整地图\n   */\n  public Map<Integer, Room> getWorldMap() {\n    return worldMap;\n  }\n\n  // ==== 辅助方法区 ====\n\n  // \uD83D\uDC47 解析单个 Room 对象\n  private Room parseRoom(JsonObject obj) {\n    int num = obj.get(\"room_number\").getAsInt();\n    String name = obj.get(\"room_name\").getAsString();\n    Room r = new Room(num, name);\n\n    // 设置出口\n    for (String dir : List.of(\"N\", \"S\", \"E\", \"W\")) {\n      if (obj.has(dir)) {\n        r.setExit(dir, obj.get(dir).getAsInt());\n      }\n    }\n\n    // 临时保存 items / fixtures 字符串（之后处理）\n    if (obj.has(\"items\") && !obj.get(\"items\").isJsonNull()) {\n      r.getItems().addAll(new ArrayList<>()); // 后续填充\n    }\n\n    if (obj.has(\"fixtures\") && !obj.get(\"fixtures\").isJsonNull()) {\n      r.getFixtures().addAll(new ArrayList<>()); // 后续填充\n    }\n\n    return r;\n  }\n\n  // 提取以逗号分隔的名字列表\n  private List<String> extractNames(Room room, String field) {\n    List<String> names = new ArrayList<>();\n    // 我们需要 room 对应字段的“原始字符串”，你可以设计一个 fieldToString() 方法来存储原始数据\n    return names;\n  }\n\n  // 拷贝物品（避免同一个 item 被多个房间引用）\n  private Item cloneItem(Item i) {\n    return new Item(i.getName(), i.getWeight(), i.getMaxUses(), i.getUsesRemaining(), i.getValue(), i.getWhenUsed());\n  }\n\n  // 解析 room target 格式 “1:RoomName” → 1\n  private int parseRoomNumber(String input) {\n    String[] parts = input.split(\":\");\n    return Integer.parseInt(parts[0].trim());\n  }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/model/core/WorldEngine.java b/src/model/core/WorldEngine.java
+--- a/src/model/core/WorldEngine.java	(revision 18c6c98af8ee002a5e6e56dcd7019ff865ebbc36)
++++ b/src/model/core/WorldEngine.java	(date 1742780411064)
+@@ -83,8 +83,13 @@
+         int value = p.get("value").getAsInt();
+         String effects = p.get("effects").getAsString();
+         int targetRoom = parseRoomNumber(p.get("target").getAsString());
++        String hintMessage = "";
+ 
+-        Puzzle puzzle = new Puzzle(name, name, active, value, solution, affectsTarget, affectsPlayer, effects, targetRoom);
++        if (p.has("hintMessage") && !p.get("hintMessage").isJsonNull()) {
++          hintMessage = p.get("hintMessage").getAsString();
++        }
++
++        Puzzle puzzle = new Puzzle(name, name, active, value, solution, affectsTarget, affectsPlayer, effects, targetRoom, hintMessage);
+ 
+         Room r = worldMap.get(targetRoom);
+         if (r != null) r.setObstacle(puzzle);

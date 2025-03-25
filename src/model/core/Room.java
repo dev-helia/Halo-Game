@@ -20,6 +20,7 @@ public class Room {
   private final String name;
   private final String roomDescription;
 
+
   // Direction → Target room number
   private final Map<String, Integer> exits;
 
@@ -191,6 +192,7 @@ public class Room {
 
   public String getRoomDescription() {
     return roomDescription;
+
   }
   @Override
   public String toString() {

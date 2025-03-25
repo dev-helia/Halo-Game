@@ -1,51 +1,33 @@
 package model.elements;
 
 /**
- * 表示房间中的固定装置，比如电脑、雕像等不能移动的物体
- * //TODO item名字必须唯一
+ * Fixture 类代表游戏中不能移动的物体。
  */
-public class Fixture {
-  //  puzzle附属谜题🚫不处理当前作业版本不支持
-  // states	状态模型	🚫不处理	以后版本考虑
-  // picture	图片	🚫
-
-  // 装置名称，例如 "Computer"
-  private String name;
-
-  // 描述信息，examine 时显示的内容
-  private String description;
-
-  // 重量，虽然不会被拿走，但可以用作“是否可搬动”的标识（通常设得很大）
-  // 装置都是 immovable 的，weight 设大于 200（约定）
+public class Fixture extends GameElements {
   private int weight;
 
   /**
-   * 构造函数
+   * 构造函数：初始化设施的名称、描述和重量
    */
   public Fixture(String name, String description, int weight) {
-    this.name = name;
-    this.description = description;
+    super(name, description);  // 调用父类的构造函数
     this.weight = weight;
   }
 
   /**
-   * 获取装置的描述信息
-   */
-  public String getDescription() {
-    return description;
-  }
-
-  /**
-   * 获取名称
-   */
-  public String getName() {
-    return name;
-  }
-
-  /**
-   * 获取重量
+   * 获取设施的重量
    */
   public int getWeight() {
     return weight;
+  }
+
+  /**
+   * 展示设施的详细信息
+   */
+  @Override
+  public void displayDetails() {
+    System.out.println("Fixture: " + getName());
+    System.out.println("Description: " + getDescription());
+    System.out.println("Weight: " + getWeight() + "kg");
   }
 }
