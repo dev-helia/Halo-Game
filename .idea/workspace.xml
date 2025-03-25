@@ -47,7 +47,7 @@
     "Application.GameEngineApp.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "helia-parse",
+    "git-widget-placeholder": "roomsParser",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -85,7 +85,7 @@
       <workItem from="1742743611374" duration="5551000" />
       <workItem from="1742750018313" duration="977000" />
       <workItem from="1742776989384" duration="24317000" />
-      <workItem from="1742931534472" duration="5680000" />
+      <workItem from="1742931534472" duration="6021000" />
     </task>
     <servers />
   </component>
