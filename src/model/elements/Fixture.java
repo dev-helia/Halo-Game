@@ -1,28 +1,28 @@
 package model.elements;
 
 /**
- * Fixture 类代表游戏中不能移动的物体。
+ * The Fixture class represents immovable objects in the game.
  */
 public class Fixture extends GameElements {
   private int weight;
 
   /**
-   * 构造函数：初始化设施的名称、描述和重量
+   * Constructor: Initializes the name, description, and weight of the fixture.
    */
   public Fixture(String name, String description, int weight) {
-    super(name, description);  // 调用父类的构造函数
+    super(name, description);  // Call the constructor of the superclass
     this.weight = weight;
   }
 
   /**
-   * 获取设施的重量
+   * Gets the weight of the fixture.
    */
   public int getWeight() {
     return weight;
   }
 
   /**
-   * 展示设施的详细信息
+   * Displays the detailed information of the fixture.
    */
   @Override
   public void displayDetails() {
