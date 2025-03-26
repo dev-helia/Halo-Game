@@ -53,7 +53,7 @@ public class GameEngineApp {
     String s = "MyHero\nL\nT Ticket\nA 'Align'\nN\nN\nQ";
     java.io.BufferedReader input = new java.io.BufferedReader(new java.io.StringReader(s));
 
-    GameEngineApp game = new GameEngineApp("./resources/museum.json", input, System.out);
+    GameEngineApp game = new GameEngineApp("src/resources/Museum_of_Planet_of_the_Apes.json", input, System.out);
     game.start();
 
     // 可切换为手动输入版本：
