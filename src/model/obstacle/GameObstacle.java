@@ -1,23 +1,39 @@
 package model.obstacle;
 
 /**
- * 游戏中所有“阻挡玩家前进”的元素的父类，例如谜题 Puzzle、怪物 Monster
+ * Abstract base class representing obstacles in the game
+ * that block the player's progress, such as puzzles or monsters.
  */
 public abstract class GameObstacle {
-  // 名称，比如 "Teddy Bear" 或 "Turnstile"
+
+  /**
+   * The name of the obstacle, e.g., "Teddy Bear" or "Turnstile".
+   */
   protected String name;
 
-  // 障碍的描述，用于提示或呈现效果信息
+  /**
+   * A description of the obstacle, used for hints or UI display.
+   */
   protected String description;
 
-  // 是否处于激活状态（true=未解决/未击败，false=已解除）
+  /**
+   * Indicates whether the obstacle is currently active.
+   * true = unsolved/undefeated; false = deactivated/solved.
+   */
   protected boolean active;
 
-  // 解决/击败该障碍后可以获得的分数
+  /**
+   * The score value awarded upon solving or defeating the obstacle.
+   */
   protected int value;
 
   /**
-   * 构造函数（给子类用）
+   * Constructor for subclasses to initialize a game obstacle.
+   *
+   * @param name        the name of the obstacle
+   * @param description a description of the obstacle
+   * @param active      whether the obstacle is active
+   * @param value       score value associated with the obstacle
    */
   public GameObstacle(String name, String description, boolean active, int value) {
     this.name = name;
@@ -26,27 +42,45 @@ public abstract class GameObstacle {
     this.value = value;
   }
 
-  // ✅ 判断障碍是否还在（active）
+  /**
+   * Checks whether the obstacle is still active.
+   *
+   * @return true if the obstacle is active; false otherwise
+   */
   public boolean isActive() {
     return active;
   }
 
-  // ✅ 解除障碍（解谜或击败怪兽时调用）
+  /**
+   * Deactivates the obstacle (e.g., after solving a puzzle or defeating a monster).
+   */
   public void deactivate() {
     active = false;
   }
 
-  // ✅ 获取障碍值（用于加分）
+  /**
+   * Returns the score value associated with the obstacle.
+   *
+   * @return the score value
+   */
   public int getValue() {
     return value;
   }
 
-  // ✅ 获取障碍名称（可用于输出）
+  /**
+   * Returns the name of the obstacle.
+   *
+   * @return the obstacle's name
+   */
   public String getName() {
     return name;
   }
 
-  // ✅ 获取描述（用于显示在 UI 上）
+  /**
+   * Returns the description of the obstacle.
+   *
+   * @return the obstacle's description
+   */
   public String getDescription() {
     return description;
   }

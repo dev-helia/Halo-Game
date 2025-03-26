@@ -6,6 +6,7 @@ import com.google.gson.reflect.TypeToken;
 import model.elements.*;
 import model.obstacle.*;
 import utils.JsonUtils;
+import utils.RoomsParser;
 
 import java.io.*;
 import java.util.*;
@@ -39,60 +40,113 @@ public class WorldEngine implements Serializable {
     JsonObject root = JsonUtils.safeParseJson(jsonFilePath);
     RoomsParser.parseRooms(root, worldMap);
 
+/**
+ * Parses the "puzzles" section from the JSON root.
+ * For each puzzle entry, this method creates a Puzzle instance
+ * and assigns it to the corresponding room in the game world.
+ *
+ * @param root the root JSON object containing puzzles
+ * @param worldMap the map of room IDs to Room objects
+ */
+public void parsePuzzles(JsonObject root, Map<Integer, Room> worldMap) {
+  if (root.has("puzzles")) {
+    JsonArray puzzlesArray = root.getAsJsonArray("puzzles");
 
-    //TODO Han
-    // 3.解析 items（用于与房间匹配）
-    Map<String, Item> globalItems = new HashMap<>();
-    if (root.has("items")) {
-      JsonArray itemsArray = root.getAsJsonArray("items");
-      for (JsonElement element : itemsArray) {
-        JsonObject i = element.getAsJsonObject();
-        String name = i.get("name").getAsString();
-        double weight = i.get("weight").getAsDouble();
-        int maxUses = i.get("max_uses").getAsInt();
-        int usesRemaining = i.get("uses_remaining").getAsInt();
-        int value = i.get("value").getAsInt();
-        String whenUsed = i.get("when_used").getAsString();
-        globalItems.put(name, new Item(name, weight, maxUses, usesRemaining, value, whenUsed));
+    for (JsonElement element : puzzlesArray) {
+      JsonObject p = element.getAsJsonObject();
+
+      // Extract basic puzzle attributes
+      String name = p.get("name").getAsString();
+      boolean active = p.get("active").getAsBoolean();
+      int value = p.get("value").getAsInt();
+
+      // Puzzle mechanics
+      String solution = p.get("solution").getAsString();
+      boolean affectsTarget = p.get("affects_target").getAsBoolean();
+      boolean affectsPlayer = p.get("affects_player").getAsBoolean();
+      String effects = p.get("effects").getAsString();
+
+      // Room assignment & optional hint
+      int targetRoom = parseRoomNumber(p.get("target").getAsString());
+      String hintMessage = p.has("hintMessage") && !p.get("hintMessage").isJsonNull()
+          ? p.get("hintMessage").getAsString()
+          : "";
+
+      // Create a Puzzle object with the parsed data
+      Puzzle puzzle = new Puzzle(
+          name,
+          name, // using name as the description for now
+          active,
+          value,
+          solution,
+          affectsTarget,
+          affectsPlayer,
+          effects,
+          targetRoom,
+          hintMessage
+      );
+
+      // Assign the puzzle to the corresponding room
+      Room r = worldMap.get(targetRoom);
+      if (r != null) {
+        r.setObstacle(puzzle);
+      } else {
+        System.err.printf("Room #%d not found — puzzle '%s' not assigned.%n", targetRoom, name);
       }
     }
+  }
+}
 
-    // todo han
-    // 4.解析 fixtures（用于装入房间）
-    Map<String, Fixture> globalFixtures = new HashMap<>();
-    if (root.has("fixtures")) {
-      JsonArray fixturesArray = root.getAsJsonArray("fixtures");
-      for (JsonElement element : fixturesArray) {
-        JsonObject f = element.getAsJsonObject();
-        String name = f.get("name").getAsString();
-        String desc = f.get("description").getAsString();
-        int weight = f.get("weight").getAsInt();
-        globalFixtures.put(name, new Fixture(name, desc, weight));
-      }
-    }
-    // todo red bean
-    // 5.解析 puzzles（用于匹配房间障碍）
-    if (root.has("puzzles")) {
-      JsonArray puzzlesArray = root.getAsJsonArray("puzzles");
-      for (JsonElement element : puzzlesArray) {
-        JsonObject p = element.getAsJsonObject();
-        String name = p.get("name").getAsString();
-        boolean active = p.get("active").getAsBoolean();
-        boolean affectsTarget = p.get("affects_target").getAsBoolean();
-        boolean affectsPlayer = p.get("affects_player").getAsBoolean();
-        String solution = p.get("solution").getAsString();
-        int value = p.get("value").getAsInt();
-        String effects = p.get("effects").getAsString();
-        int targetRoom = parseRoomNumber(p.get("target").getAsString());
-
-        Puzzle puzzle = new Puzzle(name, name, active, value, solution, affectsTarget, affectsPlayer, effects, targetRoom);
-
-        Room r = worldMap.get(targetRoom);
-        if (r != null) r.setObstacle(puzzle);
-      }
     }
 
-    // TODO: red veab 解析怪物 monster（方式类似 Puzzle）
+/**
+ * Parses the "monsters" section from the JSON root.
+ * For each monster entry, this method creates a Monster instance
+ * and assigns it to the corresponding room in the game world.
+ *
+ * @param root the root JSON object containing monsters
+ * @param worldMap the map of room IDs to Room objects
+ */
+public void parseMonsters(JsonObject root, Map<Integer, Room> worldMap) {
+  if (root.has("monsters")) {
+    JsonArray monstersArray = root.getAsJsonArray("monsters");
+
+    for (JsonElement element : monstersArray) {
+      JsonObject m = element.getAsJsonObject();
+
+      // Extract monster properties from JSON
+      String name = m.get("name").getAsString();
+      String description = m.get("description").getAsString();
+      boolean active = m.get("active").getAsBoolean();
+      int value = m.get("value").getAsInt();
+      int damage = m.get("damage").getAsInt();
+      boolean canAttack = m.get("can_attack").getAsBoolean();
+      String attackMessage = m.get("attack_message").getAsString();
+      String defeatItem = m.get("defeat_item").getAsString();
+      int targetRoom = parseRoomNumber(m.get("target").getAsString());
+
+      // Create a Monster object with parsed attributes
+      Monster monster = new Monster(
+          name,
+          description,
+          active,
+          value,
+          damage,
+          canAttack,
+          attackMessage,
+          defeatItem
+      );
+
+      // Assign the monster to the correct room in the world map
+      Room r = worldMap.get(targetRoom);
+      if (r != null) {
+        r.setObstacle(monster);
+      } else {
+        System.err.printf("Room #%d not found — monster '%s' not assigned.%n", targetRoom, name);
+      }
+    }
+  }
+}
 
     // todo ht
     // 第二轮：给房间塞入 items 和 fixtures puzzles monsters
@@ -113,8 +167,6 @@ public class WorldEngine implements Serializable {
         }
       }
     }
-  }
-
   /**
    * Print the current world map for simple smoke testing.
    */
@@ -172,51 +224,38 @@ public class WorldEngine implements Serializable {
 
   // ==== helper ====
 
-  /**
-   * Safely parse rooms from root object.
-   *
-   * @param root the root json object
-   * @throws IOException file not found
-   */
-  private void parseRooms(JsonObject root) throws IOException {
-    // Check if the rooms field is included
-    if (!root.has("rooms") || !root.get("rooms").isJsonArray()) {
-      throw new IOException("Invalid JSON file: Missing 'rooms' field, or the field is not an array!");
-    }
+  //TODO Han
+  public void parseItems(JsonObject root) {
+    if (root.has("items")) {
+      JsonArray itemsArray = root.getAsJsonArray("items");
+      for (JsonElement element : itemsArray) {
+        JsonObject itemObject = element.getAsJsonObject();
 
-    JsonArray roomsArray = root.getAsJsonArray("rooms");
+        // 从 JSON 中提取每个 item 的相关数据
+        String name = itemObject.get("name").getAsString();
+        double weight = itemObject.get("weight").getAsDouble();
+        int maxUses = itemObject.get("max_uses").getAsInt();
+        int usesRemaining = itemObject.get("uses_remaining").getAsInt();
+        int value = itemObject.get("value").getAsInt();
+        String whenUsed = itemObject.get("when_used").getAsString();
 
-    for (JsonElement element : roomsArray) {
-      // Make sure each element is an object
-      if (!element.isJsonObject()) {
-        throw new IOException("There are illegal elements (not objects) in the rooms array:" + element);
-      }
-
-      JsonObject roomObj = element.getAsJsonObject();
-
-      try {
-        // Call parseRoom and handle exceptions
-        Room room = parseRoom(roomObj);
-
-        if (room == null) {
-          throw new IOException("parseRoom returns null, please check the field:" + roomObj);
-        }
-
-        int number = room.getRoomNumber();
-        if (worldMap.containsKey(number)) {
-          throw new IOException("Repeated room numbers: " + number + ". Please check the JSON configuration!");
-        }
-
-        worldMap.put(number, room);
-
-      } catch (Exception e) {
-        throw new IOException("Failed to parse the room: " + roomObj + ", reason:" + e.getMessage(), e);
+        // 创建 Item 对象并存入全局的 globalItems Map 中
+        globalItems.put(name, new Item(name, weight, maxUses, usesRemaining, value, whenUsed));
       }
     }
   }
 
+  // todo han）
+  public void parseFixtures(JsonObject root) {
+    if (root.has("fixtures")) {
+      JsonArray fixturesArray = root.getAsJsonArray("fixtures");
+      for (JsonElement element : fixturesArray) {
+        JsonObject fixtureObject = element.getAsJsonObject();
 
-
+        // 从 JSON 中提取每个 fixture 的相关数据
+        String name = fixtureObject.get("name").getAsString();
+        String description = fixtureObject.get("description").getAsString();
+        int weight = fixtureObject.get("weight").getAsInt();
 
   // 提取以逗号分隔的名字列表
   // 你还没实现：需要你去 Room 类存储原始 "Pen, Eraser" 这样的字符串字段
@@ -273,3 +312,7 @@ public class WorldEngine implements Serializable {
     }
   }
 }
+
+
+
+

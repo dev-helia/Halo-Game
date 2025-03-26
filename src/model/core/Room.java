@@ -19,7 +19,7 @@ import java.util.*;
 public class Room implements Serializable {
   private final int roomNumber;
   private final String name;
-  private final String roomDescription;
+  private String roomDescription;
 
 
   // Direction → Target room number
