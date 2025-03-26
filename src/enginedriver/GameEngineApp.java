@@ -13,8 +13,8 @@ import java.io.IOException;
  * GameEngineApp 是游戏的入口类，负责初始化模型、控制器和视图
  */
 public class GameEngineApp {
-  private final GameController controller;
 
+  private final GameController controller;
   /**
    * 构造器，作业要求指定：提供数据文件路径、输入流、输出流
    */

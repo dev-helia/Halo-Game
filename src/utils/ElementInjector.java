@@ -38,43 +38,6 @@ public class ElementInjector {
     }
   }
 
-  /**
-   * Inject puzzles.
-   *
-   * @param puzzles  the puzzles
-   * @param worldMap the world map
-   */
-// 🧩 塞 puzzle
-  public static void injectPuzzles(List<Puzzle> puzzles, Map<Integer, Room> worldMap) {
-    for (Puzzle p : puzzles) {
-      int targetRoom = p.getTargetRoom();
-      Room r = worldMap.get(targetRoom);
-      if (r != null) {
-        r.setObstacle(p);
-      } else {
-        System.err.printf("[Puzzle] Room %d not found for puzzle '%s'.\n", targetRoom, p.getName());
-      }
-    }
-  }
-
-  /**
-   * Inject monsters.
-   *
-   * @param monsters the monsters
-   * @param worldMap the world map
-   */
-// 👹 塞 monster
-  public static void injectMonsters(List<Monster> monsters, Map<Integer, Room> worldMap) {
-    for (Monster m : monsters) {
-      int targetRoom = m.getTargetRoom();
-      Room r = worldMap.get(targetRoom);
-      if (r != null) {
-        r.setObstacle(m);
-      } else {
-        System.err.printf("[Monster] Room %d not found for monster '%s'.\n", targetRoom, m.getName());
-      }
-    }
-  }
 
   // 工具函数：提取逗号分隔字段
   private static List<String> extractNames(Room room, String field) {
@@ -92,7 +55,6 @@ public class ElementInjector {
   private static Item cloneItem(Item i) {
     return new Item(
             i.getName(),
-            i.getDescription(),
             i.getWeight(),
             i.getMaxUses(),
             i.getUsesRemaining(),
