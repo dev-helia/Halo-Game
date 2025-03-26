@@ -1,6 +1,8 @@
 package model.elements;
 
-// 抽象类，所有游戏元素的基类
+/**
+ * Abstract class that serves as the base for all game elements.
+ */
 public abstract class GameElements {
   protected String name;
   protected String description;
@@ -26,6 +28,8 @@ public abstract class GameElements {
     this.description = description;
   }
 
-  // 抽象方法，要求子类实现具体的展示方法
+  /**
+   * Abstract method that forces subclasses to implement a detailed display method.
+   */
   public abstract void displayDetails();
 }
