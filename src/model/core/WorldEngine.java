@@ -167,8 +167,6 @@ public void parseMonsters(JsonObject root, Map<Integer, Room> worldMap) {
         }
       }
     }
-  }
-
   /**
    * Print the current world map for simple smoke testing.
    */
@@ -320,3 +318,7 @@ public void parseMonsters(JsonObject root, Map<Integer, Room> worldMap) {
     }
   }
 }
+
+
+
+
