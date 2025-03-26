@@ -30,7 +30,6 @@ public class Player implements Serializable {
 
   /**
    * Constructor of a new player.
-   *
    * @param name         The player's name.
    * @param startingRoom The room where the player begins.
    */
@@ -42,6 +41,10 @@ public class Player implements Serializable {
     this.score = 0;
   }
 
+  /**
+   * A copy of the player.
+   * @param other the copy of the player.
+   */
   public void copyFrom(Player other) {
     this.health = other.health;
     this.currentRoom = other.currentRoom;
@@ -54,7 +57,6 @@ public class Player implements Serializable {
   /**
    * The player moves to the specified direction.
    * If there is a room in that direction and  no obstacles, update the room.
-   *
    * @param direction the direction (e.g. "N", "S", "E", "W")
    * @param roomMap   the map of roomNumber → Room
    * @return true if the move was successful
@@ -77,7 +79,6 @@ public class Player implements Serializable {
 
   /**
    * Gets the current room the player is in.
-   *
    * @return current room
    */
   public Room getCurrentRoom() {
@@ -87,7 +88,6 @@ public class Player implements Serializable {
   /**
    * Attempts to pick up an item from the current room by name.
    * Will only succeed if total weight does not exceed MAX_WEIGHT.
-   *
    * @param itemName name of the item
    * @return true if item picked up
    */
@@ -107,7 +107,6 @@ public class Player implements Serializable {
 
   /**
    * Drops an item by name into the current room.
-   *
    * @param itemName the name of the item to drop
    * @return true if dropped successfully
    */
@@ -126,7 +125,6 @@ public class Player implements Serializable {
 
   /**
    * Uses an item by name (if usable).
-   *
    * @param itemName the item to use
    * @return the result message
    */
@@ -145,7 +143,6 @@ public class Player implements Serializable {
 
   /**
    * Calculates the total weight the player is currently carrying.
-   *
    * @return total weight of inventory
    */
   public double getTotalWeight() {
@@ -154,7 +151,6 @@ public class Player implements Serializable {
 
   /**
    * Returns the list of items currently held by the player.
-   *
    * @return inventory list
    */
   public List<Item> getInventory() {
@@ -163,7 +159,6 @@ public class Player implements Serializable {
 
   /**
    * Returns the player's current health.
-   *
    * @return health value
    */
   public double getHealth() {
@@ -173,7 +168,6 @@ public class Player implements Serializable {
   /**
    * Sets the player's health.
    * Value is capped between 0 and MAX_HEALTH.
-   *
    * @param health new health value
    */
   public void setHealth(int health) {
@@ -182,7 +176,6 @@ public class Player implements Serializable {
 
   /**
    * Reduces player's health by the damage amount.
-   *
    * @param damage the amount of health lost
    */
   public void takeDamage(int damage) {
@@ -191,13 +184,16 @@ public class Player implements Serializable {
 
   /**
    * Gets the player's health status based on health thresholds.
-   *
    * @return health status
    */
   public HealthStatus getHealthStatus() {
     return HealthStatus.fromHealth(this.health);
   }
 
+  /**
+   * Checks if the player is still active.
+   * @return true if active, otherwise false.
+   */
   public boolean isAlive() {
     return this.health > 0;
   }
@@ -205,7 +201,6 @@ public class Player implements Serializable {
   /**
    * Attempts to answer a puzzle in the given room.
    * If successful, deactivates the puzzle and adds score.
-   *
    * @param answer the user's answer
    * @param room   the current room
    * @return true if answer was correct
@@ -223,7 +218,6 @@ public class Player implements Serializable {
 
   /**
    * Updates the player's score.
-   *
    * @param points points to add
    */
   public void updateScore(int points) {
@@ -232,7 +226,6 @@ public class Player implements Serializable {
 
   /**
    * Gets the player's total score.
-   *
    * @return current score
    */
   public double getScore() {
@@ -241,7 +234,6 @@ public class Player implements Serializable {
 
   /**
    * Gets the player's end-game rank based on score.
-   *
    * @return rank enum
    */
   public PlayerRank getRank() {
@@ -250,7 +242,6 @@ public class Player implements Serializable {
 
   /**
    * Gets the player's name.
-   *
    * @return name
    */
   public String getName() {

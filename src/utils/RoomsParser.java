@@ -8,6 +8,9 @@ import model.core.Room;
 
 import static utils.RoomParser.parseRoom;
 
+/**
+ * Parses an entire collection of rooms from a JSON root object.
+ */
 public class RoomsParser {
   /**
    * Safely parse rooms from root object.

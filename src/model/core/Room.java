@@ -23,18 +23,14 @@ public class Room implements Serializable {
 
   // Direction → Target room number
   private final Map<String, Integer> exits;
-
   private final List<Item> items;
   private final List<Fixture> fixtures;
-
   private GameObstacle obstacle;
-
   // Used to store raw string fields before parsing
   private final Map<String, String> rawFields;
 
   /**
    * Constructs a new Room with room number and name.
-   *
    * @param roomNumber the unique room number
    * @param name       the name of the room
    */
@@ -48,10 +44,6 @@ public class Room implements Serializable {
     this.obstacle = null;
     this.rawFields = new HashMap<>();
   }
-
-  // ------------------------------------------
-  // Exits
-  // ------------------------------------------
 
   /**
    * Sets the exit in the given direction to point to a room number.
@@ -77,10 +69,6 @@ public class Room implements Serializable {
   public Map<String, Integer> getExits() {
     return exits;
   }
-
-  // ------------------------------------------
-  // Items
-  // ------------------------------------------
 
   public void addItem(Item item) {
     items.add(item);
@@ -177,10 +165,6 @@ public class Room implements Serializable {
   public String getRawField(String key) {
     return rawFields.get(key.toLowerCase());
   }
-
-  // ------------------------------------------
-  // Info(getter and toString)
-  // ------------------------------------------
 
   public int getRoomNumber() {
     return roomNumber;
