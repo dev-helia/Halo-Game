@@ -13,33 +13,54 @@ import java.io.IOException;
 import java.util.Scanner;
 
 /**
- * 控制器类，负责接收用户输入，调用模型逻辑，并通过视图展示结果
+ * GameController is responsible for handling the main game loop:
+ * - Accepting player input
+ * - Interacting with the model (World, Player, Rooms)
+ * - Displaying output via the View
  */
 public class GameController {
-  private final Player player;
+  private Player player;
   private final WorldEngine world;
   private final View view;
   private final Scanner scanner;
 
-  public GameController(Player player, WorldEngine world, View view, Readable inputSource) {
-    this.player = player;
+  /**
+   * Constructor for GameController.
+   *
+   * @param world        The game world containing all rooms and elements.
+   * @param view         The view used for output (e.g. console).
+   * @param inputSource  Input source (BufferedReader/StringReader or System.in).
+   */
+  public GameController(WorldEngine world, View view, Readable inputSource) {
     this.world = world;
     this.view = view;
     this.scanner = new Scanner(inputSource);
+    this.player = null; // we’ll set it later after name is input
   }
 
+
   /**
-   * 游戏主循环
+   * Starts the game loop, initializing the player and processing commands.
+   *
+   * @throws IOException if there is an input/output error
    */
   public void startGame() throws IOException {
     view.displayMainMenu();
 
+    // Initialize player after asking for name
+    view.showMessage("Enter your name:");
+    String name = scanner.nextLine().trim();
+    Room startingRoom = world.getRoom(1); // or world.getStartingRoom()
+    Player player = new Player(name, startingRoom);
+    this.player = player; // update the field
+
+    // Main game loop
     while (true) {
       Room currentRoom = player.getCurrentRoom();
       view.showMessage("Health Status: " + player.getHealthStatus());
       view.renderGame(player, currentRoom);
 
-      // 如果房间里有怪物 & 还活跃 → 自动攻击
+      // Auto-monster attack logic.
       GameObstacle obs = currentRoom.getObstacle();
       if (obs instanceof Monster m && m.isActive() && m.canAttack()) {
         m.attack(player);
@@ -51,21 +72,23 @@ public class GameController {
         }
       }
 
-      // 获取玩家输入
+      // Prompt for command
       view.showMessage("\nEnter command: ");
       if (!scanner.hasNextLine()) break;
       String line = scanner.nextLine().trim();
+      // Quit command
       if (line.equalsIgnoreCase("Q")) {
         world.saveState("savegame.json", player);
         view.showMessage("Game saved before quitting.");
         break;
       }
 
-      // 解析命令
+      // Parse command and optional argument
       String[] parts = line.split(" ", 2);
       String cmd = parts[0].toUpperCase();
       String arg = parts.length > 1 ? parts[1] : null;
 
+      // Process each command
       switch (cmd) {
         case "N", "S", "E", "W" -> {
           boolean moved = player.move(cmd, world.getWorldMap());
@@ -107,16 +130,18 @@ public class GameController {
             break;
           }
           Item item = currentRoom.getItem(arg);
+          boolean found = false;
           if (item != null) {
             view.showMessage(item.getDescription());
-          } else {
-            view.showMessage("You see nothing interesting about that.");
+            found = true;
           }
 
           Fixture fix = currentRoom.getFixture(arg);
           if (fix != null) {
             view.showMessage(fix.getDescription());
-          } else {
+            found = true;
+          }
+          if (!found) {
             view.showMessage("You see nothing interesting about that.");
           }
         }
@@ -142,6 +167,7 @@ public class GameController {
       }
     }
 
+    // Game over summary
     view.showMessage("Thanks for playing! Goodbye~");
     view.showMessage("Final Score: " + player.getScore());
     view.showMessage("Your Rank: " + player.getRank());
