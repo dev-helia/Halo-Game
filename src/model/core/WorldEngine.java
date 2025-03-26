@@ -70,31 +70,41 @@ public class WorldEngine {
         globalFixtures.put(name, new Fixture(name, desc, weight));
       }
     }
+  }
 
-
-    // todo red bean
-    // 5.解析 puzzles（用于匹配房间障碍）
+  /**
+   * Parses the "puzzles" section from the JSON root.
+   * For each puzzle entry, this method creates a Puzzle instance
+   * and assigns it to the corresponding room in the game world.
+   *
+   * @param root the root JSON object containing puzzles
+   * @param worldMap the map of room IDs to Room objects
+   */
+  public void parsePuzzles(JsonObject root, Map<Integer, Room> worldMap) {
     if (root.has("puzzles")) {
       JsonArray puzzlesArray = root.getAsJsonArray("puzzles");
 
       for (JsonElement element : puzzlesArray) {
         JsonObject p = element.getAsJsonObject();
+
+        // Extract basic puzzle attributes
         String name = p.get("name").getAsString();
         boolean active = p.get("active").getAsBoolean();
         int value = p.get("value").getAsInt();
 
-        // 谜题机制
+        // Puzzle mechanics
         String solution = p.get("solution").getAsString();
         boolean affectsTarget = p.get("affects_target").getAsBoolean();
         boolean affectsPlayer = p.get("affects_player").getAsBoolean();
         String effects = p.get("effects").getAsString();
 
-        // 房间 & 提示
+        // Room assignment & optional hint
         int targetRoom = parseRoomNumber(p.get("target").getAsString());
         String hintMessage = p.has("hintMessage") && !p.get("hintMessage").isJsonNull()
                 ? p.get("hintMessage").getAsString()
                 : "";
 
+        // Create a Puzzle object with the parsed data
         Puzzle puzzle = new Puzzle(
                 name,
                 name,
@@ -108,23 +118,34 @@ public class WorldEngine {
                 hintMessage
         );
 
-        // 谜题与房间连接
+        // Assign the puzzle to the corresponding room
         Room r = worldMap.get(targetRoom);
         if (r != null) {
           r.setObstacle(puzzle);
         } else {
-          System.err.printf("Room #%d not found — puzzle '%s' not assigned.\n", targetRoom, name);
+          System.err.printf("Room #%d not found — puzzle '%s' not assigned.%n", targetRoom, name);
         }
       }
     }
+  }
 
-    // TODO: red veab 解析怪物 monster（方式类似 Puzzle）
+
+  /**
+   * Parses the "monsters" section from the JSON root.
+   * For each monster entry, this method creates a Monster instance
+   * and assigns it to the corresponding room in the game world.
+   *
+   * @param root the root JSON object containing monsters
+   * @param worldMap the map of room IDs to Room objects
+   */
+  public void parseMonsters(JsonObject root, Map<Integer, Room> worldMap) {
     if (root.has("monsters")) {
       JsonArray monstersArray = root.getAsJsonArray("monsters");
 
       for (JsonElement element : monstersArray) {
         JsonObject m = element.getAsJsonObject();
 
+        // Extract monster properties from JSON
         String name = m.get("name").getAsString();
         String description = m.get("description").getAsString();
         boolean active = m.get("active").getAsBoolean();
@@ -135,7 +156,7 @@ public class WorldEngine {
         String defeatItem = m.get("defeat_item").getAsString();
         int targetRoom = parseRoomNumber(m.get("target").getAsString());
 
-        // 创建怪物列表
+        // Create a Monster object with parsed attributes
         Monster monster = new Monster(
                 name,
                 description,
@@ -147,15 +168,17 @@ public class WorldEngine {
                 defeatItem
         );
 
-        // 怪物与谜题连接
+        // Assign the monster to the correct room in the world map
         Room r = worldMap.get(targetRoom);
         if (r != null) {
           r.setObstacle(monster);
         } else {
-          System.err.printf("Room #%d not found — monster '%s' not assigned.\n", targetRoom, name);
+          System.err.printf("Room #%d not found — monster '%s' not assigned.%n", targetRoom, name);
         }
       }
     }
+  }
+
 
 
     // todo ht
@@ -362,4 +385,7 @@ public class WorldEngine {
     String[] parts = input.split(":");
     return Integer.parseInt(parts[0].trim());
   }
+}
+
+public void main() {
 }
