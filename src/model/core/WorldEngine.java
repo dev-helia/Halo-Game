@@ -13,11 +13,11 @@ import java.util.*;
 /**
  * WorldEngine: Responsible for loading JSON data,
  * generating game maps,
- * and providing world status
+ * and providing world status.
  */
 public class WorldEngine implements Serializable {
   // fields and the default constructor
-  private Map<Integer, Room> worldMap; // Whole room map: Room number -> Room object
+  private final Map<Integer, Room> worldMap; // Whole room map: Room number -> Room object
 
   /**
    * Constructor (no seed default build)
@@ -37,7 +37,7 @@ public class WorldEngine implements Serializable {
    */
   public void generateWorld(String jsonFilePath) throws IOException {
     JsonObject root = JsonUtils.safeParseJson(jsonFilePath);
-    parseRooms(root);
+    RoomsParser.parseRooms(root, worldMap);
 
 
     //TODO Han
@@ -95,7 +95,7 @@ public class WorldEngine implements Serializable {
     // TODO: red veab 解析怪物 monster（方式类似 Puzzle）
 
     // todo ht
-    // 第二轮：给房间塞入 items 和 fixtures
+    // 第二轮：给房间塞入 items 和 fixtures puzzles monsters
     for (Room room : worldMap.values()) {
       // 添加 items
       if (room.getItems() == null) continue;

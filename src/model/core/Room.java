@@ -199,4 +199,8 @@ public class Room implements Serializable {
   public String toString() {
     return "Room " + roomNumber + ": " + name;
   }
+
+  public void setDescription(String description) {
+    this.roomDescription = description;
+  }
 }
