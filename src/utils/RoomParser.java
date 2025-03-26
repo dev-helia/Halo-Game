@@ -16,15 +16,6 @@ public class RoomParser {
    * @param obj the obj
    * @return the room
    */
-// todo sue
-  /**
-   * Parse a single Room object from a JSON object.
-   * { "room_name":"Courtyard", "room_number": "1",
-   *  "description":"A beautiful courtyard with flowers on both sides of the stone walkway. \nThe walkway leads north. A billboard is in the distance.",
-   * "N": "2", "S": "0", "E": "0", "W": "0","puzzle": null, "monster": null, "items": "Hair Clippers", "fixtures": "Billboard","picture": "courtyard.png" },
-   * }
-   */
-  // 👇 解析单个 Room 对象 提取基本字段（名字/编号/出口）
   static Room parseRoom(JsonObject obj) {
     // Get the room number from JSON file.
     int num = obj.get("room_number").getAsInt();

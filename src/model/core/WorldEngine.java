@@ -40,45 +40,6 @@ public class WorldEngine implements Serializable {
     JsonObject root = JsonUtils.safeParseJson(jsonFilePath);
     RoomsParser.parseRooms(root, worldMap);
 
-
-    //TODO Han
-    public void parseItems(JsonObject root) {
-      if (root.has("items")) {
-        JsonArray itemsArray = root.getAsJsonArray("items");
-        for (JsonElement element : itemsArray) {
-          JsonObject itemObject = element.getAsJsonObject();
-
-          // 从 JSON 中提取每个 item 的相关数据
-          String name = itemObject.get("name").getAsString();
-          double weight = itemObject.get("weight").getAsDouble();
-          int maxUses = itemObject.get("max_uses").getAsInt();
-          int usesRemaining = itemObject.get("uses_remaining").getAsInt();
-          int value = itemObject.get("value").getAsInt();
-          String whenUsed = itemObject.get("when_used").getAsString();
-
-          // 创建 Item 对象并存入全局的 globalItems Map 中
-          globalItems.put(name, new Item(name, weight, maxUses, usesRemaining, value, whenUsed));
-        }
-      }
-    }
-
-    // todo han）
-    public void parseFixtures(JsonObject root) {
-      if (root.has("fixtures")) {
-        JsonArray fixturesArray = root.getAsJsonArray("fixtures");
-        for (JsonElement element : fixturesArray) {
-          JsonObject fixtureObject = element.getAsJsonObject();
-
-          // 从 JSON 中提取每个 fixture 的相关数据
-          String name = fixtureObject.get("name").getAsString();
-          String description = fixtureObject.get("description").getAsString();
-          int weight = fixtureObject.get("weight").getAsInt();
-
-          // 创建 Fixture 对象并存入全局的 globalFixtures Map 中
-          globalFixtures.put(name, new Fixture(name, description, weight));
-        }
-      }
-    }
     // todo red bean
     // 5.解析 puzzles（用于匹配房间障碍）
     if (root.has("puzzles")) {
@@ -181,52 +142,44 @@ public class WorldEngine implements Serializable {
 
   // ==== helper ====
 
-  /**
-   * Safely parse rooms from root object.
-   *
-   * @param root the root json object
-   * @throws IOException file not found
-   */
-  private void parseRooms(JsonObject root) throws IOException {
-    // Check if the rooms field is included
-    if (!root.has("rooms") || !root.get("rooms").isJsonArray()) {
-      throw new IOException("Invalid JSON file: Missing 'rooms' field, or the field is not an array!");
-    }
+  //TODO Han
+  public void parseItems(JsonObject root) {
+    if (root.has("items")) {
+      JsonArray itemsArray = root.getAsJsonArray("items");
+      for (JsonElement element : itemsArray) {
+        JsonObject itemObject = element.getAsJsonObject();
 
-    JsonArray roomsArray = root.getAsJsonArray("rooms");
+        // 从 JSON 中提取每个 item 的相关数据
+        String name = itemObject.get("name").getAsString();
+        double weight = itemObject.get("weight").getAsDouble();
+        int maxUses = itemObject.get("max_uses").getAsInt();
+        int usesRemaining = itemObject.get("uses_remaining").getAsInt();
+        int value = itemObject.get("value").getAsInt();
+        String whenUsed = itemObject.get("when_used").getAsString();
 
-    for (JsonElement element : roomsArray) {
-      // Make sure each element is an object
-      if (!element.isJsonObject()) {
-        throw new IOException("There are illegal elements (not objects) in the rooms array:" + element);
-      }
-
-      JsonObject roomObj = element.getAsJsonObject();
-
-      try {
-        // Call parseRoom and handle exceptions
-        Room room = parseRoom(roomObj);
-
-        if (room == null) {
-          throw new IOException("parseRoom returns null, please check the field:" + roomObj);
-        }
-
-        int number = room.getRoomNumber();
-        if (worldMap.containsKey(number)) {
-          throw new IOException("Repeated room numbers: " + number + ". Please check the JSON configuration!");
-        }
-
-        worldMap.put(number, room);
-
-      } catch (Exception e) {
-        throw new IOException("Failed to parse the room: " + roomObj + ", reason:" + e.getMessage(), e);
+        // 创建 Item 对象并存入全局的 globalItems Map 中
+        globalItems.put(name, new Item(name, weight, maxUses, usesRemaining, value, whenUsed));
       }
     }
   }
 
+  // todo han）
+  public void parseFixtures(JsonObject root) {
+    if (root.has("fixtures")) {
+      JsonArray fixturesArray = root.getAsJsonArray("fixtures");
+      for (JsonElement element : fixturesArray) {
+        JsonObject fixtureObject = element.getAsJsonObject();
 
+        // 从 JSON 中提取每个 fixture 的相关数据
+        String name = fixtureObject.get("name").getAsString();
+        String description = fixtureObject.get("description").getAsString();
+        int weight = fixtureObject.get("weight").getAsInt();
 
-
+        // 创建 Fixture 对象并存入全局的 globalFixtures Map 中
+        globalFixtures.put(name, new Fixture(name, description, weight));
+      }
+    }
+  }
 
   // 提取以逗号分隔的名字列表
   // 你还没实现：需要你去 Room 类存储原始 "Pen, Eraser" 这样的字符串字段
