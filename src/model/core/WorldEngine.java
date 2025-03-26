@@ -1,10 +1,11 @@
 package model.core;
 
 import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
 
 import model.elements.*;
-import model.obstacle.*;
+import model.obstacle.GameObstacle;
+import model.obstacle.Monster;
+import model.obstacle.Puzzle;
 import utils.JsonUtils;
 import utils.RoomsParser;
 
@@ -48,44 +49,65 @@ public class WorldEngine implements Serializable {
     // get the wordMap
     RoomsParser.parseRooms(root, worldMap);
     // parse room elements
-    parseItems(root, worldMap);
-    parseFixtures(root, worldMap);
+//    parseItems(root, worldMap);
+//    parseFixtures(root, worldMap);
     // parse room obstacles
     parseMonsters(root, worldMap);
     parsePuzzles(root, worldMap);
 
   }
 
+  // ==== printer ====
+
   /**
    * Print the current world map for simple smoke testing.
    */
   public void printWorldMap() {
     System.out.println("=== Game World Map ===");
-    // print rooms
-    for (Map.Entry<Integer, Room> entry : worldMap.entrySet()) {
-      Room room = entry.getValue();
-      System.out.println("Room " + room.getRoomNumber() + ": " + room.getName());
-      System.out.println("Description " + room.getRoomDescription());
-      System.out.println("  Exits -> N: " + room.getExit("N") + ", S: " + room.getExit("S") + ", E: " + room.getExit("E") + ", W: " + room.getExit("W"));
 
-      // items and fixtures in the current room
+    // print each room
+    for (Room room : worldMap.values()) {
+      System.out.println("🏡 Room Number: " + room.getRoomNumber() + "\n"
+              + "📪 Room Name: " + room.getName());
+      System.out.println("📜 Room Description: " + room.getRoomDescription());
+
+      // exits
+      System.out.println("🚪 Room Exits:");
+      System.out.println("  → N: " + room.getExit("N"));
+      System.out.println("  → S: " + room.getExit("S"));
+      System.out.println("  → E: " + room.getExit("E"));
+      System.out.println("  → W: " + room.getExit("W"));
+
+      // items
       if (room.getItems() != null && !room.getItems().isEmpty()) {
-        System.out.println("  Items: ");
+        System.out.println("🎒 Items:");
         for (Item item : room.getItems()) {
-          System.out.println("    - " + item.getName());
+          System.out.println("  - " + item.getName());
         }
       }
 
+      // fixtures
       if (room.getFixtures() != null && !room.getFixtures().isEmpty()) {
-        System.out.println("  Fixtures: ");
+        System.out.println("🪑 Fixtures:");
         for (Fixture fixture : room.getFixtures()) {
-          System.out.println("    - " + fixture.getName());
+          System.out.println("  - " + fixture.getName());
         }
       }
 
-      System.out.println();
+      // obstacle（Puzzle or Monster）
+      GameObstacle obs = room.getObstacle();
+      if (obs != null) {
+        if (obs instanceof Puzzle) {
+          System.out.println("🧩 Puzzle: " + obs.getName());
+        } else if (obs instanceof Monster) {
+          System.out.println("👹 Monster: " + obs.getName());
+        }
+      }
+
+      System.out.println("--------------------------------------------------\n");
     }
   }
+
 
   // ==== getter ====
 
@@ -108,6 +130,15 @@ public class WorldEngine implements Serializable {
     return worldMap;
   }
 
+  // ==== game state ====
+
+  /**
+   * Save state boolean.
+   *
+   * @param filePath the file path
+   * @param player   the player
+   * @return boolean
+   */
   public boolean saveState(String filePath, Player player) {
     try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filePath))) {
       out.writeObject(this);
@@ -118,6 +149,13 @@ public class WorldEngine implements Serializable {
     }
   }
 
+  /**
+   * Restore state boolean.
+   *
+   * @param filePath  the file path
+   * @param playerRef the player ref
+   * @return boolean
+   */
   public boolean restoreState(String filePath, Player playerRef) {
     try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filePath))) {
       WorldEngine loadedWorld = (WorldEngine) in.readObject();
