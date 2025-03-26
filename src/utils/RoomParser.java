@@ -16,7 +16,7 @@ public class RoomParser {
    * @param obj the obj
    * @return the room
    */
-  static Room parseRoom(JsonObject obj) {
+  private Room parseRoom(JsonObject obj) {
     // Get the room number from JSON file.
     int num = obj.get("room_number").getAsInt();
     // Get the room name from JSON file.

@@ -257,12 +257,6 @@ public void parseMonsters(JsonObject root, Map<Integer, Room> worldMap) {
         String description = fixtureObject.get("description").getAsString();
         int weight = fixtureObject.get("weight").getAsInt();
 
-        // 创建 Fixture 对象并存入全局的 globalFixtures Map 中
-        globalFixtures.put(name, new Fixture(name, description, weight));
-      }
-    }
-  }
-
   // 提取以逗号分隔的名字列表
   // 你还没实现：需要你去 Room 类存储原始 "Pen, Eraser" 这样的字符串字段
   private List<String> extractNames(Room room, String field) {
