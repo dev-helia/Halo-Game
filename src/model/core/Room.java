@@ -4,6 +4,7 @@ import model.elements.Fixture;
 import model.elements.Item;
 import model.obstacle.GameObstacle;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -14,11 +15,11 @@ import java.util.*;
  * - Optional items, fixtures, and an obstacle (puzzle or monster)
  * - Raw field strings to be parsed later
  */
-
-public class Room {
+//TODO 把name改成roomName
+public class Room implements Serializable {
   private final int roomNumber;
   private final String name;
-  private String roomDescription;
+  private final String roomDescription;
 
 
   // Direction → Target room number
@@ -38,9 +39,10 @@ public class Room {
    * @param roomNumber the unique room number
    * @param name       the name of the room
    */
-  public Room(int roomNumber, String name) {
+  public Room(int roomNumber, String name, String roomDescription) {
     this.roomNumber = roomNumber;
     this.name = name;
+    this.roomDescription = roomDescription;
     this.exits = new HashMap<>();
     this.items = new ArrayList<>();
     this.fixtures = new ArrayList<>();

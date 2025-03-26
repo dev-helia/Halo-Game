@@ -2,6 +2,7 @@ package model.core;
 
 import model.elements.Item;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,7 @@ import model.obstacle.Puzzle;
  *  - Take damage from monsters, solve puzzles and defeat monsters, use items with limited uses.
  *  Maintain a health status and end-game ranking based on total score.
  */
-public class Player {
+public class Player implements Serializable {
 
   private final String name;
   private int health;
@@ -39,6 +40,15 @@ public class Player {
     this.currentRoom = startingRoom;
     this.inventory = new ArrayList<>();
     this.score = 0;
+  }
+
+  public void copyFrom(Player other) {
+    this.health = other.health;
+    this.currentRoom = other.currentRoom;
+    // update inventory content without reassigning the list
+    this.inventory.clear();
+    this.inventory.addAll(other.inventory);
+    this.score = other.score;
   }
 
   /**
