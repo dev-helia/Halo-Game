@@ -16,18 +16,17 @@ public class RoomParser {
    * @param obj the obj
    * @return the room
    */
-  public static Room parseRoom(JsonObject obj) {
+  private Room parseRoom(JsonObject obj) {
     // Get the room number from JSON file.
     int num = obj.get("room_number").getAsInt();
     // Get the room name from JSON file.
     String name = obj.get("room_name").getAsString();
-    // Create a Room object using room number and name.
-    Room r = new Room(num, name);
-
     // Set the room description if it exists
-    if (obj.has("description") && !obj.get("description").isJsonNull()) {
-      r.setDescription(obj.get("description").getAsString());
-    }
+    String description = (obj.has("description") && !obj.get("description").isJsonNull())
+            ? obj.get("description").getAsString()
+            : null;
+    // Create a Room object using room number and name.
+    Room r = new Room(num, name, description);
 
     // Set exits (N/S/E/W) to their target room numbers
     for (String dir : List.of("N", "S", "E", "W")) {
