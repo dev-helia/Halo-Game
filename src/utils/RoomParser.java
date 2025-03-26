@@ -25,7 +25,7 @@ public class RoomParser {
    * }
    */
   // 👇 解析单个 Room 对象 提取基本字段（名字/编号/出口）
-  private Room parseRoom(JsonObject obj) {
+  static Room parseRoom(JsonObject obj) {
     // Get the room number from JSON file.
     int num = obj.get("room_number").getAsInt();
     // Get the room name from JSON file.
