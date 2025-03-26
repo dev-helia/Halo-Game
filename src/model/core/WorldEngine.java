@@ -41,33 +41,41 @@ public class WorldEngine {
 
 
     //TODO Han
-    // 3.解析 items（用于与房间匹配）
-    Map<String, Item> globalItems = new HashMap<>();
-    if (root.has("items")) {
-      JsonArray itemsArray = root.getAsJsonArray("items");
-      for (JsonElement element : itemsArray) {
-        JsonObject i = element.getAsJsonObject();
-        String name = i.get("name").getAsString();
-        double weight = i.get("weight").getAsDouble();
-        int maxUses = i.get("max_uses").getAsInt();
-        int usesRemaining = i.get("uses_remaining").getAsInt();
-        int value = i.get("value").getAsInt();
-        String whenUsed = i.get("when_used").getAsString();
-        globalItems.put(name, new Item(name, weight, maxUses, usesRemaining, value, whenUsed));
+    public void parseItems(JsonObject root) {
+      if (root.has("items")) {
+        JsonArray itemsArray = root.getAsJsonArray("items");
+        for (JsonElement element : itemsArray) {
+          JsonObject itemObject = element.getAsJsonObject();
+
+          // 从 JSON 中提取每个 item 的相关数据
+          String name = itemObject.get("name").getAsString();
+          double weight = itemObject.get("weight").getAsDouble();
+          int maxUses = itemObject.get("max_uses").getAsInt();
+          int usesRemaining = itemObject.get("uses_remaining").getAsInt();
+          int value = itemObject.get("value").getAsInt();
+          String whenUsed = itemObject.get("when_used").getAsString();
+
+          // 创建 Item 对象并存入全局的 globalItems Map 中
+          globalItems.put(name, new Item(name, weight, maxUses, usesRemaining, value, whenUsed));
+        }
       }
     }
 
-    // todo han
-    // 4.解析 fixtures（用于装入房间）
-    Map<String, Fixture> globalFixtures = new HashMap<>();
-    if (root.has("fixtures")) {
-      JsonArray fixturesArray = root.getAsJsonArray("fixtures");
-      for (JsonElement element : fixturesArray) {
-        JsonObject f = element.getAsJsonObject();
-        String name = f.get("name").getAsString();
-        String desc = f.get("description").getAsString();
-        int weight = f.get("weight").getAsInt();
-        globalFixtures.put(name, new Fixture(name, desc, weight));
+    // todo han）
+    public void parseFixtures(JsonObject root) {
+      if (root.has("fixtures")) {
+        JsonArray fixturesArray = root.getAsJsonArray("fixtures");
+        for (JsonElement element : fixturesArray) {
+          JsonObject fixtureObject = element.getAsJsonObject();
+
+          // 从 JSON 中提取每个 fixture 的相关数据
+          String name = fixtureObject.get("name").getAsString();
+          String description = fixtureObject.get("description").getAsString();
+          int weight = fixtureObject.get("weight").getAsInt();
+
+          // 创建 Fixture 对象并存入全局的 globalFixtures Map 中
+          globalFixtures.put(name, new Fixture(name, description, weight));
+        }
       }
     }
     // todo red bean
