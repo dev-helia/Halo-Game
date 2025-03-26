@@ -1,3 +1,5 @@
+import model.obstacle.Monster;
+
 import model.core.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
