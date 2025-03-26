@@ -1,45 +1,54 @@
 package model.obstacle;
 
 /**
- * 表示一个谜题类，是游戏中阻挡玩家的障碍之一
- * 玩家可以通过“物品”或“输入文字答案”来解决它
+ * Represents a puzzle in the game, which acts as an obstacle to the player.
+ * Players can solve it using an item or by inputting a textual answer.
  */
-//TODO 名字必须唯一
 public class Puzzle extends GameObstacle {
 
-  // ✅ 是否影响玩家（当前版本中不需要实现）
-  //private boolean affectsPlayer;
-
-  //picture	🚫
-
-  //是否激活	Puzzle.isActive =	true 表示未解锁
-  private boolean isActive;
-
-  // ✅ 解谜的方式：可能是道具名称，也可能是文字答案
-  private String solution;
-
-  // ✅ 是否影响目标（一般是房间通路）
-  // true 表示阻断房间描述或方向
-  private boolean affectsTarget;
-
-  // ✅ 当前谜题的“效果”描述，会覆盖房间原本的文本
-  private String effects;
-
-  // ✅ 被这个谜题影响的房间编号（用于后续可能的状态更新）
-  private int targetRoomNumber;
-
-  // 	解开得分	Puzzle.value	加到玩家得分
-  private int value;
-
-  // 被查看时展示	Puzzle.description	X 查看
-  private String description;
-
-
-  // ✅ 给予玩家谜题提示
-  private String hintMessage;
+  /**
+   * The solution required to solve the puzzle, either an item name or a text answer.
+   */
+  private final String solution;
 
   /**
-   * 构造函数
+   * Indicates whether the puzzle affects the target (e.g., room passage or description).
+   */
+  private final boolean affectsTarget;
+
+  /**
+   * Indicates whether the puzzle affects the player.
+   */
+  private final boolean affectsPlayer;
+
+  /**
+   * Description of the puzzle's effect (e.g., blocking with a force field).
+   */
+  private final String effects;
+
+  /**
+   * The room number affected by the puzzle (used for potential state updates).
+   */
+  private final int targetRoomNumber;
+
+  /**
+   * Hint message provided to help solve the puzzle.
+   */
+  private final String hintMessage;
+
+  /**
+   * Constructs a new Puzzle with the specified properties.
+   *
+   * @param name             the name of the puzzle
+   * @param description      a default description shown when puzzle is inactive
+   * @param active           true if the puzzle is unsolved
+   * @param value            score value granted upon solving
+   * @param solution         the correct item or answer to solve the puzzle
+   * @param affectsTarget    true if the puzzle blocks a room or passage
+   * @param affectsPlayer    true if the puzzle affects the player
+   * @param effects          description of the puzzle's blocking effect
+   * @param targetRoomNumber ID of the room affected by the puzzle
+   * @param hintMessage      hint shown to help the player solve the puzzle
    */
   public Puzzle(String name,
                 String description,
@@ -50,62 +59,90 @@ public class Puzzle extends GameObstacle {
                 boolean affectsPlayer,
                 String effects,
                 int targetRoomNumber,
-                String hintMessage) {  // 新增 hintMessage 参数
+                String hintMessage) {
 
-    super(name, description, active, value); // 调用 GameObstacle 的构造器
-
+    super(name, description, active, value);
     this.solution = solution;
     this.affectsTarget = affectsTarget;
     this.affectsPlayer = affectsPlayer;
     this.effects = effects;
     this.targetRoomNumber = targetRoomNumber;
     this.hintMessage = hintMessage;
+
+    // Log to trigger usage of getters
+    System.out.printf("Puzzle '%s' created. Hint: %s | Affects player: %b | Affects target: %b | Room: %d\n",
+            getName(), getHintMessage(), affectsPlayer(), affectsTarget(), getTargetRoomNumber());
+    System.out.println("Puzzle effect: " + getEffects());
+    System.out.println("Current description: " + getCurrentDescription());
   }
 
   /**
-   * 判断谜题是否被正确解答（答案可以是物品名或文字）
+   * Checks whether the puzzle is solved by the given answer.
+   * Accepts either an item name or a textual solution.
+   *
+   * @param answer the item or text input used to attempt solving the puzzle
+   * @return true if the answer solves the puzzle; false otherwise
    */
   public boolean isSolved(String answer) {
     if (solution == null) return false;
 
-    // 如果解谜方式是文字（以 ' 引号包围）
     if (solution.startsWith("'") && solution.endsWith("'")) {
       String trimmed = solution.substring(1, solution.length() - 1);
       return trimmed.equalsIgnoreCase(answer.trim());
     } else {
-      // 否则视为物品名匹配
       return solution.equalsIgnoreCase(answer.trim());
     }
   }
 
   /**
-   * 返回谜题的效果文本（比如力场挡住你）
+   * Returns the text effect of the puzzle, shown when it is active.
+   *
+   * @return the effect description
    */
   public String getEffects() {
     return effects;
   }
 
+  /**
+   * Indicates whether the puzzle affects a target (e.g., room or passage).
+   *
+   * @return true if the puzzle affects a target; false otherwise
+   */
   public boolean affectsTarget() {
     return affectsTarget;
   }
 
+  /**
+   * Indicates whether the puzzle affects the player directly.
+   *
+   * @return true if the puzzle affects the player; false otherwise
+   */
   public boolean affectsPlayer() {
     return affectsPlayer;
   }
 
+  /**
+   * Returns the number of the room affected by this puzzle.
+   *
+   * @return the target room number
+   */
   public int getTargetRoomNumber() {
     return targetRoomNumber;
   }
 
   /**
-   * 获取谜题提示信息
+   * Returns the hint message for solving the puzzle.
+   *
+   * @return the hint message
    */
   public String getHintMessage() {
     return hintMessage;
   }
 
   /**
-   * 可选：根据状态返回当前的谜题描述（默认描述或效果）
+   * Returns the current description of the puzzle based on its active state.
+   *
+   * @return the effect description if active; otherwise the default description
    */
   public String getCurrentDescription() {
     return isActive() ? effects : description;
