@@ -9,7 +9,7 @@ import java.util.Map;
 import model.elements.Item;
 
 public class ItemParser {
-  public void parseItems(JsonObject root, Map<String, Item> globalItems) {
+  public static void parseItems(JsonObject root, Map<String, Item> globalItems) {
     if (root.has("items")) {
       JsonArray itemsArray = root.getAsJsonArray("items");
       for (JsonElement element : itemsArray) {

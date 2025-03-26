@@ -15,7 +15,6 @@ import java.util.*;
  * - Optional items, fixtures, and an obstacle (puzzle or monster)
  * - Raw field strings to be parsed later
  */
-//TODO 把name改成roomName
 public class Room implements Serializable {
   private final int roomNumber;
   private final String name;

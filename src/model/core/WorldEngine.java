@@ -11,6 +11,11 @@ import utils.RoomsParser;
 import java.io.*;
 import java.util.*;
 
+import static utils.FixtureParser.parseFixtures;
+import static utils.ItemParser.parseItems;
+import static utils.MonsterParser.parseMonsters;
+import static utils.PuzzleParser.parsePuzzles;
+
 
 /**
  * WorldEngine: Responsible for loading JSON data,
@@ -20,10 +25,6 @@ import java.util.*;
 public class WorldEngine implements Serializable {
   // fields and the default constructor
   private Map<Integer, Room> worldMap; // Whole room map: Room number -> Room object
-  private Map<String, Item> globalItems;
-  private Map<String, Fixture> globalFixtures;
-  private Map<String, Puzzle> globalPuzzles;
-  private Map<String, Monster> globalMonsters;
 
   /**
    * Constructor (no seed default build)
@@ -32,10 +33,6 @@ public class WorldEngine implements Serializable {
    */
   public WorldEngine() {
     this.worldMap = new HashMap<>();
-    this.globalItems = new HashMap<>();
-    this.globalFixtures = new HashMap<>();
-    this.globalPuzzles = new HashMap<>();
-    this.globalMonsters = new HashMap<>();
   }
 
   /**
@@ -46,8 +43,17 @@ public class WorldEngine implements Serializable {
    * @throws IOException input and output exception
    */
   public void generateWorld(String jsonFilePath) throws IOException {
+    // get the root object
     JsonObject root = JsonUtils.safeParseJson(jsonFilePath);
+    // get the wordMap
     RoomsParser.parseRooms(root, worldMap);
+    // parse room elements
+    parseItems(root, worldMap);
+    parseFixtures(root, worldMap);
+    // parse room obstacles
+    parseMonsters(root, worldMap);
+    parsePuzzles(root, worldMap);
+
   }
 
   /**
