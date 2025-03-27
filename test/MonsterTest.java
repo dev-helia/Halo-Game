@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * These tests validate Monster-specific behavior (damage, attack, defeat item),
  * as well as inherited properties from {@link GameObstacle}, including value,
  * name, description, and active state.
- * </p>
+ * </p >
  */
 public class MonsterTest {
 
@@ -27,21 +27,19 @@ public class MonsterTest {
    * Minimal implementation of a testable Player with overrideable health.
    */
   private static class TestPlayer extends Player {
-    private double testHealth;
-
-    public TestPlayer(String name, Room startingRoom, double health) {
+    public TestPlayer(String name, Room startingRoom, int health) {
       super(name, startingRoom);
-      this.testHealth = health;
-    }
-
-    @Override
-    public double getHealth() {
-      return testHealth;
+      super.setHealth(health);
     }
 
     @Override
     public void setHealth(int health) {
-      this.testHealth = Math.max(0, Math.min(health, 100));
+      super.setHealth(health);
+    }
+
+    @Override
+    public double getHealth() {
+      return super.getHealth();
     }
   }
 
@@ -163,4 +161,3 @@ public class MonsterTest {
     assertFalse(player.isAlive());
   }
 }
-
