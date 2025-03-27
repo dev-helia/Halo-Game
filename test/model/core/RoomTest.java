@@ -1,4 +1,5 @@
-import model.core.Room;
+package model.core;
+
 import model.elements.Item;
 import model.elements.Fixture;
 import model.obstacle.Puzzle;
@@ -6,8 +7,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.List;
 
 /**
  * Unit tests for the Room class.

@@ -1,4 +1,4 @@
-package utils;
+package utils.obstacleparser;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -9,7 +9,7 @@ import java.util.Map;
 import model.core.Room;
 import model.obstacle.Monster;
 
-import static utils.RoomNumberParser.parseRoomNumber;
+import static utils.roomparser.RoomNumberParser.parseRoomNumber;
 
 public class MonsterParser {
 
@@ -28,16 +28,16 @@ public class MonsterParser {
       for (JsonElement element : monstersArray) {
         JsonObject m = element.getAsJsonObject();
 
-        // Extract monster properties from JSON
-        String name = m.get("name").getAsString();
-        String description = m.get("description").getAsString();
-        boolean active = m.get("active").getAsBoolean();
-        int value = m.get("value").getAsInt();
-        int damage = m.get("damage").getAsInt();
-        boolean canAttack = m.get("can_attack").getAsBoolean();
-        String attackMessage = m.get("attack_message").getAsString();
-        String defeatItem = m.get("defeat_item").getAsString();
-        int targetRoom = parseRoomNumber(m.get("target").getAsString());
+        String name = getAsStringOrDefault(m, "name", "Unknown");
+        String description = getAsStringOrDefault(m, "description", "");
+        boolean active = getAsBooleanOrDefault(m, "active", false);
+        int value = getAsIntOrDefault(m, "value", 0);
+        int damage = getAsIntOrDefault(m, "damage", 0);
+        boolean canAttack = getAsBooleanOrDefault(m, "can_attack", false);
+        String attackMessage = getAsStringOrDefault(m, "attack", "");
+        String defeatItem = getAsStringOrDefault(m, "solution", "");
+        int targetRoom = parseRoomNumber(getAsStringOrDefault(m, "target", "0:Unknown"));
+
 
         // Create a Monster object with parsed attributes
         Monster monster = new Monster(
@@ -61,4 +61,16 @@ public class MonsterParser {
       }
     }
   }
+  private static String getAsStringOrDefault(JsonObject obj, String key, String defaultVal) {
+    return obj.has(key) && obj.get(key).isJsonPrimitive() ? obj.get(key).getAsString() : defaultVal;
+  }
+
+  private static int getAsIntOrDefault(JsonObject obj, String key, int defaultVal) {
+    return obj.has(key) && obj.get(key).isJsonPrimitive() ? obj.get(key).getAsInt() : defaultVal;
+  }
+
+  private static boolean getAsBooleanOrDefault(JsonObject obj, String key, boolean defaultVal) {
+    return obj.has(key) && obj.get(key).isJsonPrimitive() ? obj.get(key).getAsBoolean() : defaultVal;
+  }
+
 }

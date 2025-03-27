@@ -1,4 +1,4 @@
-package utils;
+package utils.roomparser;
 
 import com.google.gson.*;
 
@@ -6,7 +6,7 @@ import java.util.Map;
 
 import model.core.Room;
 
-import static utils.RoomParser.parseRoom;
+import static utils.roomparser.RoomParser.parseRoom;
 
 /**
  * Parses an entire collection of rooms from a JSON root object.

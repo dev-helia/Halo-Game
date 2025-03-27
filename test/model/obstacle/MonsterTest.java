@@ -1,5 +1,4 @@
-import model.obstacle.Monster;
-import model.obstacle.GameObstacle;
+package model.obstacle;
 
 import model.core.Player;
 import model.core.Room;
