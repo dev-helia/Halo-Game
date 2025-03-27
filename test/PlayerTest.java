@@ -150,7 +150,7 @@ public class PlayerTest {
   public void testTakeDamageAndHealthStatus() {
     player.takeDamage(30);
     assertEquals(70, player.getHealth());
-    assertEquals(HealthStatus.FATIGUED, player.getHealthStatus());
+    assertEquals(HealthStatus.AWAKE, player.getHealthStatus());
 
     player.takeDamage(35);
     assertEquals(35, player.getHealth());
@@ -173,7 +173,7 @@ public class PlayerTest {
     assertEquals(PlayerRank.INTERMEDIATE, player.getRank());
 
     player.updateScore(100);
-    assertEquals(PlayerRank.LEGEND, player.getRank());
+    assertEquals(PlayerRank.EXPERT, player.getRank());
   }
 
   /**

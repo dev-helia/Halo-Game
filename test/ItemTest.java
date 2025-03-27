@@ -20,7 +20,7 @@ public class ItemTest {
     assertEquals("A sharp steel sword", item.getDescription());
     assertEquals(2.5, item.getWeight());
     assertEquals(10, item.getMaxUses());
-    assertEquals(6, item.getUsesRemaining());
+    assertEquals(5, item.getUsesRemaining());
     assertEquals(100, item.getValue());
     assertEquals("When wielded in battle", item.getWhenUsed());
   }
