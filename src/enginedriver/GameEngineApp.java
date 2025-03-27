@@ -8,6 +8,7 @@ import view.ConsoleView;
 import view.View;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * GameEngineApp is the required entry point for the game engine.
@@ -61,11 +62,13 @@ public class GameEngineApp {
    */
   public static void main(String[] args) throws IOException {
 
-    String s = "MyHero\nL\nT Ticket\nA 'Align'\nN\nN\nQ";
-    java.io.BufferedReader input = new java.io.BufferedReader(new java.io.StringReader(s));
+    //String s = "MyHero\nL\nT Ticket\nA 'Align'\nN\nN\nQ";
+    //java.io.BufferedReader input = new java.io.BufferedReader(new java.io.StringReader(s));
 
     GameEngineApp game = new GameEngineApp(
-            "src/resources/Museum_of_Planet_of_the_Apes.json", input, System.out);
-    game.start();
+            "src/resources/Museum_of_Planet_of_the_Apes.json",
+            new InputStreamReader(System.in),  // ← manually typed input
+            System.out);
+            game.start();
   }
 }

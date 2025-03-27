@@ -7,9 +7,11 @@ import model.elements.Item;
 import model.elements.Fixture;
 import model.obstacle.GameObstacle;
 import model.obstacle.Monster;
+import model.obstacle.Puzzle;
 import view.View;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -115,8 +117,47 @@ public class GameController {
             view.showMessage("Use what?");
             break;
           }
-          view.showMessage(player.useItem(arg));
+
+          String result = player.useItem(arg);
+          view.showMessage(result);
+
+          GameObstacle obstacle = currentRoom.getObstacle();
+
+          if (obstacle != null && obs.isActive()) {
+            // Puzzle case
+            if (obstacle instanceof Puzzle puzzle && puzzle.isSolved(arg)) {
+              puzzle.deactivate();
+              view.showMessage("✅ Puzzle solved: " + puzzle.getName());
+              player.updateScore(puzzle.getValue());
+
+              // Flip negative exits → positive if it affects target
+              if (puzzle.affectsTarget()) {
+                Map<String, Integer> exits = currentRoom.getExits();
+                for (Map.Entry<String, Integer> entry : exits.entrySet()) {
+                  if (entry.getValue() < 0) {
+                    entry.setValue(-entry.getValue());
+                  }
+                }
+              }
+            }
+
+            // Monster case
+            else if (obstacle instanceof Monster monster && monster.isDefeatedByItem(arg)) {
+              monster.deactivate();
+              view.showMessage("✅ You defeated the monster: " + monster.getName());
+              player.updateScore(monster.getValue());
+
+              // Flip blocked exits
+              Map<String, Integer> exits = currentRoom.getExits();
+              for (Map.Entry<String, Integer> entry : exits.entrySet()) {
+                if (entry.getValue() < 0) {
+                  entry.setValue(-entry.getValue());
+                }
+              }
+            }
+          }
         }
+
         case "I" -> {
           view.showMessage("Your Inventory:");
           for (Item i : player.getInventory()) {
