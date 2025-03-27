@@ -1,39 +1,56 @@
 import model.obstacle.Monster;
+import model.obstacle.GameObstacle;
 
 import model.core.Player;
+import model.core.Room;
+import model.core.HealthStatus;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Unit tests for the Monster class, a subclass of GameObstacle.
+ * Unit tests for the {@link Monster} class, which extends {@link GameObstacle}.
+ * <p>
+ * These tests validate Monster-specific behavior (damage, attack, defeat item),
+ * as well as inherited properties from {@link GameObstacle}, including value,
+ * name, description, and active state.
+ * </p>
  */
 public class MonsterTest {
 
   private Monster monster;
+  private TestPlayer player;
 
+  /**
+   * Minimal implementation of a testable Player with overrideable health.
+   */
   private static class TestPlayer extends Player {
-    private double health = 100;
+    private double testHealth;
+
+    public TestPlayer(String name, Room startingRoom, double health) {
+      super(name, startingRoom);
+      this.testHealth = health;
+    }
 
     @Override
     public double getHealth() {
-      return health;
+      return testHealth;
     }
 
     @Override
     public void setHealth(int health) {
-      this.health = health;
+      this.testHealth = Math.max(0, Math.min(health, 100));
     }
   }
 
-  private TestPlayer player;
-
   /**
-   * Sets up a test monster and a test player before each test.
+   * Sets up a test monster and player in a dummy room.
    */
   @BeforeEach
   public void setUp() {
+    Room dummyRoom = new Room(1, "Test Room", "A dummy room.");
     monster = new Monster(
             "Teddy Bear",
             "A creepy teddy bear with glowing eyes.",
@@ -44,12 +61,9 @@ public class MonsterTest {
             "The teddy bear slaps you!",
             "Slippers"
     );
-    player = new TestPlayer();
+    player = new TestPlayer("TestPlayer", dummyRoom, 100);
   }
 
-  /**
-   * Tests that the monster returns the correct name and description.
-   */
   @Test
   public void testBasicProperties() {
     assertEquals("Teddy Bear", monster.getName());
@@ -58,66 +72,42 @@ public class MonsterTest {
     assertEquals(200, monster.getValue());
   }
 
-  /**
-   * Tests that the monster attack message is returned correctly.
-   */
   @Test
   public void testGetAttackMessage() {
     assertEquals("The teddy bear slaps you!", monster.getAttackMessage());
   }
 
-  /**
-   * Tests that the monster's ability to attack is correctly returned.
-   */
   @Test
   public void testCanAttack() {
     assertTrue(monster.canAttack());
   }
 
-  /**
-   * Tests that the monster's damage value is correctly returned.
-   */
   @Test
   public void testGetDamage() {
     assertEquals(25, monster.getDamage());
   }
 
-  /**
-   * Tests that the correct defeat item is returned.
-   */
   @Test
   public void testGetDefeatItem() {
     assertEquals("Slippers", monster.getDefeatItem());
   }
 
-  /**
-   * Tests whether the correct item can defeat the monster.
-   */
   @Test
   public void testIsDefeatedByCorrectItem() {
     assertTrue(monster.isDefeatedByItem("Slippers"));
   }
 
-  /**
-   * Tests that the wrong item does not defeat the monster.
-   */
   @Test
   public void testIsDefeatedByWrongItem() {
     assertFalse(monster.isDefeatedByItem("Sword"));
   }
 
-  /**
-   * Tests the attack method to ensure the player takes damage correctly.
-   */
   @Test
   public void testAttackWhenActiveAndCanAttack() {
     monster.attack(player);
     assertEquals(75, player.getHealth());
   }
 
-  /**
-   * Tests that a monster does not attack if it's inactive.
-   */
   @Test
   public void testAttackWhenInactive() {
     monster.deactivate();
@@ -125,9 +115,6 @@ public class MonsterTest {
     assertEquals(100, player.getHealth());
   }
 
-  /**
-   * Tests that a monster that cannot attack causes no damage.
-   */
   @Test
   public void testAttackWhenCannotAttack() {
     Monster passiveMonster = new Monster(
@@ -143,4 +130,37 @@ public class MonsterTest {
     passiveMonster.attack(player);
     assertEquals(100, player.getHealth());
   }
+
+  @Test
+  public void testPlayerHealthStatusTransitions() {
+    player.setHealth(100);
+    assertEquals(HealthStatus.AWAKE, player.getHealthStatus());
+
+    player.setHealth(69);
+    assertEquals(HealthStatus.FATIGUED, player.getHealthStatus());
+
+    player.setHealth(39);
+    assertEquals(HealthStatus.WOOZY, player.getHealthStatus());
+
+    player.setHealth(0);
+    assertEquals(HealthStatus.SLEEP, player.getHealthStatus());
+  }
+
+  @Test
+  public void testAttackDropsToWoozy() {
+    player.setHealth(45);
+    monster.attack(player); // -25 → health = 20
+    assertEquals(20, player.getHealth());
+    assertEquals(HealthStatus.WOOZY, player.getHealthStatus());
+  }
+
+  @Test
+  public void testAttackToSleepStatus() {
+    player.setHealth(10);
+    monster.attack(player); // -25 → health = 0
+    assertEquals(0, player.getHealth());
+    assertEquals(HealthStatus.SLEEP, player.getHealthStatus());
+    assertFalse(player.isAlive());
+  }
 }
+
