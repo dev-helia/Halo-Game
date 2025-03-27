@@ -49,8 +49,8 @@ public class WorldEngine implements Serializable {
     // get the wordMap
     RoomsParser.parseRooms(root, worldMap);
     // parse room elements
-//    parseItems(root, worldMap);
-//    parseFixtures(root, worldMap);
+    parseItems(root, worldMap);
+    parseFixtures(root, worldMap);
     // parse room obstacles
     parseMonsters(root, worldMap);
     parsePuzzles(root, worldMap);
