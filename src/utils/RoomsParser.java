@@ -41,6 +41,13 @@ public class RoomsParser {
           continue;
         }
 
+        String[] rawKeys = {"items", "fixtures", "monster", "puzzle", "picture"};
+        for (String key : rawKeys) {
+          if (roomObj.has(key) && !roomObj.get(key).isJsonNull()) {
+            room.setRawField(key, roomObj.get(key).getAsString());
+          }
+        }
+
         int number = room.getRoomNumber();
         if (worldMap.containsKey(number)) {
           System.err.println("Duplicate room number: " + number + ", skipping.");

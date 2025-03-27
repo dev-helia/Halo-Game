@@ -4,6 +4,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import model.core.Room;
@@ -19,32 +21,50 @@ public class FixtureParser {
    * @param root     the root JSON object containing fixtures
    * @param worldMap the map of room IDs to Room objects
    */
-  public static void parseFixtures(JsonObject root, Map<Integer, Room> worldMap) {
-    if (root.has("fixtures")) {
-      JsonArray fixturesArray = root.getAsJsonArray("fixtures");
-      for (JsonElement element : fixturesArray) {
-        JsonObject fixtureObj = element.getAsJsonObject();
+  public static void parseFixtures(JsonObject root, Map<Integer, Room> worldMap, List<Fixture> allFixtures) {
+    if (!root.has("fixtures") || !root.get("fixtures").isJsonArray()) {
+      System.err.println("Warning: No 'fixtures' array found.");
+      return;
+    }
 
-        // Extract fixture fields and handle missing data (clamping)
+    JsonArray fixturesArray = root.getAsJsonArray("fixtures");
+
+    // 🛠️ 1. 先解析所有 fixtures
+    for (JsonElement element : fixturesArray) {
+      if (!element.isJsonObject()) continue;
+      JsonObject fixtureObj = element.getAsJsonObject();
+
+      try {
+// Extract fixture fields and handle missing data (clamping)
         String name = fixtureObj.has("name") ? fixtureObj.get("name").getAsString() : "Unnamed Fixture";  // Clamp missing name
-        String description = fixtureObj.has("description") ? fixtureObj.get("description").getAsString() : "No description available";  // Clamp missing description
+        String desc = fixtureObj.has("description") ? fixtureObj.get("description").getAsString() : "No description available";  // Clamp missing description
         double weight = fixtureObj.has("weight") ? fixtureObj.get("weight").getAsDouble() : 0.0;  // Clamp missing weight
 
-        // Create the Fixture object
-        Fixture fixture = new Fixture(name, description, (int) weight);
+        Fixture fixture = new Fixture(name, desc, weight);
+        allFixtures.add(fixture);
+      } catch (Exception e) {
+        System.err.println("Skipping invalid fixture: " + e.getMessage());
+      }
+    }
 
-        // Assign the fixture to the appropriate room
-        if (fixtureObj.has("room_number")) {
-          int roomNumber = fixtureObj.get("room_number").getAsInt();
-          Room room = worldMap.get(roomNumber);
-          if (room != null) {
-            room.addFixture(fixture);  // Add the fixture to the room
-          } else {
-            System.err.println("Room " + roomNumber + " not found for fixture " + name);  // Error handling for missing room
+    // 🛠️ 2. 塞回每个 room
+    for (Room room : worldMap.values()) {
+      String raw = room.getRawField("fixtures");
+      if (raw == null) continue;
+
+      List<Fixture> roomFixtures = new ArrayList<>();
+      for (String name : raw.split(",")) {
+        String trimmed = name.trim();
+        for (Fixture fix : allFixtures) {
+          if (fix.getName().equalsIgnoreCase(trimmed)) {
+            roomFixtures.add(fix);
+            break;
           }
         }
       }
+      room.setFixtures(roomFixtures);
     }
   }
+
 }
 

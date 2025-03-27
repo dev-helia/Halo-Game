@@ -48,9 +48,12 @@ public class WorldEngine implements Serializable {
     JsonObject root = JsonUtils.safeParseJson(jsonFilePath);
     // get the wordMap
     RoomsParser.parseRooms(root, worldMap);
-    // parse room elements
-    parseItems(root, worldMap);
-    parseFixtures(root, worldMap);
+
+    List<Item> globalItems = new ArrayList<>();
+    List<Fixture> globalFixtures = new ArrayList<>();
+
+    parseItems(root, worldMap, globalItems);
+    parseFixtures(root, worldMap, globalFixtures);
     // parse room obstacles
     parseMonsters(root, worldMap);
     parsePuzzles(root, worldMap);
@@ -65,10 +68,9 @@ public class WorldEngine implements Serializable {
   public void printWorldMap() {
     System.out.println("=== Game World Map ===");
 
-    // print each room
     for (Room room : worldMap.values()) {
-      System.out.println("🏡 Room Number: " + room.getRoomNumber() + "\n"
-              + "📪 Room Name: " + room.getName());
+      System.out.println("🏡 Room Number: " + room.getRoomNumber());
+      System.out.println("📪 Room Name: " + room.getName());
       System.out.println("📜 Room Description: " + room.getRoomDescription());
 
       // exits
@@ -79,34 +81,43 @@ public class WorldEngine implements Serializable {
       System.out.println("  → W: " + room.getExit("W"));
 
       // items
-      if (room.getItems() != null && !room.getItems().isEmpty()) {
-        System.out.println("🎒 Items:");
+      System.out.println("🎒 Items:");
+      if (room.getItems() == null) {
+        System.out.println("  - null");
+      } else if (room.getItems().isEmpty()) {
+        System.out.println("  - (empty)");
+      } else {
         for (Item item : room.getItems()) {
           System.out.println("  - " + item.getName());
         }
       }
 
       // fixtures
-      if (room.getFixtures() != null && !room.getFixtures().isEmpty()) {
-        System.out.println("🪑 Fixtures:");
+      System.out.println("🪑 Fixtures:");
+      if (room.getFixtures() == null) {
+        System.out.println("  - null");
+      } else if (room.getFixtures().isEmpty()) {
+        System.out.println("  - (empty)");
+      } else {
         for (Fixture fixture : room.getFixtures()) {
           System.out.println("  - " + fixture.getName());
         }
       }
 
-      // obstacle（Puzzle or Monster）
+      // obstacle
       GameObstacle obs = room.getObstacle();
-      if (obs != null) {
-        if (obs instanceof Puzzle) {
-          System.out.println("🧩 Puzzle: " + obs.getName());
-        } else if (obs instanceof Monster) {
-          System.out.println("👹 Monster: " + obs.getName());
-        }
+      if (obs == null) {
+        System.out.println("🧱 Obstacle: null");
+      } else if (obs instanceof Puzzle) {
+        System.out.println("🧩 Puzzle: " + obs.getName());
+      } else if (obs instanceof Monster) {
+        System.out.println("👹 Monster: " + obs.getName());
       }
 
       System.out.println("--------------------------------------------------\n");
     }
   }
+
 
 
   // ==== getter ====

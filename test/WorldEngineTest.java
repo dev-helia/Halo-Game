@@ -27,7 +27,7 @@ public class WorldEngineTest {
   @Before
   public void setUp() throws IOException {
     engine = new WorldEngine();
-    engine.generateWorld("src/resources/Museum_of_Planet_of_the_Apes.json"); // 修改路径为你项目中的资源位置
+    engine.generateWorld("src/resources/Museum_of_Planet_of_the_Apes.json");
   }
 
   /**

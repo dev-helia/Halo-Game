@@ -20,11 +20,10 @@ public class Room implements Serializable {
   private final String name;
   private String roomDescription;
 
-
   // Direction → Target room number
   private final Map<String, Integer> exits;
-  private final List<Item> items;
-  private final List<Fixture> fixtures;
+  private List<Item> items;
+  private List<Fixture> fixtures;
   private GameObstacle obstacle;
   // Used to store raw string fields before parsing
   private final Map<String, String> rawFields;
@@ -98,6 +97,10 @@ public class Room implements Serializable {
   public List<Item> getItems() {
     return items;
   }
+  public void setItems(List<Item> items) {
+    this.items = items;
+  }
+
 
   // ------------------------------------------
   // Fixtures
@@ -119,7 +122,9 @@ public class Room implements Serializable {
   public List<Fixture> getFixtures() {
     return fixtures;
   }
-
+  public void setFixtures(List<Fixture> fixtures) {
+    this.fixtures = fixtures;
+  }
   // ------------------------------------------
   // Obstacles
   // ------------------------------------------

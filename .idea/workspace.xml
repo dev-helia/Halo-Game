@@ -5,8 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7245979f-e6c8-4016-ba5a-d9e760a2e23b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/test/ItemTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/core/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/core/Room.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/core/WorldEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/core/WorldEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/elements/Fixture.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/elements/Fixture.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/FixtureParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/FixtureParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/ItemParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/ItemParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/RoomsParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/RoomsParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/WorldEngineTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/WorldEngineTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,12 +41,12 @@
     &quot;assignee&quot;: &quot;dev-helia&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/dev-helia/Halo_Game.git",
-    "accountId": "3a79e63b-9a11-476a-8145-75d82e2c757b"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/dev-helia/Halo_Game.git&quot;,
+    &quot;accountId&quot;: &quot;3a79e63b-9a11-476a-8145-75d82e2c757b&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
 }</component>
@@ -50,35 +57,40 @@
     <option name="showMembers" value="true" />
     <option name="showVisibilityIcons" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.GameEngineApp.executor&quot;: &quot;Run&quot;,
-    &quot;Application.WorldEngineSmokeTest.executor&quot;: &quot;Run&quot;,
-    &quot;Application.WorldEngineTest.executor&quot;: &quot;Run&quot;,
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
-    &quot;JUnit.FixtureTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PlayerTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.RoomTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.WorldEngineTest.testRoomCount.executor&quot;: &quot;Run&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.GameEngineApp.executor": "Run",
+    "Application.WorldEngineSmokeTest.executor": "Run",
+    "Application.WorldEngineTest.executor": "Run",
+    "Downloaded.Files.Path.Enabled": "false",
+    "JUnit.FixtureTest.executor": "Run",
+    "JUnit.GameObstacleTest.executor": "Run",
+    "JUnit.ItemTest.executor": "Run",
+    "JUnit.MonsterTest.executor": "Run",
+    "JUnit.PlayerTest.executor": "Run",
+    "JUnit.PuzzleTest.executor": "Run",
+    "JUnit.RoomTest.executor": "Run",
+    "JUnit.WorldEngineTest.executor": "Run",
+    "JUnit.WorldEngineTest.testRoomCount.executor": "Run",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
-  <component name="RunManager" selected="Application.WorldEngineTest">
+}]]></component>
+  <component name="RunManager" selected="Application.WorldEngineSmokeTest">
     <configuration name="WorldEngineSmokeTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="WorldEngineSmokeTest" />
       <module name="untitled1" />
@@ -86,17 +98,10 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="WorldEngineTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="WorldEngineTest" />
-      <module name="untitled1" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="FixtureTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="GameObstacleTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="untitled1" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="FixtureTest" />
+      <option name="MAIN_CLASS_NAME" value="GameObstacleTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -111,10 +116,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ItemsTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="MonsterTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="untitled1" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="ItemsTest" />
+      <option name="MAIN_CLASS_NAME" value="MonsterTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="WorldEngineTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="untitled1" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="WorldEngineTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -122,11 +136,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.WorldEngineTest" />
         <item itemvalue="Application.WorldEngineSmokeTest" />
-        <item itemvalue="JUnit.FixtureTest" />
-        <item itemvalue="JUnit.ItemsTest" />
         <item itemvalue="JUnit.ItemTest" />
+        <item itemvalue="JUnit.WorldEngineTest" />
+        <item itemvalue="JUnit.GameObstacleTest" />
+        <item itemvalue="JUnit.MonsterTest" />
       </list>
     </recent_temporary>
   </component>
@@ -149,6 +163,7 @@
       <workItem from="1742952720741" duration="10465000" />
       <workItem from="1743024530758" duration="3843000" />
       <workItem from="1743033933762" duration="779000" />
+      <workItem from="1743040338539" duration="2316000" />
     </task>
     <servers />
   </component>
@@ -160,12 +175,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/model/core/Room.java</url>
-          <line>73</line>
+          <line>72</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/model/core/Room.java</url>
-          <line>131</line>
+          <line>136</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
