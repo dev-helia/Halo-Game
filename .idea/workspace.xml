@@ -6,12 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="7245979f-e6c8-4016-ba5a-d9e760a2e23b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/savegame.json" beforeDir="false" afterPath="$PROJECT_DIR$/savegame.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/enginedriver/GameEngineApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/enginedriver/GameEngineApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/core/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/core/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/ConsoleView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/ConsoleView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/PlayerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/PlayerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,40 +50,40 @@
     <option name="showMembers" value="true" />
     <option name="showVisibilityIcons" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.GameEngineApp.executor": "Run",
-    "Application.WorldEngineSmokeTest.executor": "Run",
-    "Application.WorldEngineTest.executor": "Run",
-    "Downloaded.Files.Path.Enabled": "false",
-    "JUnit.FixtureTest.executor": "Run",
-    "JUnit.GameObstacleTest.executor": "Run",
-    "JUnit.ItemTest.executor": "Run",
-    "JUnit.MonsterTest.executor": "Run",
-    "JUnit.PlayerTest.executor": "Run",
-    "JUnit.PuzzleTest.executor": "Run",
-    "JUnit.RoomTest.executor": "Run",
-    "JUnit.WorldEngineTest.executor": "Run",
-    "JUnit.WorldEngineTest.testRoomCount.executor": "Run",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "suScoreFix",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.GameEngineApp.executor&quot;: &quot;Run&quot;,
+    &quot;Application.WorldEngineSmokeTest.executor&quot;: &quot;Run&quot;,
+    &quot;Application.WorldEngineTest.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;JUnit.FixtureTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GameObstacleTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ItemTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MonsterTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PlayerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PuzzleTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.RoomTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.WorldEngineTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.WorldEngineTest.testRoomCount.executor&quot;: &quot;Run&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;suREADME&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
-  <component name="RunManager">
+}</component>
+  <component name="RunManager" selected="Application.WorldEngineSmokeTest">
     <configuration name="WorldEngineSmokeTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="WorldEngineSmokeTest" />
       <module name="untitled1" />
