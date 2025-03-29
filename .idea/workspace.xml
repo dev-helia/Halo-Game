@@ -4,38 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7245979f-e6c8-4016-ba5a-d9e760a2e23b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/test/controller/GameControllerTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/controller/TestViewHelper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/model/core/WorldEngineInjectionTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/model/core/WorldEngineSmokeTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/savegame.json" beforeDir="false" afterPath="$PROJECT_DIR$/savegame.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/enginedriver/GameEngineApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/enginedriver/GameEngineApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/core/WorldEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/core/WorldEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/Align_Quest_Game_Elements.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/maps/Align_Quest_Game_Elements.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/Empty_Rooms.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/maps/Empty_Rooms.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/Empty_Rooms_Data.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/maps/Empty_Rooms_Data.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/Museum_of_Planet_of_the_Apes.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/maps/Museum_of_Planet_of_the_Apes.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/Simple_Hallway.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/maps/Simple_Hallway.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/FixtureParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/elementparser/FixtureParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/ItemParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/elementparser/ItemParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/JsonUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/JsonUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/MonsterParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/obstacleparser/MonsterParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/PuzzleParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/obstacleparser/PuzzleParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/RoomNumberParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/roomparser/RoomNumberParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/RoomParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/roomparser/RoomParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/RoomsParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/roomparser/RoomsParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/FixtureTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/model/element/FixtureTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/GameObstacleTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/model/obstacle/GameObstacleTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/ItemTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/model/element/ItemTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/MonsterTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/model/obstacle/MonsterTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/PlayerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/model/core/PlayerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/PuzzleTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/model/obstacle/PuzzleTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/RoomTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/model/core/RoomTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/WorldEngineTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/model/core/WorldEngineTest.java" afterDir="false" />
-    </list>
+    <list default="true" id="7245979f-e6c8-4016-ba5a-d9e760a2e23b" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -99,7 +68,7 @@
     "Repository.Attach.Sources": "false",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "helia-controller",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -206,7 +175,7 @@
       <workItem from="1743024530758" duration="3843000" />
       <workItem from="1743033933762" duration="779000" />
       <workItem from="1743040338539" duration="2316000" />
-      <workItem from="1743082839910" duration="9997000" />
+      <workItem from="1743082839910" duration="11655000" />
     </task>
     <servers />
   </component>
