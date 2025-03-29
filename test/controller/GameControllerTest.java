@@ -1,97 +1,211 @@
 package controller;
 
-import model.core.Player;
-import model.core.Room;
 import model.core.WorldEngine;
-import model.elements.Item;
-import model.elements.Fixture;
-import model.obstacle.Puzzle;
 import org.junit.Before;
 import org.junit.Test;
 import view.View;
 
-import java.io.StringReader;
+import java.io.ByteArrayInputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
+/**
+ * The type Game controller test.
+ */
 public class GameControllerTest {
-  private WorldEngine world;
-  private TestViewHelper view;
-  private Player player;
+  private WorldEngine engine;
+  private View view;
 
+  /**
+   * Sets .
+   */
   @Before
-  public void setUp() throws Exception {
-    world = new WorldEngine();
-    world.generateWorld("src/resources/Museum_of_Planet_of_the_Apes.json");
-    view = new TestViewHelper();
-    player = new Player("Helia", world.getRoom(1));
+  public void setup() {
+    engine = new WorldEngine();
+    view = new MockView();
   }
 
-  private void simulateGameWithInput(String input) throws Exception {
-    GameController controller = new GameController(world, view, new StringReader(input));
+  // Helper to make Readable from input string
+  private Readable simulateInput(String input) {
+    return new InputStreamReader(
+            new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)),
+            StandardCharsets.UTF_8
+    );
+  }
+
+  // Helper to get printed messages
+  private List<String> getOutput() {
+    return ((MockView) view).getMessages();
+  }
+
+  /**
+   * Test start new game look and quit no save.
+   *
+   * @throws Exception the exception
+   */
+  @Test
+  public void testStartNewGame_LookAndQuit_NoSave() throws Exception {
+    String input = "NEW\n1\nXiao Hong\nL\nQ\nN\n";
+    GameController controller = new GameController(engine, view, simulateInput(input));
     controller.startGame();
+
+    assertNotNull(controller.getPlayer());
+    assertEquals("Xiao Hong", controller.getPlayer().getName());
+
+    List<String> output = getOutput();
+    assertTrue(output.stream().anyMatch(msg -> msg.contains("Health Status")));
+    assertTrue(output.stream().anyMatch(msg -> msg.contains("Rendered")));
   }
 
+  /**
+   * Test start new game move east quit with save.
+   *
+   * @throws Exception the exception
+   */
   @Test
-  public void testMoveNorth() throws Exception {
-    simulateGameWithInput("Helia\nN\nQ\n");
-    assertTrue(view.containsMessage("You can't move that way.") || view.containsMessage("Health Status"));
+  public void testStartNewGame_MoveEast_QuitWithSave() throws Exception {
+    String input = "NEW\n1\nXiao Hong\nE\nQ\nY\nsave1\n";
+    GameController controller = new GameController(engine, view, simulateInput(input));
+    controller.startGame();
+
+    assertNotNull(controller.getPlayer());
+    assertEquals("Xiao Hong", controller.getPlayer().getName());
+
+    MockView mockView = (MockView) view;
+    List<String> output = mockView.getMessages();
+
+    assertTrue(
+            "Expected save confirmation message",
+            output.stream().anyMatch(msg -> msg.contains("Game saved to save1"))
+    );
   }
 
+
+  /**
+   * Test start and use help command.
+   *
+   * @throws Exception the exception
+   */
   @Test
-  public void testInvalidMove() throws Exception {
-    simulateGameWithInput("Helia\nW\nQ\n");
-    assertTrue(view.containsMessage("You can't move that way."));
+  public void testStartAndUseHelpCommand() throws Exception {
+    String input = "NEW\n1\nLia\nHELP\nQ\nN\n";
+    GameController controller = new GameController(engine, view, simulateInput(input));
+    controller.startGame();
+
+    assertNotNull(controller.getPlayer());
+    assertEquals("Lia", controller.getPlayer().getName());
+
+    List<String> output = getOutput();
+    assertTrue(output.stream().anyMatch(msg -> msg.contains("Movement Commands")));
   }
 
+  /**
+   * Test inventory empty.
+   *
+   * @throws Exception the exception
+   */
   @Test
-  public void testTakeItem() throws Exception {
-    simulateGameWithInput("Helia\nT Ticket\nQ\n");
-    assertTrue(view.containsMessage("You picked up Ticket"));
+  public void testInventoryEmpty() throws Exception {
+    String input = "NEW\n1\nAda\nI\nQ\nN\n";
+    GameController controller = new GameController(engine, view, simulateInput(input));
+    controller.startGame();
+
+    assertNotNull(controller.getPlayer());
+    assertEquals("Ada", controller.getPlayer().getName());
+
+    List<String> output = getOutput();
+    assertTrue(output.stream().anyMatch(msg -> msg.contains("Your inventory is empty")));
   }
 
+  /**
+   * Test unknown command handled.
+   *
+   * @throws Exception the exception
+   */
   @Test
-  public void testDropItem() throws Exception {
-    simulateGameWithInput("Helia\nT Ticket\nD Ticket\nQ\n");
-    assertTrue(view.containsMessage("You dropped Ticket"));
+  public void testUnknownCommandHandled() throws Exception {
+    String input = "NEW\n1\nLuna\nWHAT\nQ\nN\n";
+    GameController controller = new GameController(engine, view, simulateInput(input));
+    controller.startGame();
+
+    List<String> output = getOutput();
+    assertTrue(output.stream().anyMatch(msg -> msg.contains("Unknown command")));
   }
 
+  /**
+   * Test save and restore flow.
+   *
+   * @throws Exception the exception
+   */
   @Test
-  public void testUseItem() throws Exception {
-    simulateGameWithInput("Helia\nT Ticket\nU Ticket\nQ\n");
-    assertTrue(view.containsPartial("You used the"));
+  public void testSaveAndRestoreFlow() throws Exception {
+    // First run: save game
+    String input1 = "NEW\n1\nRuby\nQ\nY\nsavedfile\n";
+    GameController controller1 = new GameController(engine, view, simulateInput(input1));
+    controller1.startGame();
+
+    List<String> output1 = getOutput();
+    assertTrue(output1.stream().anyMatch(msg -> msg.contains("Game saved to savedfile")));
+
+    // Second run: restore same game
+    String input2 = "RESTORE\n1\nQ\nN\n";
+
+    view = new MockView(); // reset
+    GameController controller2 = new GameController(engine, view, simulateInput(input2));
+    controller2.startGame();
+
+    List<String> output2 = getOutput();
+    assertTrue(output2.stream().anyMatch(msg -> msg.contains("Game restored")));
   }
 
+  /**
+   * Test puzzle answer fail and success.
+   *
+   * @throws Exception the exception
+   */
   @Test
-  public void testExamineItem() throws Exception {
-    simulateGameWithInput("Helia\nX Ticket\nQ\n");
-    assertTrue(view.containsPartial("A ticket that grants entry"));
+  public void testPuzzleAnswerFailAndSuccess() throws Exception {
+    String input = String.join("\n",
+            "NEW",          // Start new game
+            "5",            // Map: Simple_Hallway
+            "Mimi",         // Player name
+            "N",            // Go to room 2 (LOCK puzzle triggers)
+            "T Key",     // Take Key (now in correct room)
+            "A Key",   // Solve LOCK
+            "N",            // Go to room 3
+            "T Lamp",    // Take Lamp
+            "N",            // Go to room 4 (DARKNESS triggers)
+            "A Lamp",  // Solve DARKNESS
+            "Q", "N"        // Quit without saving
+    );
+
+
+    GameController controller = new GameController(engine, view, simulateInput(input));
+    controller.startGame();
+
+    List<String> output = getOutput();
+    output.forEach(System.out::println); // 👈 查看所有输出
+
+    assertTrue(output.stream().anyMatch(msg -> msg.contains("That didn't work")));
+    assertTrue(output.stream().anyMatch(msg -> msg.contains("Puzzle solved")));
   }
 
+  /**
+   * Test examine unknown item.
+   *
+   * @throws Exception the exception
+   */
   @Test
-  public void testExamineFixture() throws Exception {
-    simulateGameWithInput("Helia\nN\nX Computer\nQ\n");
-    assertTrue(view.containsPartial("An old computer with a green screen"));
+  public void testExamineUnknownItem() throws Exception {
+    String input = "NEW\n1\nLily\nX unknown\nQ\nN\n";
+    GameController controller = new GameController(engine, view, simulateInput(input));
+    controller.startGame();
+
+    List<String> output = getOutput();
+    assertTrue(output.stream().anyMatch(msg -> msg.contains("nothing interesting")));
   }
 
-  @Test
-  public void testAnswerPuzzle() throws Exception {
-    simulateGameWithInput("Helia\nA Gorilla\nQ\n");
-    assertTrue(view.containsMessage("Puzzle solved!") || view.containsMessage("That didn't work."));
-  }
-
-  @Test
-  public void testSaveAndRestore() throws Exception {
-    simulateGameWithInput("Helia\nSAVE\nRESTORE\nQ\n");
-    assertTrue(view.containsMessage("Game saved."));
-    assertTrue(view.containsMessage("Game restored."));
-  }
-
-  @Test
-  public void testInventoryDisplay() throws Exception {
-    simulateGameWithInput("Helia\nT Ticket\nI\nQ\n");
-    assertTrue(view.containsPartial("Your Inventory:"));
-    assertTrue(view.containsPartial("Ticket"));
-  }
 }

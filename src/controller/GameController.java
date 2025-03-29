@@ -245,7 +245,17 @@ public class GameController {
     view.showMessage("Enter file name to save (without .json):");
     String fileName = scanner.nextLine().trim();
     String fullPath = PathUtils.getSavePath(fileName);
+    File saveFile = new File(fullPath);
+    if (saveFile.exists()) {
+      view.showMessage("A save file with that name already exists. Overwrite? (Y/N)");
+      String response = scanner.nextLine().trim();
+      if (!response.equalsIgnoreCase("Y")) {
+        view.showMessage("Save canceled. Returning to game...");
+        return;
+      }
+    }
     boolean success = world.saveState(fullPath, player);
+
     view.showMessage(success ? "Game saved to " + fileName : " Save failed.");
   }
 
@@ -471,5 +481,14 @@ public class GameController {
     view.showMessage("  - " + RESTORE_KEY + "            : Restore a saved game");
     view.showMessage("  - " + QUIT_KEY + "               : Quit the game");
     view.showMessage("  - " + HELP_KEY + "               : Show this help menu again");
+  }
+
+  /**
+   * Gets the current player.
+   *
+   * @return the player instance, or null if not yet initialized
+   */
+  public Player getPlayer() {
+    return player;
   }
 }

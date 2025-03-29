@@ -1,9 +1,11 @@
 package model.elements;
 
+import java.io.Serializable;
+
 /**
  * Abstract class that serves as the base for all game elements.
  */
-public abstract class GameElements {
+public abstract class GameElements implements Serializable {
   protected String name;
   protected String description;
 

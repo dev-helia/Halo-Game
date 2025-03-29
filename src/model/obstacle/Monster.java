@@ -1,5 +1,7 @@
 package model.obstacle;
 
+import java.io.Serializable;
+
 import model.core.Player;
 
 /**

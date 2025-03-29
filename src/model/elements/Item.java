@@ -1,5 +1,7 @@
 package model.elements;
 
+import java.io.Serializable;
+
 /**
  * The Item class represents objects in the game that players can pick up, use, or drop.
  */

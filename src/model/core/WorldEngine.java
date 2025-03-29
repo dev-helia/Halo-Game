@@ -156,9 +156,11 @@ public class WorldEngine implements Serializable {
       out.writeObject(player);
       return true;
     } catch (IOException e) {
+      e.printStackTrace();
       return false;
     }
   }
+
 
   /**
    * Restore state boolean.
@@ -173,9 +175,16 @@ public class WorldEngine implements Serializable {
       Player loadedPlayer = (Player) in.readObject();
 
       this.worldMap = loadedWorld.worldMap;
-      playerRef.copyFrom(loadedPlayer);
+
+      if (playerRef != null && loadedPlayer != null) {
+        playerRef.copyFrom(loadedPlayer);
+      } else {
+        return false;
+      }
+
       return true;
     } catch (IOException | ClassNotFoundException e) {
+      e.printStackTrace();
       return false;
     }
   }

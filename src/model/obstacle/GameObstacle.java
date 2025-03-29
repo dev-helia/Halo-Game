@@ -1,10 +1,12 @@
 package model.obstacle;
 
+import java.io.Serializable;
+
 /**
  * Abstract base class representing obstacles in the game
  * that block the player's progress, such as puzzles or monsters.
  */
-public abstract class GameObstacle {
+public abstract class GameObstacle implements Serializable {
 
   /**
    * The name of the obstacle, e.g., "Teddy Bear" or "Turnstile".
