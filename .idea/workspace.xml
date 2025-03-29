@@ -4,7 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7245979f-e6c8-4016-ba5a-d9e760a2e23b" name="Changes" comment="" />
+    <list default="true" id="7245979f-e6c8-4016-ba5a-d9e760a2e23b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/savegame.json" beforeDir="false" afterPath="$PROJECT_DIR$/savegame.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/enginedriver/GameEngineApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/enginedriver/GameEngineApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/core/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/core/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/ConsoleView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/ConsoleView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/model/core/PlayerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/model/core/PlayerTest.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -31,12 +40,12 @@
     &quot;assignee&quot;: &quot;dev-helia&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/dev-helia/Halo_Game.git",
-    "accountId": "3a79e63b-9a11-476a-8145-75d82e2c757b"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/dev-helia/Halo_Game.git&quot;,
+    &quot;accountId&quot;: &quot;3a79e63b-9a11-476a-8145-75d82e2c757b&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
 }</component>
@@ -54,7 +63,6 @@
     "Application.WorldEngineTest.executor": "Run",
     "Downloaded.Files.Path.Enabled": "false",
     "JUnit.FixtureTest.executor": "Run",
-    "JUnit.GameControllerTest.executor": "Run",
     "JUnit.GameObstacleTest.executor": "Run",
     "JUnit.ItemTest.executor": "Run",
     "JUnit.MonsterTest.executor": "Run",
@@ -68,7 +76,7 @@
     "Repository.Attach.Sources": "false",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "helia-controller",
+    "git-widget-placeholder": "Merging helia-controller",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -81,19 +89,9 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/resources/maps" />
-    </key>
-    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="model.core" />
-      <recent name="model.obstacle" />
-      <recent name="controller" />
-    </key>
-  </component>
-  <component name="RunManager" selected="Application.GameEngineApp">
-    <configuration name="GameEngineApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="enginedriver.GameEngineApp" />
+  <component name="RunManager" selected="Application.WorldEngineSmokeTest">
+    <configuration name="WorldEngineSmokeTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="WorldEngineSmokeTest" />
       <module name="untitled1" />
       <extension name="coverage">
         <pattern>
@@ -147,7 +145,6 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.GameEngineApp" />
         <item itemvalue="JUnit.GameControllerTest" />
         <item itemvalue="Application.WorldEngineSmokeTest" />
         <item itemvalue="JUnit.ItemTest" />
@@ -198,7 +195,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/enginedriver/GameEngineApp.java</url>
           <line>36</line>
-          <properties class="enginedriver.GameEngineApp" method="main">
+          <properties class="enginedriver.GameEngineApp" method="start">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>

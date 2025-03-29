@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Iterator;
 
+import model.obstacle.Monster;
 import model.obstacle.Puzzle;
 
 /**
@@ -210,6 +211,36 @@ public class Player implements Serializable {
       if (puzzle.isSolved(answer)) {
         puzzle.deactivate();
         updateScore(puzzle.getValue());
+
+        // ✅ Update the exit if it affects target
+        if (puzzle.affectsTarget()) {
+          int targetRoom = puzzle.getTargetRoomNumber(); // e.g., 2
+          for (Map.Entry<String, Integer> entry : room.getExits().entrySet()) {
+            if (entry.getValue() == -targetRoom) {
+              room.setExit(entry.getKey(), targetRoom); // unblock path
+              break;
+            }
+          }
+        }
+
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Attempt to defeat a monster obstacle in the current room using the given item.
+   * If successful, the monster is deactivated and score is updated.
+   *
+   * @param itemName name of the item to use
+   * @return true if the monster was defeated
+   */
+  public boolean defeatMonster(String itemName) {
+    if (currentRoom.hasObstacle() && currentRoom.getObstacle() instanceof Monster monster) {
+      if (monster.isDefeatedByItem(itemName)) {
+        monster.deactivate();
+        updateScore(monster.getValue());
         return true;
       }
     }

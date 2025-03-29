@@ -7,11 +7,13 @@ import model.elements.Item;
 import model.elements.Fixture;
 import model.obstacle.GameObstacle;
 import model.obstacle.Monster;
+import model.obstacle.Puzzle;
 import view.View;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -69,6 +71,7 @@ public class GameController {
     this.scanner = new Scanner(inputSource); //TODO 什么意思
     this.player = null; // we’ll set it later after name is input
   }
+
 
   /**
    * Starts the game loop, initializing the player and processing commands.

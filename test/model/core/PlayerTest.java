@@ -1,6 +1,7 @@
 package model.core;
 
 import model.elements.Item;
+import model.obstacle.Monster;
 import model.obstacle.Puzzle;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -200,6 +201,53 @@ public class PlayerTest {
     boolean solved = player.answerCorrect("nope", roomA);
     assertFalse(solved);
     assertTrue(roomA.hasObstacle());
+    assertEquals(0, player.getScore());
+  }
+
+  /**
+   * Test that a monster can be defeated using the correct item from the JSON data.
+   */
+  @Test
+  public void testDefeatMonsterWithCorrectItem() {
+    // Setup: Room with Teddy Bear requiring Hair Clippers
+    Room foyer = new Room(3, "Foyer", "Description...");
+    Monster teddy = new Monster(
+            "Teddy Bear", "Fuzzy bear", true, 100, 15, true,
+            "Roar!", "Hair Clippers"
+    );
+    foyer.setObstacle(teddy);
+
+    player = new Player("Tester", foyer);
+
+    Item clippers = new Item("Hair Clippers", "Buzz", 1.0, 1, 1, 10, "Zzzzt!");
+    foyer.addItem(clippers);
+    player.pickItem("Hair Clippers");
+
+    assertTrue(player.defeatMonster("Hair Clippers"));
+    assertFalse(foyer.hasObstacle());
+    assertEquals(100, player.getScore());
+  }
+
+  /**
+   * Test that using an incorrect item does not defeat the monster.
+   */
+  @Test
+  public void testDefeatMonsterWithWrongItemFails() {
+    Room dining = new Room(7, "Dining Room", "Description...");
+    Monster rabbit = new Monster(
+            "Rabbit", "Furry bunny", true, 80, 10, true,
+            "Chomp!", "Frying Pan"
+    );
+    dining.setObstacle(rabbit);
+
+    player = new Player("Tester", dining);
+
+    Item wrongItem = new Item("Carrot", "Tasty", 0.5, 1, 1, 3, "Yum!");
+    dining.addItem(wrongItem);
+    player.pickItem("Carrot");
+
+    assertFalse(player.defeatMonster("Carrot"));
+    assertTrue(dining.hasObstacle());
     assertEquals(0, player.getScore());
   }
 }
