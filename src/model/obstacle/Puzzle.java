@@ -86,14 +86,10 @@ public class Puzzle extends GameObstacle {
    * @return true if the answer solves the puzzle; false otherwise
    */
   public boolean isSolved(String answer) {
-    if (solution == null) return false;
-
-    if (solution.startsWith("'") && solution.endsWith("'")) {
-      String trimmed = solution.substring(1, solution.length() - 1);
-      return trimmed.equalsIgnoreCase(answer.trim());
-    } else {
-      return solution.equalsIgnoreCase(answer.trim());
-    }
+    if (solution == null || answer == null) return false;
+    String cleanedSolution = solution.replaceAll("^[\"']+|[\"']+$", "").trim();
+    String cleanedAnswer = answer.replaceAll("^[\"']+|[\"']+$", "").trim();
+    return cleanedSolution.equalsIgnoreCase(cleanedAnswer);
   }
 
   /**

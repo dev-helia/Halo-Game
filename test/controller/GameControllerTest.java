@@ -168,11 +168,27 @@ public class GameControllerTest {
    */
   @Test
   public void testPuzzleAnswerFailAndSuccess() throws Exception {
-    String input = "NEW\n1\nMimi\nANSWER wrong\nANSWER left\nQ\nN\n";
+    String input = String.join("\n",
+            "NEW",          // Start new game
+            "5",            // Map: Simple_Hallway
+            "Mimi",         // Player name
+            "N",            // Go to room 2 (LOCK puzzle triggers)
+            "T Key",     // Take Key (now in correct room)
+            "A Key",   // Solve LOCK
+            "N",            // Go to room 3
+            "T Lamp",    // Take Lamp
+            "N",            // Go to room 4 (DARKNESS triggers)
+            "A Lamp",  // Solve DARKNESS
+            "Q", "N"        // Quit without saving
+    );
+
+
     GameController controller = new GameController(engine, view, simulateInput(input));
     controller.startGame();
 
     List<String> output = getOutput();
+    output.forEach(System.out::println); // 👈 查看所有输出
+
     assertTrue(output.stream().anyMatch(msg -> msg.contains("That didn't work")));
     assertTrue(output.stream().anyMatch(msg -> msg.contains("Puzzle solved")));
   }
