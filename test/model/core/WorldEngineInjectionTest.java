@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +12,7 @@ import model.elements.Item;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static utils.fileutil.PathUtils.getMapPath;
 
 
 /**
@@ -29,7 +29,7 @@ public class WorldEngineInjectionTest {
   @Before
   public void setUp() throws IOException {
     engine = new WorldEngine();
-    String mapPath = Paths.get(System.getProperty("user.dir"), "src", "resources", "maps", "Museum_of_Planet_of_the_Apes.json").toString();
+    engine.generateWorld(getMapPath("Museum_of_Planet_of_the_Apes"));
 
   }
 

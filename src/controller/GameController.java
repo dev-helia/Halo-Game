@@ -1,18 +1,19 @@
 package controller;
 
 import model.core.Player;
-import model.core.WorldEngine;
 import model.core.Room;
-import model.elements.Item;
+import model.core.WorldEngine;
 import model.elements.Fixture;
+import model.elements.Item;
 import model.obstacle.GameObstacle;
 import model.obstacle.Monster;
+import utils.fileutil.PathUtils;
 import view.View;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -24,45 +25,35 @@ public class GameController {
   private final WorldEngine world;
   private final View view;
   private final Scanner scanner;
-  // File path
-  private static final String MAP_FOLDER =
-          Paths.get(System.getProperty("user.dir"), "src", "resources", "maps").toString();
 
-  private static final String SAVE_FOLDER =
-          Paths.get(System.getProperty("user.dir"), "src", "resources", "saves").toString();
-
-  // Direction keys
   private static final String NORTH_KEY = "N";
   private static final String SOUTH_KEY = "S";
   private static final String EAST_KEY = "E";
-  private static final String WEST_KEY = "W"; //
+  private static final String WEST_KEY = "W";
 
-  // Item interaction
   private static final String TAKE_KEY = "T";
   private static final String DROP_KEY = "D";
   private static final String USE_KEY = "U";
 
-  // Info & puzzle
   private static final String INVENTORY_KEY = "I";
   private static final String LOOK_KEY = "L";
   private static final String EXAMINE_KEY = "X";
   private static final String ANSWER_KEY = "A";
 
-  // System
   private static final String SAVE_KEY = "SAVE";
   private static final String RESTORE_KEY = "RESTORE";
   private static final String NEW_KEY = "NEW";
   private static final String QUIT_KEY = "Q";
   private static final String HELP_KEY = "HELP";
 
-  // Ensure save folder exists
   static {
     try {
-      Files.createDirectories(Paths.get(SAVE_FOLDER));
+      Files.createDirectories(Paths.get(new File(PathUtils.getSavePath("")).getParent()));
     } catch (IOException e) {
       System.err.println("Failed to create save directory: " + e.getMessage());
     }
   }
+
   /**
    * Instantiates a new Game controller.
    *
@@ -74,7 +65,7 @@ public class GameController {
     this.world = world;
     this.view = view;
     this.scanner = new Scanner(inputSource);
-    this.player = null; // we’ll set it later after name is input
+    this.player = null;
   }
 
   /**
@@ -84,16 +75,12 @@ public class GameController {
    */
   public void startGame() throws IOException {
     view.displayMainMenu();
+    view.showMessage("Type " + NEW_KEY + " start a new game or " + RESTORE_KEY + " to load saves:");
 
-    // Initialize player after asking for name
-    // New game (select map) or resume game
-    view.showMessage("Type " + NEW_KEY +" start a new game or "+ RESTORE_KEY + " to load saves:");
     while (true) {
       String input = scanner.nextLine().trim().toUpperCase();
 
-      // start a new game
       if (input.equals(NEW_KEY)) {
-        // List the map + select
         String mapPath = selectMap();
         if (mapPath == null) {
           view.showMessage("Map selection failed. Exiting...");
@@ -101,17 +88,12 @@ public class GameController {
         }
         world.generateWorld(mapPath);
         view.showMessage("Map loaded successfully!");
-        // Ask player name
         view.showMessage("Enter your name:");
         String name = scanner.nextLine().trim();
         Room startingRoom = world.getRoom(1);
         this.player = new Player(name, startingRoom);
         break;
-      }
-
-      // restore the game
-      else if (input.equals(RESTORE_KEY)) {
-        // List saves + selection
+      } else if (input.equals(RESTORE_KEY)) {
         String savePath = selectSave();
         if (savePath == null) {
           view.showMessage("Save selection failed. Exiting...");
@@ -128,13 +110,10 @@ public class GameController {
       }
     }
 
-    // Main game loop
     while (true) {
-      // current room info
       Room currentRoom = player.getCurrentRoom();
       view.showMessage("Health Status: " + player.getHealthStatus());
 
-      // Auto-monster attack logic.
       GameObstacle obs = currentRoom.getObstacle();
       if (obs instanceof Monster m && m.isActive() && m.canAttack()) {
         m.attack(player);
@@ -146,17 +125,12 @@ public class GameController {
         }
       }
 
-      // Prompt for command
       view.showMessage("Type a command ('HELP' for help, 'Q' to quit):");
-
       if (!scanner.hasNextLine()) {
         view.showMessage("Input stream closed. Ending game.");
         break;
       }
       String line = scanner.nextLine().trim();
-
-      // enter input
-      // cmd(T/D/U) + optional arg(Ticket)
       String[] parts = line.split(" ", 2);
       String cmd = parts[0].toUpperCase();
       String arg = parts.length > 1 ? parts[1] : null;
@@ -165,13 +139,32 @@ public class GameController {
         if (handleQuitCommand()) break;
         continue;
       }
-
       handleCommand(cmd, arg);
     }
-    // Game over summary
+
     view.showMessage("Thanks for playing! Goodbye~");
     view.showMessage("Final Score: " + player.getScore());
     view.showMessage("Your Rank: " + player.getRank());
+  }
+
+  /**
+   * Allows the user to select a game map from available .json files.
+   *
+   * @return the path to the selected map file, or null if selection fails
+   */
+  private String selectMap() {
+    File folder = new File(PathUtils.getMapPath(""));
+    return pickJsonFile(folder.getParent(), "\uD83E\uDDF1 Available maps:", "Choose a map number:");
+  }
+
+  /**
+   * Allows the user to select a saved game state from available .json files.
+   *
+   * @return the path to the selected save file, or null if selection fails
+   */
+  private String selectSave() {
+    File folder = new File(PathUtils.getSavePath(""));
+    return pickJsonFile(folder.getParent(), "\uD83D\uDCBE Available saves:", "Choose a save number:");
   }
 
   /**
@@ -183,25 +176,20 @@ public class GameController {
    * @return the full path of the selected .json file, or null if no file is selected
    */
   private String pickJsonFile(String folderPath, String promptTitle, String promptInput) {
-    // file folder
     File folder = new File(folderPath);
-    // filter
     File[] files = folder.listFiles((dir, name) -> name.endsWith(".json"));
 
-    // no json files in current path
     if (files == null || files.length == 0) {
       view.showMessage("No .json files found in: " + folderPath);
       return null;
     }
 
-    // print current files with order
     view.showMessage(promptTitle);
     for (int i = 0; i < files.length; i++) {
       view.showMessage((i + 1) + ". " + files[i].getName());
     }
     view.showMessage(promptInput);
 
-    // user input
     while (true) {
       String input = scanner.nextLine().trim();
       try {
@@ -215,24 +203,6 @@ public class GameController {
         view.showMessage("Please enter a number.");
       }
     }
-  }
-
-  /**
-   * Allows the user to select a game map from available .json files.
-   *
-   * @return the path to the selected map file, or null if selection fails
-   */
-  private String selectMap() {
-    return pickJsonFile(MAP_FOLDER, "🧭 Available maps:", "Choose a map number:");
-  }
-
-  /**
-   * Allows the user to select a saved game state from available .json files.
-   *
-   * @return the path to the selected save file, or null if selection fails
-   */
-  private String selectSave() {
-    return pickJsonFile(SAVE_FOLDER, "💾 Available saves:", "Choose a save number:");
   }
 
   /**
@@ -257,11 +227,11 @@ public class GameController {
       switch (response) {
         case "Y" -> {
           saveGameState();
-          return true; // quit
+          return true;
         }
         case "N" -> {
-          view.showMessage("Okay~ No save. 🌙✨");
-          return true; // quit
+          view.showMessage("Okay~ No save. \uD83C\uDF19✨");
+          return true;
         }
         default -> view.showMessage("Please enter 'Y' or 'N'.");
       }
@@ -274,10 +244,7 @@ public class GameController {
   private void saveGameState() {
     view.showMessage("Enter file name to save (without .json):");
     String fileName = scanner.nextLine().trim();
-    if (!fileName.endsWith(".json")) {
-      fileName += ".json";
-    }
-    String fullPath = SAVE_FOLDER + File.separator + fileName;
+    String fullPath = PathUtils.getSavePath(fileName);
     boolean success = world.saveState(fullPath, player);
     view.showMessage(success ? "Game saved to " + fileName : " Save failed.");
   }
@@ -388,7 +355,6 @@ public class GameController {
       view.showMessage("Your inventory is empty.");
       return;
     }
-
     view.showMessage("Your Inventory:");
     for (Item i : inventory) {
       view.showMessage(" - " + i.getName() + " (uses left: " + i.getUsesRemaining() + ")");
@@ -413,24 +379,20 @@ public class GameController {
       view.showMessage("Examine what?");
       return;
     }
-
     Room room = player.getCurrentRoom();
     boolean found = false;
-
     Item item = room.getItem(arg);
     if (item != null) {
-      view.showMessage("🔍 " + item.getDescription());
+      view.showMessage("\uD83D\uDD0D " + item.getDescription());
       found = true;
     }
-
     Fixture fixture = room.getFixture(arg);
     if (fixture != null) {
-      view.showMessage("🛋️ " + fixture.getDescription());
+      view.showMessage("\uD83D\uDECB️ " + fixture.getDescription());
       found = true;
     }
-
     if (!found) {
-      view.showMessage("🤷 You see nothing interesting about that.");
+      view.showMessage("\uD83E\uDD37 You see nothing interesting about that.");
     }
   }
 
@@ -444,13 +406,9 @@ public class GameController {
       view.showMessage("Answer what?");
       return;
     }
-
     Room room = player.getCurrentRoom();
     boolean solved = player.answerCorrect(arg, room);
-    if (solved) {
-      //player.addScore(10); // 示例值
-    }
-    view.showMessage(solved ? "🎉 Puzzle solved!" : "That didn't work.");
+    view.showMessage(solved ? "\uD83C\uDF89 Puzzle solved!" : "That didn't work.");
   }
 
   /**
@@ -466,7 +424,7 @@ public class GameController {
           return;
         }
         case "N" -> {
-          view.showMessage("No save. Let's keep going~ 🌈");
+          view.showMessage("No save. Let's keep going~ \uD83C\uDF08");
           return;
         }
         default -> view.showMessage("Please enter 'Y' or 'N'.");
@@ -483,7 +441,6 @@ public class GameController {
       view.showMessage("No valid save file selected.");
       return;
     }
-
     Player temp = new Player("TEMP", new Room(0, "TEMP", "Placeholder"));
     boolean success = world.restoreState(savePath, temp);
     if (success) {
@@ -499,24 +456,16 @@ public class GameController {
    */
   private void handleHelp() {
     view.showMessage("\nMovement Commands\n---------------------");
-
-    // Movement
     view.showMessage("  - " + NORTH_KEY + " / " + SOUTH_KEY + " / " + EAST_KEY + " / " + WEST_KEY + " : Move North/South/East/West");
-
-    // Item actions
     view.showMessage("\nItem Actions\n---------------------");
     view.showMessage("  - " + TAKE_KEY + " <item>    : Take an item");
     view.showMessage("  - " + DROP_KEY + " <item>    : Drop an item");
     view.showMessage("  - " + USE_KEY + " <item>     : Use an item");
-
-    // Info & puzzle
     view.showMessage("\nPuzzle & Info\n---------------------");
     view.showMessage("  - " + INVENTORY_KEY + "           : Check inventory");
     view.showMessage("  - " + LOOK_KEY + "               : Look around the room");
     view.showMessage("  - " + EXAMINE_KEY + " <name>     : Examine an item or fixture");
     view.showMessage("  - " + ANSWER_KEY + " <answer>    : Answer a puzzle");
-
-    // System
     view.showMessage("\nSystem Commands\n---------------------");
     view.showMessage("  - " + SAVE_KEY + "               : Save your progress");
     view.showMessage("  - " + RESTORE_KEY + "            : Restore a saved game");
@@ -524,4 +473,3 @@ public class GameController {
     view.showMessage("  - " + HELP_KEY + "               : Show this help menu again");
   }
 }
-

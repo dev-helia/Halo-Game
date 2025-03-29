@@ -5,16 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7245979f-e6c8-4016-ba5a-d9e760a2e23b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/utils/fileutil/PathUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/enginedriver/GameEngineApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/enginedriver/GameEngineApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/core/WorldEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/core/WorldEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/JsonUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/fileutil/JsonUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/model/core/WorldEngineInjectionTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/model/core/WorldEngineInjectionTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/model/core/WorldEngineSmokeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/model/core/WorldEngineSmokeTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/model/core/WorldEngineTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/model/core/WorldEngineTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/model/element/FixtureTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/model/element/FixtureTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/model/element/ItemTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/model/element/ItemTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/model/obstacle/MonsterTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/model/obstacle/MonsterTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,8 +78,9 @@
     "Repository.Attach.Sources": "false",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "#20 on helia-controller",
+    "git-widget-placeholder": "helia-controller",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/hetao/Desktop/Halo_Game7",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -177,9 +176,9 @@
       <list>
         <item itemvalue="Application.GameEngineApp" />
         <item itemvalue="Application.model.core.WorldEngineSmokeTest" />
+        <item itemvalue="JUnit.WorldEngineInjectionTest" />
         <item itemvalue="JUnit.WorldEngineTest" />
         <item itemvalue="JUnit.WorldEngineTest.testRoomCount" />
-        <item itemvalue="JUnit.WorldEngineInjectionTest" />
       </list>
     </recent_temporary>
   </component>
@@ -204,6 +203,7 @@
       <workItem from="1743033933762" duration="779000" />
       <workItem from="1743040338539" duration="2316000" />
       <workItem from="1743082839910" duration="11655000" />
+      <workItem from="1743271382881" duration="1136000" />
     </task>
     <servers />
   </component>
@@ -225,8 +225,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/enginedriver/GameEngineApp.java</url>
-          <line>36</line>
-          <properties class="enginedriver.GameEngineApp" method="start">
+          <line>47</line>
+          <properties class="enginedriver.GameEngineApp">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>

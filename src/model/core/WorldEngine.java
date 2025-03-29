@@ -6,7 +6,7 @@ import model.elements.*;
 import model.obstacle.GameObstacle;
 import model.obstacle.Monster;
 import model.obstacle.Puzzle;
-import utils.JsonUtils;
+import utils.fileutil.JsonUtils;
 import utils.roomparser.RoomsParser;
 
 import java.io.*;

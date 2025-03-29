@@ -3,6 +3,7 @@ package model.core;
 import java.io.IOException;
 
 import static org.junit.Assert.*;
+import static utils.fileutil.PathUtils.getMapPath;
 
 
 import model.obstacle.Puzzle;
@@ -26,7 +27,7 @@ public class WorldEngineTest {
   @Before
   public void setUp() throws IOException {
     engine = new WorldEngine();
-    engine.generateWorld("src/resources/maps/Museum_of_Planet_of_the_Apes.json");
+    engine.generateWorld(getMapPath("Museum_of_Planet_of_the_Apes"));
   }
 
   /**

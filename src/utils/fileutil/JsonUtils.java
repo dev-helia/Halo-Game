@@ -1,11 +1,8 @@
-package utils;
+package utils.fileutil;
 
 import com.google.gson.*;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * JSON tool class: safely read JSON files
