@@ -1,4 +1,4 @@
-package utils;
+package utils.roomparser;
 
 /**
  * Utility class for parsing room number from string formats like "1:Museum Entrance".

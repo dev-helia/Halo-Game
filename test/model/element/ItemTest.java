@@ -1,3 +1,5 @@
+package model.element;
+
 import model.elements.Item;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

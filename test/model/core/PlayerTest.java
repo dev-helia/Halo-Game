@@ -1,14 +1,11 @@
-import model.core.Player;
-import model.core.Room;
-import model.core.HealthStatus;
-import model.core.PlayerRank;
+package model.core;
+
 import model.elements.Item;
 import model.obstacle.Monster;
 import model.obstacle.Puzzle;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;

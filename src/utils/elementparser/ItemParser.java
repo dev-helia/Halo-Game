@@ -1,4 +1,4 @@
-package utils;
+package utils.elementparser;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;

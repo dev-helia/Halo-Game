@@ -1,11 +1,10 @@
-import java.io.IOException;
+package model.core;
 
-import model.core.WorldEngine;
+import java.io.IOException;
 
 import static org.junit.Assert.*;
 
 
-import model.core.Room;
 import model.obstacle.Puzzle;
 import org.junit.Before;
 import org.junit.Test;
@@ -73,28 +72,4 @@ public class WorldEngineTest {
 }
 
 
-/**
- * The type World engine smoke test.
- */
-class WorldEngineSmokeTest{
-  /**
-   * Print the worldMap for the smoke test for testing world engine.
-   *
-   * @param args the input arguments
-   */
-  public static void main(String[] args) {
-    try {
-      // Arrange
-      String filePath = "src/resources/Museum_of_Planet_of_the_Apes.json";
 
-      WorldEngine engine = new WorldEngine();
-
-      // Act
-      engine.generateWorld(filePath);
-      engine.printWorldMap();
-
-    } catch (IOException e) {
-      System.err.println("File loading failure: " + e.getMessage());
-    }
-  }
-}

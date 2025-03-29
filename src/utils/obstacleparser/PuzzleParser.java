@@ -1,4 +1,4 @@
-package utils;
+package utils.obstacleparser;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -9,7 +9,7 @@ import java.util.Map;
 import model.core.Room;
 import model.obstacle.Puzzle;
 
-import static utils.RoomNumberParser.parseRoomNumber;
+import static utils.roomparser.RoomNumberParser.parseRoomNumber;
 
 public class PuzzleParser {
 

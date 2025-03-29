@@ -1,4 +1,4 @@
-package utils;
+package utils.roomparser;
 
 import com.google.gson.JsonObject;
 

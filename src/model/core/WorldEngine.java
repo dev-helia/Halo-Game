@@ -7,15 +7,15 @@ import model.obstacle.GameObstacle;
 import model.obstacle.Monster;
 import model.obstacle.Puzzle;
 import utils.JsonUtils;
-import utils.RoomsParser;
+import utils.roomparser.RoomsParser;
 
 import java.io.*;
 import java.util.*;
 
-import static utils.FixtureParser.parseFixtures;
-import static utils.ItemParser.parseItems;
-import static utils.MonsterParser.parseMonsters;
-import static utils.PuzzleParser.parsePuzzles;
+import static utils.elementparser.FixtureParser.parseFixtures;
+import static utils.elementparser.ItemParser.parseItems;
+import static utils.obstacleparser.MonsterParser.parseMonsters;
+import static utils.obstacleparser.PuzzleParser.parsePuzzles;
 
 
 /**
