@@ -7,23 +7,16 @@ import model.elements.Item;
 import model.elements.Fixture;
 import model.obstacle.GameObstacle;
 import model.obstacle.Monster;
-import model.obstacle.Puzzle;
 import view.View;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
 /**
- * GameController is responsible for handling the main game loop:
- * - Accepting player input
- * - Interacting with the model (World, Player, Rooms)
- * - Displaying output via the View
- *  - Call : WorldEngine, Player, View
- *  - Use : Scanner
+ * The type Game controller.
  */
 public class GameController {
   private Player player;
@@ -59,24 +52,23 @@ public class GameController {
 
 
   /**
-   * Constructor for GameController.
+   * Instantiates a new Game controller.
    *
-   * @param world        The game world containing all rooms and elements.
-   * @param view         The view used for output (e.g. console).
-   * @param inputSource  Input source (BufferedReader/StringReader or System.in).
+   * @param world       the world
+   * @param view        the view
+   * @param inputSource the input source
    */
   public GameController(WorldEngine world, View view, Readable inputSource) {
     this.world = world;
     this.view = view;
-    this.scanner = new Scanner(inputSource); //TODO 什么意思
+    this.scanner = new Scanner(inputSource);
     this.player = null; // we’ll set it later after name is input
   }
 
-
   /**
-   * Starts the game loop, initializing the player and processing commands.
+   * Start game.
    *
-   * @throws IOException if there is an input/output error
+   * @throws IOException the io exception
    */
   public void startGame() throws IOException {
     view.displayMainMenu();
@@ -151,8 +143,6 @@ public class GameController {
       }
       String line = scanner.nextLine().trim();
 
-      // TODO 好像没有看见加分的逻辑
-      // TODO 而且可以单纯输入a, 应该要clamping一下
       // enter input
       // cmd(T/D/U) + optional arg(Ticket)
       String[] parts = line.split(" ", 2);
@@ -173,16 +163,12 @@ public class GameController {
   }
 
   /**
-   * A generic file picker from folder.
-   * 1. List current json files.
-   * 2. Allow the user to simply choose a number to enter the game.
-   * The index starts from 1.
-   * TODO path的不同的系统的解析
+   * Picks a .json file from the given folder path by prompting the user.
    *
-   * @param folderPath  folder to list files from (e.g., "src/resources", "src/resources/saves")
-   * @param promptTitle what to display as title (e.g., "🧭 Available maps:")
-   * @param promptInput what to display as prompt (e.g., "Choose a map number:")
-   * @return full path of selected file, or null if none selected
+   * @param folderPath   the directory path where .json files are stored
+   * @param promptTitle  the title message shown before listing files
+   * @param promptInput  the prompt asking user to choose a file number
+   * @return the full path of the selected .json file, or null if no file is selected
    */
   private String pickJsonFile(String folderPath, String promptTitle, String promptInput) {
     // file folder
@@ -219,22 +205,38 @@ public class GameController {
     }
   }
 
+  /**
+   * Allows the user to select a game map from available .json files.
+   *
+   * @return the path to the selected map file, or null if selection fails
+   */
   private String selectMap() {
     return pickJsonFile(MAP_FOLDER, "🧭 Available maps:", "Choose a map number:");
   }
 
+  /**
+   * Allows the user to select a saved game state from available .json files.
+   *
+   * @return the path to the selected save file, or null if selection fails
+   */
   private String selectSave() {
     return pickJsonFile(SAVE_FOLDER, "💾 Available saves:", "Choose a save number:");
   }
 
+  /**
+   * Check the quit command input.
+   *
+   * @param cmd the user's command input
+   * @return true if it is a quit command
+   */
   private boolean isQuitCommand(String cmd) {
     return cmd.equals(QUIT_KEY);
   }
 
   /**
-   * Handles the "Q" command: asks whether to save and confirms quitting.
+   * Handling the quit command loop.
    *
-   * @return true if player wants to quit, false if they cancel
+   * @return true if the user wants to quit
    */
   private boolean handleQuitCommand() {
     view.showMessage("Do you want to save before quitting? (Y/N)");
@@ -242,14 +244,7 @@ public class GameController {
       String response = scanner.nextLine().trim().toUpperCase();
       switch (response) {
         case "Y" -> {
-          view.showMessage("Enter file name to save (without .json):");
-          String fileName = scanner.nextLine().trim();
-          if (!fileName.endsWith(".json")) {
-            fileName += ".json";
-          }
-          String fullPath = SAVE_FOLDER + "/" + fileName;
-          boolean success = world.saveState(fullPath, player);
-          view.showMessage(success ? "✅ Game saved to " + fileName : "❌ Save failed.");
+          saveGameState();
           return true; // quit
         }
         case "N" -> {
@@ -261,23 +256,48 @@ public class GameController {
     }
   }
 
+  /**
+   * Handling save the current game state.
+   */
+  private void saveGameState() {
+    view.showMessage("Enter file name to save (without .json):");
+    String fileName = scanner.nextLine().trim();
+    if (!fileName.endsWith(".json")) {
+      fileName += ".json";
+    }
+    String fullPath = SAVE_FOLDER + "/" + fileName;
+    boolean success = world.saveState(fullPath, player);
+    view.showMessage(success ? "✅ Game saved to " + fileName : "❌ Save failed.");
+  }
+
+  /**
+   * Handing user's input commands.
+   *
+   * @param cmd  current command.
+   * @param arg the input string
+   */
   private void handleCommand(String cmd, String arg) {
     switch (cmd) {
-      case "N", "S", "E", "W" -> handleMove(cmd);
-      case "T" -> handleTake(arg);
-      case "D" -> handleDrop(arg);
-      case "U" -> handleUse(arg);
-      case "I" -> handleInventory();
-      case "L" -> handleLook();
-      case "X" -> handleExamine(arg);
-      case "A" -> handleAnswer(arg);
-      case "SAVE" -> handleSave();
-      case "RESTORE" -> handleRestore();
-      case "HELP" -> handleHelp();
+      case NORTH_KEY, SOUTH_KEY, EAST_KEY, WEST_KEY -> handleMove(cmd);
+      case TAKE_KEY -> handleTake(arg);
+      case DROP_KEY -> handleDrop(arg);
+      case USE_KEY -> handleUse(arg);
+      case INVENTORY_KEY -> handleInventory();
+      case LOOK_KEY -> handleLook();
+      case EXAMINE_KEY -> handleExamine(arg);
+      case ANSWER_KEY -> handleAnswer(arg);
+      case SAVE_KEY -> handleSave();
+      case RESTORE_KEY -> handleRestore();
+      case HELP_KEY -> handleHelp();
       default -> view.showMessage("Unknown command: " + cmd);
     }
   }
 
+  /**
+   * Handling move command.
+   *
+   * @param cmd the move command
+   */
   private void handleMove(String cmd) {
     boolean moved = player.move(cmd, world.getWorldMap());
     if (moved) {
@@ -289,6 +309,12 @@ public class GameController {
     }
   }
 
+  /**
+   * Handling complete the move command.
+   *
+   * @param dir the move command
+   * @return the full name of the direction (North, West, South, East)
+   */
   private String directionToFull(String dir) {
     return switch (dir) {
       case "N" -> "North";
@@ -299,6 +325,11 @@ public class GameController {
     };
   }
 
+  /**
+   * Handling take the item.
+   *
+   * @param arg the input string
+   */
   private void handleTake(String arg) {
     if (arg == null) {
       view.showMessage("❓ What do you want to take?");
@@ -308,6 +339,11 @@ public class GameController {
     view.showMessage(success ? "🎒 You picked up " + arg + "." : "🚫 You can't take that.");
   }
 
+  /**
+   * Handling dropping the item.
+   *
+   * @param arg the input string
+   */
   private void handleDrop(String arg) {
     if (arg == null) {
       view.showMessage("❓ What do you want to drop?");
@@ -317,6 +353,11 @@ public class GameController {
     view.showMessage(success ? "🗑️ You dropped " + arg + "." : "🚫 You don't have that item.");
   }
 
+  /**
+   * Handling use the item.
+   *
+   * @param arg
+   */
   private void handleUse(String arg) {
     if (arg == null) {
       view.showMessage("❓ Use what?");
@@ -326,6 +367,9 @@ public class GameController {
     view.showMessage(result);
   }
 
+  /**
+   * Handling check the inventory.
+   */
   private void handleInventory() {
     List<Item> inventory = player.getInventory();
     if (inventory.isEmpty()) {
@@ -339,11 +383,19 @@ public class GameController {
     }
   }
 
+  /**
+   * Handling look around the room.
+   */
   private void handleLook() {
     Room current = player.getCurrentRoom();
     view.renderGame(player, current);
   }
 
+  /**
+   * Handling examine command.
+   *
+   * @param arg the input string
+   */
   private void handleExamine(String arg) {
     if (arg == null) {
       view.showMessage("❓ Examine what?");
@@ -370,6 +422,11 @@ public class GameController {
     }
   }
 
+  /**
+   * Handling answer the puzzle.
+   *
+   * @param arg input string
+   */
   private void handleAnswer(String arg) {
     if (arg == null) {
       view.showMessage("❓ Answer what?");
@@ -384,20 +441,16 @@ public class GameController {
     view.showMessage(solved ? "🎉 Puzzle solved!" : "❌ That didn't work.");
   }
 
+  /**
+   * Private method for save the game.
+   */
   private void handleSave() {
     view.showMessage("Do you want to save the game? (Y/N)");
     while (true) {
       String answer = scanner.nextLine().trim().toUpperCase();
       switch (answer) {
         case "Y" -> {
-          view.showMessage("Enter file name to save (without .json):");
-          String fileName = scanner.nextLine().trim();
-          if (!fileName.endsWith(".json")) {
-            fileName += ".json";
-          }
-          String path = SAVE_FOLDER + "/" + fileName;
-          boolean success = world.saveState(path, player);
-          view.showMessage(success ? "✅ Game saved to " + fileName : "❌ Save failed.");
+          saveGameState();
           return;
         }
         case "N" -> {
@@ -409,6 +462,9 @@ public class GameController {
     }
   }
 
+  /**
+   * Private method for restoring the game.
+   */
   private void handleRestore() {
     String savePath = selectSave();
     if (savePath == null) {
@@ -426,6 +482,9 @@ public class GameController {
     }
   }
 
+  /**
+   * Help command.
+   */
   private void handleHelp() {
     view.showMessage("\n🎮 Movement Commands\n---------------------");
 
@@ -452,6 +511,5 @@ public class GameController {
     view.showMessage("  - " + QUIT_KEY + "               : Quit the game");
     view.showMessage("  - " + HELP_KEY + "               : Show this help menu again");
   }
-
 }
 
