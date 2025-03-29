@@ -29,7 +29,6 @@ public class FixtureParser {
 
     JsonArray fixturesArray = root.getAsJsonArray("fixtures");
 
-    // 🛠️ 1. 先解析所有 fixtures
     for (JsonElement element : fixturesArray) {
       if (!element.isJsonObject()) continue;
       JsonObject fixtureObj = element.getAsJsonObject();
