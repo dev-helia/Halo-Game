@@ -33,6 +33,6 @@ public class PathUtils {
     if (!fileName.endsWith(".json")) {
       fileName += ".json";
     }
-    return Paths.get(System.getProperty("user.dir"), SAVE_DIR, fileName).toString();
+    return Paths.get(SAVE_DIR, fileName).toString();
   }
 }

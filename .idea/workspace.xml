@@ -5,14 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7245979f-e6c8-4016-ba5a-d9e760a2e23b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/utils/fileutil/PathUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/controller/MockView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/GameController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/core/WorldEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/core/WorldEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/JsonUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/fileutil/JsonUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/model/core/WorldEngineInjectionTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/model/core/WorldEngineInjectionTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/model/core/WorldEngineSmokeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/model/core/WorldEngineSmokeTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/model/core/WorldEngineTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/model/core/WorldEngineTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/elements/Fixture.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/elements/Fixture.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/elements/GameElements.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/elements/GameElements.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/elements/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/elements/Item.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/obstacle/GameObstacle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/obstacle/GameObstacle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/obstacle/Monster.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/obstacle/Monster.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/obstacle/Puzzle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/obstacle/Puzzle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/saves/a.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/fileutil/PathUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/fileutil/PathUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/controller/GameControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/controller/GameControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/controller/TestViewHelper.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,6 +52,9 @@
     &quot;accountId&quot;: &quot;3a79e63b-9a11-476a-8145-75d82e2c757b&quot;
   }
 }</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="QODANA_PROBLEMS_VIEW_TAB" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
 }</component>
@@ -64,6 +73,12 @@
     "Application.model.core.WorldEngineSmokeTest.executor": "Run",
     "Downloaded.Files.Path.Enabled": "false",
     "JUnit.FixtureTest.executor": "Run",
+    "JUnit.GameControllerTest.executor": "Run",
+    "JUnit.GameControllerTest.testPuzzleAnswerFailAndSuccess.executor": "Run",
+    "JUnit.GameControllerTest.testSaveAndRestoreFlow.executor": "Run",
+    "JUnit.GameControllerTest.testStartAndUseHelpCommand.executor": "Run",
+    "JUnit.GameControllerTest.testStartNewGame_LookAndQuit_NoSave.executor": "Run",
+    "JUnit.GameControllerTest.testStartNewGame_MoveEast_QuitWithSave.executor": "Run",
     "JUnit.GameObstacleTest.executor": "Run",
     "JUnit.ItemTest.executor": "Run",
     "JUnit.MonsterTest.executor": "Run",
@@ -106,67 +121,64 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="WorldEngineSmokeTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="model.core.WorldEngineSmokeTest" />
-      <module name="untitled1" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="model.core.WorldEngineSmokeTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="model.core.WorldEngineSmokeTest" />
+    <configuration name="GameControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="untitled1" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="model.core.*" />
+          <option name="PATTERN" value="controller.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="WorldEngineInjectionTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="untitled1" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="model.core.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="model.core" />
-      <option name="MAIN_CLASS_NAME" value="model.core.WorldEngineInjectionTest" />
+      <option name="PACKAGE_NAME" value="controller" />
+      <option name="MAIN_CLASS_NAME" value="controller.GameControllerTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="WorldEngineTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="GameControllerTest.testPuzzleAnswerFailAndSuccess" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="untitled1" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="model.core.*" />
+          <option name="PATTERN" value="controller.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="model.core" />
-      <option name="MAIN_CLASS_NAME" value="model.core.WorldEngineTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="PACKAGE_NAME" value="controller" />
+      <option name="MAIN_CLASS_NAME" value="controller.GameControllerTest" />
+      <option name="METHOD_NAME" value="testPuzzleAnswerFailAndSuccess" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="WorldEngineTest.testRoomCount" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="GameControllerTest.testSaveAndRestoreFlow" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="untitled1" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="model.core.*" />
+          <option name="PATTERN" value="controller.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="model.core" />
-      <option name="MAIN_CLASS_NAME" value="model.core.WorldEngineTest" />
-      <option name="METHOD_NAME" value="testRoomCount" />
+      <option name="PACKAGE_NAME" value="controller" />
+      <option name="MAIN_CLASS_NAME" value="controller.GameControllerTest" />
+      <option name="METHOD_NAME" value="testSaveAndRestoreFlow" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GameControllerTest.testStartNewGame_MoveEast_QuitWithSave" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="untitled1" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="controller" />
+      <option name="MAIN_CLASS_NAME" value="controller.GameControllerTest" />
+      <option name="METHOD_NAME" value="testStartNewGame_MoveEast_QuitWithSave" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -175,10 +187,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.GameEngineApp" />
-        <item itemvalue="Application.model.core.WorldEngineSmokeTest" />
-        <item itemvalue="JUnit.WorldEngineInjectionTest" />
-        <item itemvalue="JUnit.WorldEngineTest" />
-        <item itemvalue="JUnit.WorldEngineTest.testRoomCount" />
+        <item itemvalue="JUnit.GameControllerTest" />
+        <item itemvalue="JUnit.GameControllerTest.testSaveAndRestoreFlow" />
+        <item itemvalue="JUnit.GameControllerTest.testStartNewGame_MoveEast_QuitWithSave" />
+        <item itemvalue="JUnit.GameControllerTest.testPuzzleAnswerFailAndSuccess" />
       </list>
     </recent_temporary>
   </component>
@@ -203,7 +215,7 @@
       <workItem from="1743033933762" duration="779000" />
       <workItem from="1743040338539" duration="2316000" />
       <workItem from="1743082839910" duration="11655000" />
-      <workItem from="1743271382881" duration="1136000" />
+      <workItem from="1743271382881" duration="5238000" />
     </task>
     <servers />
   </component>
@@ -240,6 +252,12 @@
             <option name="WATCH_EXIT" value="false" />
           </properties>
           <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-field">
+          <url>file://$PROJECT_DIR$/test/controller/GameControllerTest.java</url>
+          <line>18</line>
+          <properties field="engine" class="controller.GameControllerTest" />
+          <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
