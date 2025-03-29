@@ -26,6 +26,13 @@ public class MonsterTest {
    * Minimal implementation of a testable Player with overrideable health.
    */
   private static class TestPlayer extends Player {
+    /**
+     * Instantiates a new Test player.
+     *
+     * @param name         the name
+     * @param startingRoom the starting room
+     * @param health       the health
+     */
     public TestPlayer(String name, Room startingRoom, int health) {
       super(name, startingRoom);
       super.setHealth(health);
@@ -61,6 +68,9 @@ public class MonsterTest {
     player = new TestPlayer("TestPlayer", dummyRoom, 100);
   }
 
+  /**
+   * Test basic properties.
+   */
   @Test
   public void testBasicProperties() {
     assertEquals("Teddy Bear", monster.getName());
@@ -69,42 +79,66 @@ public class MonsterTest {
     assertEquals(200, monster.getValue());
   }
 
+  /**
+   * Test get attack message.
+   */
   @Test
   public void testGetAttackMessage() {
     assertEquals("The teddy bear slaps you!", monster.getAttackMessage());
   }
 
+  /**
+   * Test can attack.
+   */
   @Test
   public void testCanAttack() {
     assertTrue(monster.canAttack());
   }
 
+  /**
+   * Test get damage.
+   */
   @Test
   public void testGetDamage() {
     assertEquals(25, monster.getDamage());
   }
 
+  /**
+   * Test get defeat item.
+   */
   @Test
   public void testGetDefeatItem() {
     assertEquals("Slippers", monster.getDefeatItem());
   }
 
+  /**
+   * Test is defeated by correct item.
+   */
   @Test
   public void testIsDefeatedByCorrectItem() {
     assertTrue(monster.isDefeatedByItem("Slippers"));
   }
 
+  /**
+   * Test is defeated by wrong item.
+   */
   @Test
   public void testIsDefeatedByWrongItem() {
     assertFalse(monster.isDefeatedByItem("Sword"));
   }
 
+  /**
+   * Test attack when active and can attack.
+   */
   @Test
   public void testAttackWhenActiveAndCanAttack() {
     monster.attack(player);
     assertEquals(75, player.getHealth());
   }
 
+  /**
+   * Test attack when inactive.
+   */
   @Test
   public void testAttackWhenInactive() {
     monster.deactivate();
@@ -112,6 +146,9 @@ public class MonsterTest {
     assertEquals(100, player.getHealth());
   }
 
+  /**
+   * Test attack when cannot attack.
+   */
   @Test
   public void testAttackWhenCannotAttack() {
     Monster passiveMonster = new Monster(
@@ -128,6 +165,9 @@ public class MonsterTest {
     assertEquals(100, player.getHealth());
   }
 
+  /**
+   * Test player health status transitions.
+   */
   @Test
   public void testPlayerHealthStatusTransitions() {
     player.setHealth(100);
@@ -143,6 +183,9 @@ public class MonsterTest {
     assertEquals(HealthStatus.SLEEP, player.getHealthStatus());
   }
 
+  /**
+   * Test attack drops to woozy.
+   */
   @Test
   public void testAttackDropsToWoozy() {
     player.setHealth(45);
@@ -151,6 +194,9 @@ public class MonsterTest {
     assertEquals(HealthStatus.WOOZY, player.getHealthStatus());
   }
 
+  /**
+   * Test attack to sleep status.
+   */
   @Test
   public void testAttackToSleepStatus() {
     player.setHealth(10);

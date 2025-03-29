@@ -25,7 +25,7 @@ public class GameEngineApp {
     // Load the world data from the JSON file
     WorldEngine world = new WorldEngine();
     // Create the view
-    View view = new ConsoleView(); // 输出会写到 output 上
+    View view = new ConsoleView();
     // Create the controller
     this.controller = new GameController(world, view, source); // remove Player param
   }

@@ -2,6 +2,8 @@ package model.core;
 
 import java.io.IOException;
 
+import static utils.fileutil.PathUtils.getMapPath;
+
 
 /**
  * The type World engine smoke test.
@@ -15,12 +17,10 @@ public class WorldEngineSmokeTest{
   public static void main(String[] args) {
     try {
       // Arrange
-      String filePath = "src/resources/Museum_of_Planet_of_the_Apes.json";
-
       WorldEngine engine = new WorldEngine();
+      engine.generateWorld(getMapPath("Museum_of_Planet_of_the_Apes"));
 
       // Act
-      engine.generateWorld(filePath);
       engine.printWorldMap();
 
     } catch (IOException e) {
