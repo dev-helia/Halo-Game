@@ -1,6 +1,6 @@
-Game Engine Design Documentation
+# Game Engine Design Documentation
 
-**1.High-Level Design Overview**
+## **1.High-Level Design Overview**
 
 Our team’s final implementation adopts a modular design inspired by the Model-View-Controller (MVC) pattern. The project is divided into six main packages:
 
@@ -23,9 +23,9 @@ Our team’s final implementation adopts a modular design inspired by the Model-
 •  **resources:** Includes external assets like .json game maps and images.
    This structure improves cohesion within each package and keeps responsibilities well-separated across components.
 
-**2.Evolution from Homework 7**
+## **2.Evolution from Homework 7**
    
-****2.1** Modifications**
+### ****2.1** Modifications**
 
 Compared to our HW7 design, which was more tightly coupled and manually coded, this version introduces major architectural refinements:
    
@@ -39,7 +39,7 @@ Compared to our HW7 design, which was more tightly coupled and manually coded, t
    
 •	We replaced print statements with a standardized View interface, making it easier to plug in future UI implementations.
    
-**2.2 Updated Scenarios from HW7**
+### **2.2 Updated Scenarios from HW7**
 
    **Scenario 1:** Player Encounters a Monster (Player, Room, Monster, Inventory, Fixture)
    Player Jess enters the Foyer and is confronted by a monster: the Teddy Bear, which blocks the eastward path to the Spooky Library. The game displays a warning that a monster growls at Jess and blocks the way. The Teddy Bear attacks automatically, slapping Jess and dealing 25 points of damage. Jess's health decreases from 100 to 75, and the game updates his health status to FATIGUED.
@@ -54,18 +54,18 @@ Compared to our HW7 design, which was more tightly coupled and manually coded, t
    After examining the room and its fixtures, Jess discovers a clue: MOD-SPOOKY-VOICE. Recalling a password from an earlier note, Jess tries entering A Align. This time, the system verifies the answer, confirms it is correct, and deactivates the puzzle. The puzzle is removed from the room, and the blocked northward exit is updated internally from -6 to 6.
    Jess is now able to move north using the command N and successfully enters the Kitchen.
 
-**3.Additional Improvements**
+## **3.Additional Improvements**
    **•	Scalability:** Adding new rooms, items, or obstacles only requires updating the JSON file, not modifying the codebase.
    **•	Testability:** Code is now unit-testable in isolation due to clean separation of model and controller logic.
    **•	Flexibility:** The game supports saving and restoring game state with object serialization.
    **•	Maintainability:** Each class has a single clear responsibility, and enums are used to improve clarity for health status and ranking logic.
    **•	Extensibility:** The architecture supports future enhancements, like alternative views or more complex obstacles, without disrupting existing functionality.
 
-**4.Custom Game Engine Behavior**
+## **4.Custom Game Engine Behavior**
   
  Our team made a few design choices where the project allowed flexibility:
    
-**4.1 Health Status Logic**
+### **4.1 Health Status Logic**
    
 We defined four tiers of health using the HealthStatus enum:
    
@@ -79,7 +79,7 @@ We defined four tiers of health using the HealthStatus enum:
    
 Health is reduced when attacked by monsters and capped between 0 and 100.
    
-**4.2 Player Scoring and Rank System**
+### **4.2 Player Scoring and Rank System**
    
 Players gain points for solving puzzles and defeating monsters. Each obstacle has a predefined score value from the JSON file.
    The player's final rank is determined by their total score:
@@ -94,7 +94,7 @@ Players gain points for solving puzzles and defeating monsters. Each obstacle ha
    
 We opted not to factor inventory item value into the score calculation, but the structure supports such extensions.
    
-**4.3 Information Density**
+### **4.3 Information Density**
 
    After each command, the user interface displays the current room name and description, any active obstacles (like puzzles or monsters), a list of visible items, and the player’s health, score, and health status (e.g., AWAKE, WOOZY). At the beginning and when using the L command, the console also reminds the player of all available commands for navigation and interaction. Messages are printed to confirm actions like picking up items, solving puzzles, or taking damage. This structure ensures the player always receives relevant updates without overwhelming repetition.
 
