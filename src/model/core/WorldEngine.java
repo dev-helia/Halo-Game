@@ -69,19 +69,19 @@ public class WorldEngine implements Serializable {
     System.out.println("=== Game World Map ===");
 
     for (Room room : worldMap.values()) {
-      System.out.println("🏡 Room Number: " + room.getRoomNumber());
-      System.out.println("📪 Room Name: " + room.getName());
-      System.out.println("📜 Room Description: " + room.getRoomDescription());
+      System.out.println("Room Number: " + room.getRoomNumber());
+      System.out.println("Room Name: " + room.getName());
+      System.out.println("Room Description: " + room.getRoomDescription());
 
       // exits
-      System.out.println("🚪 Room Exits:");
+      System.out.println("Room Exits:");
       System.out.println("  → N: " + room.getExit("N"));
       System.out.println("  → S: " + room.getExit("S"));
       System.out.println("  → E: " + room.getExit("E"));
       System.out.println("  → W: " + room.getExit("W"));
 
       // items
-      System.out.println("🎒 Items:");
+      System.out.println("Items:");
       if (room.getItems() == null) {
         System.out.println("  - null");
       } else if (room.getItems().isEmpty()) {
@@ -93,7 +93,7 @@ public class WorldEngine implements Serializable {
       }
 
       // fixtures
-      System.out.println("🪑 Fixtures:");
+      System.out.println("Fixtures:");
       if (room.getFixtures() == null) {
         System.out.println("  - null");
       } else if (room.getFixtures().isEmpty()) {
@@ -107,11 +107,11 @@ public class WorldEngine implements Serializable {
       // obstacle
       GameObstacle obs = room.getObstacle();
       if (obs == null) {
-        System.out.println("🧱 Obstacle: null");
+        System.out.println("Obstacle: null");
       } else if (obs instanceof Puzzle) {
-        System.out.println("🧩 Puzzle: " + obs.getName());
+        System.out.println("Puzzle: " + obs.getName());
       } else if (obs instanceof Monster) {
-        System.out.println("👹 Monster: " + obs.getName());
+        System.out.println("Monster: " + obs.getName());
       }
 
       System.out.println("--------------------------------------------------\n");

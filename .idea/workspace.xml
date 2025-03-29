@@ -5,8 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7245979f-e6c8-4016-ba5a-d9e760a2e23b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/savegame.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/saves/.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/enginedriver/GameEngineApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/enginedriver/GameEngineApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/core/WorldEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/core/WorldEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/model/core/WorldEngineInjectionTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/model/core/WorldEngineInjectionTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/model/core/WorldEngineSmokeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/model/core/WorldEngineSmokeTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/model/core/WorldEngineTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/model/core/WorldEngineTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/model/element/FixtureTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/model/element/FixtureTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/model/element/ItemTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/model/element/ItemTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/model/obstacle/MonsterTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/model/obstacle/MonsterTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,6 +63,7 @@
     "Application.GameEngineApp.executor": "Run",
     "Application.WorldEngineSmokeTest.executor": "Run",
     "Application.WorldEngineTest.executor": "Run",
+    "Application.model.core.WorldEngineSmokeTest.executor": "Run",
     "Downloaded.Files.Path.Enabled": "false",
     "JUnit.FixtureTest.executor": "Run",
     "JUnit.GameObstacleTest.executor": "Run",
@@ -63,6 +72,7 @@
     "JUnit.PlayerTest.executor": "Run",
     "JUnit.PuzzleTest.executor": "Run",
     "JUnit.RoomTest.executor": "Run",
+    "JUnit.WorldEngineInjectionTest.executor": "Run",
     "JUnit.WorldEngineTest.executor": "Run",
     "JUnit.WorldEngineTest.testRoomCount.executor": "Run",
     "Repository.Attach.Annotations": "false",
@@ -98,44 +108,35 @@
       </method>
     </configuration>
     <configuration name="WorldEngineSmokeTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="WorldEngineSmokeTest" />
-      <module name="untitled1" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="enginedriver.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="WorldEngineSmokeTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="model.core.WorldEngineSmokeTest" />
       <module name="untitled1" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GameControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="model.core.WorldEngineSmokeTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="model.core.WorldEngineSmokeTest" />
       <module name="untitled1" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="controller.*" />
+          <option name="PATTERN" value="model.core.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="controller" />
-      <option name="MAIN_CLASS_NAME" value="controller.GameControllerTest" />
-      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ItemTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="WorldEngineInjectionTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="untitled1" />
-      <option name="PACKAGE_NAME" value="model.element" />
-      <option name="MAIN_CLASS_NAME" value="model.element.ItemTest" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="model.core.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="model.core" />
+      <option name="MAIN_CLASS_NAME" value="model.core.WorldEngineInjectionTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -143,6 +144,12 @@
     </configuration>
     <configuration name="WorldEngineTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="untitled1" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="model.core.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <option name="PACKAGE_NAME" value="model.core" />
       <option name="MAIN_CLASS_NAME" value="model.core.WorldEngineTest" />
       <option name="TEST_OBJECT" value="class" />
@@ -150,13 +157,29 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="WorldEngineTest.testRoomCount" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="untitled1" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="model.core.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="model.core" />
+      <option name="MAIN_CLASS_NAME" value="model.core.WorldEngineTest" />
+      <option name="METHOD_NAME" value="testRoomCount" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.GameEngineApp" />
-        <item itemvalue="Application.WorldEngineSmokeTest" />
-        <item itemvalue="JUnit.GameControllerTest" />
-        <item itemvalue="JUnit.ItemTest" />
+        <item itemvalue="Application.model.core.WorldEngineSmokeTest" />
         <item itemvalue="JUnit.WorldEngineTest" />
+        <item itemvalue="JUnit.WorldEngineTest.testRoomCount" />
+        <item itemvalue="JUnit.WorldEngineInjectionTest" />
       </list>
     </recent_temporary>
   </component>

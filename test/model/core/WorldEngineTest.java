@@ -26,7 +26,7 @@ public class WorldEngineTest {
   @Before
   public void setUp() throws IOException {
     engine = new WorldEngine();
-    engine.generateWorld("src/resources/Museum_of_Planet_of_the_Apes.json");
+    engine.generateWorld("src/resources/maps/Museum_of_Planet_of_the_Apes.json");
   }
 
   /**

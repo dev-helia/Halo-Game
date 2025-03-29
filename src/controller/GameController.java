@@ -10,10 +10,11 @@ import model.obstacle.Monster;
 import view.View;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Set;
 
 /**
  * The type Game controller.
@@ -23,34 +24,45 @@ public class GameController {
   private final WorldEngine world;
   private final View view;
   private final Scanner scanner;
-  private static final String MAP_FOLDER = "src/resources/maps";
-  private static final String SAVE_FOLDER = "src/resources/saves";
-  // 🌐 Direction keys
+  // File path
+  private static final String MAP_FOLDER =
+          Paths.get(System.getProperty("user.dir"), "src", "resources", "maps").toString();
+
+  private static final String SAVE_FOLDER =
+          Paths.get(System.getProperty("user.dir"), "src", "resources", "saves").toString();
+
+  // Direction keys
   private static final String NORTH_KEY = "N";
   private static final String SOUTH_KEY = "S";
   private static final String EAST_KEY = "E";
   private static final String WEST_KEY = "W"; //
-  private static final Set<String> MOVE_KEYS = Set.of(NORTH_KEY, SOUTH_KEY, EAST_KEY, WEST_KEY);
 
-  // 🎒 Item interaction
+  // Item interaction
   private static final String TAKE_KEY = "T";
   private static final String DROP_KEY = "D";
   private static final String USE_KEY = "U";
 
-  // 🕵️ Info & puzzle
+  // Info & puzzle
   private static final String INVENTORY_KEY = "I";
   private static final String LOOK_KEY = "L";
   private static final String EXAMINE_KEY = "X";
   private static final String ANSWER_KEY = "A";
 
-  // 💾 System
+  // System
   private static final String SAVE_KEY = "SAVE";
   private static final String RESTORE_KEY = "RESTORE";
   private static final String NEW_KEY = "NEW";
   private static final String QUIT_KEY = "Q";
   private static final String HELP_KEY = "HELP";
 
-
+  // Ensure save folder exists
+  static {
+    try {
+      Files.createDirectories(Paths.get(SAVE_FOLDER));
+    } catch (IOException e) {
+      System.err.println("Failed to create save directory: " + e.getMessage());
+    }
+  }
   /**
    * Instantiates a new Game controller.
    *
@@ -84,7 +96,7 @@ public class GameController {
         // List the map + select
         String mapPath = selectMap();
         if (mapPath == null) {
-          view.showMessage("🚨 Map selection failed. Exiting...");
+          view.showMessage("Map selection failed. Exiting...");
           return;
         }
         world.generateWorld(mapPath);
@@ -102,7 +114,7 @@ public class GameController {
         // List saves + selection
         String savePath = selectSave();
         if (savePath == null) {
-          view.showMessage("🚨 Save selection failed. Exiting...");
+          view.showMessage("Save selection failed. Exiting...");
           return;
         }
         this.player = new Player("TEMP", new Room(0, "TEMP", "This is a temporary room."));
@@ -135,10 +147,10 @@ public class GameController {
       }
 
       // Prompt for command
-      view.showMessage("👉 Type a command ('HELP' for help, 'Q' to quit):");
+      view.showMessage("Type a command ('HELP' for help, 'Q' to quit):");
 
       if (!scanner.hasNextLine()) {
-        view.showMessage("🛑 Input stream closed. Ending game.");
+        view.showMessage("Input stream closed. Ending game.");
         break;
       }
       String line = scanner.nextLine().trim();
@@ -178,7 +190,7 @@ public class GameController {
 
     // no json files in current path
     if (files == null || files.length == 0) {
-      view.showMessage("⚠️ No .json files found in: " + folderPath);
+      view.showMessage("No .json files found in: " + folderPath);
       return null;
     }
 
@@ -197,10 +209,10 @@ public class GameController {
         if (choice >= 1 && choice <= files.length) {
           return files[choice - 1].getPath();
         } else {
-          view.showMessage("⚠️ Invalid number. Try again:");
+          view.showMessage("Invalid number. Try again:");
         }
       } catch (NumberFormatException e) {
-        view.showMessage("⚠️ Please enter a number.");
+        view.showMessage("Please enter a number.");
       }
     }
   }
@@ -251,7 +263,7 @@ public class GameController {
           view.showMessage("Okay~ No save. 🌙✨");
           return true; // quit
         }
-        default -> view.showMessage("❓ Please enter 'Y' or 'N'.");
+        default -> view.showMessage("Please enter 'Y' or 'N'.");
       }
     }
   }
@@ -265,9 +277,9 @@ public class GameController {
     if (!fileName.endsWith(".json")) {
       fileName += ".json";
     }
-    String fullPath = SAVE_FOLDER + "/" + fileName;
+    String fullPath = SAVE_FOLDER + File.separator + fileName;
     boolean success = world.saveState(fullPath, player);
-    view.showMessage(success ? "✅ Game saved to " + fileName : "❌ Save failed.");
+    view.showMessage(success ? "Game saved to " + fileName : " Save failed.");
   }
 
   /**
@@ -305,7 +317,7 @@ public class GameController {
       Room current = player.getCurrentRoom();
       view.renderGame(player, current);
     } else {
-      view.showMessage("🚧 You can't move that way.");
+      view.showMessage("You can't move that way.");
     }
   }
 
@@ -332,11 +344,11 @@ public class GameController {
    */
   private void handleTake(String arg) {
     if (arg == null) {
-      view.showMessage("❓ What do you want to take?");
+      view.showMessage("What do you want to take?");
       return;
     }
     boolean success = player.pickItem(arg);
-    view.showMessage(success ? "🎒 You picked up " + arg + "." : "🚫 You can't take that.");
+    view.showMessage(success ? "You picked up " + arg + "." : "You can't take that.");
   }
 
   /**
@@ -346,11 +358,11 @@ public class GameController {
    */
   private void handleDrop(String arg) {
     if (arg == null) {
-      view.showMessage("❓ What do you want to drop?");
+      view.showMessage("What do you want to drop?");
       return;
     }
     boolean success = player.dropItem(arg);
-    view.showMessage(success ? "🗑️ You dropped " + arg + "." : "🚫 You don't have that item.");
+    view.showMessage(success ? "You dropped " + arg + "." : "You don't have that item.");
   }
 
   /**
@@ -360,7 +372,7 @@ public class GameController {
    */
   private void handleUse(String arg) {
     if (arg == null) {
-      view.showMessage("❓ Use what?");
+      view.showMessage("Use what?");
       return;
     }
     String result = player.useItem(arg);
@@ -373,11 +385,11 @@ public class GameController {
   private void handleInventory() {
     List<Item> inventory = player.getInventory();
     if (inventory.isEmpty()) {
-      view.showMessage("👜 Your inventory is empty.");
+      view.showMessage("Your inventory is empty.");
       return;
     }
 
-    view.showMessage("🎒 Your Inventory:");
+    view.showMessage("Your Inventory:");
     for (Item i : inventory) {
       view.showMessage(" - " + i.getName() + " (uses left: " + i.getUsesRemaining() + ")");
     }
@@ -398,7 +410,7 @@ public class GameController {
    */
   private void handleExamine(String arg) {
     if (arg == null) {
-      view.showMessage("❓ Examine what?");
+      view.showMessage("Examine what?");
       return;
     }
 
@@ -429,7 +441,7 @@ public class GameController {
    */
   private void handleAnswer(String arg) {
     if (arg == null) {
-      view.showMessage("❓ Answer what?");
+      view.showMessage("Answer what?");
       return;
     }
 
@@ -438,7 +450,7 @@ public class GameController {
     if (solved) {
       //player.addScore(10); // 示例值
     }
-    view.showMessage(solved ? "🎉 Puzzle solved!" : "❌ That didn't work.");
+    view.showMessage(solved ? "🎉 Puzzle solved!" : "That didn't work.");
   }
 
   /**
@@ -457,7 +469,7 @@ public class GameController {
           view.showMessage("No save. Let's keep going~ 🌈");
           return;
         }
-        default -> view.showMessage("❓ Please enter 'Y' or 'N'.");
+        default -> view.showMessage("Please enter 'Y' or 'N'.");
       }
     }
   }
@@ -468,7 +480,7 @@ public class GameController {
   private void handleRestore() {
     String savePath = selectSave();
     if (savePath == null) {
-      view.showMessage("🚨 No valid save file selected.");
+      view.showMessage("No valid save file selected.");
       return;
     }
 
@@ -476,9 +488,9 @@ public class GameController {
     boolean success = world.restoreState(savePath, temp);
     if (success) {
       this.player = temp;
-      view.showMessage("✅ Game restored!");
+      view.showMessage("Game restored!");
     } else {
-      view.showMessage("❌ Restore failed.");
+      view.showMessage("Restore failed.");
     }
   }
 
@@ -486,26 +498,26 @@ public class GameController {
    * Help command.
    */
   private void handleHelp() {
-    view.showMessage("\n🎮 Movement Commands\n---------------------");
+    view.showMessage("\nMovement Commands\n---------------------");
 
     // Movement
     view.showMessage("  - " + NORTH_KEY + " / " + SOUTH_KEY + " / " + EAST_KEY + " / " + WEST_KEY + " : Move North/South/East/West");
 
     // Item actions
-    view.showMessage("\n🧸 Item Actions\n---------------------");
+    view.showMessage("\nItem Actions\n---------------------");
     view.showMessage("  - " + TAKE_KEY + " <item>    : Take an item");
     view.showMessage("  - " + DROP_KEY + " <item>    : Drop an item");
     view.showMessage("  - " + USE_KEY + " <item>     : Use an item");
 
     // Info & puzzle
-    view.showMessage("\n🧩 Puzzle & Info\n---------------------");
+    view.showMessage("\nPuzzle & Info\n---------------------");
     view.showMessage("  - " + INVENTORY_KEY + "           : Check inventory");
     view.showMessage("  - " + LOOK_KEY + "               : Look around the room");
     view.showMessage("  - " + EXAMINE_KEY + " <name>     : Examine an item or fixture");
     view.showMessage("  - " + ANSWER_KEY + " <answer>    : Answer a puzzle");
 
     // System
-    view.showMessage("\n💾 System Commands\n---------------------");
+    view.showMessage("\nSystem Commands\n---------------------");
     view.showMessage("  - " + SAVE_KEY + "               : Save your progress");
     view.showMessage("  - " + RESTORE_KEY + "            : Restore a saved game");
     view.showMessage("  - " + QUIT_KEY + "               : Quit the game");

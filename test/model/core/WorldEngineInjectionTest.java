@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 
@@ -13,15 +14,28 @@ import model.elements.Item;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+
+/**
+ * The type World engine injection test.
+ */
 public class WorldEngineInjectionTest {
   private WorldEngine engine;
 
+  /**
+   * Sets up.
+   *
+   * @throws IOException the io exception
+   */
   @Before
   public void setUp() throws IOException {
     engine = new WorldEngine();
-    engine.generateWorld("src/resources/Museum_of_Planet_of_the_Apes.json");
+    String mapPath = Paths.get(System.getProperty("user.dir"), "src", "resources", "maps", "Museum_of_Planet_of_the_Apes.json").toString();
+
   }
 
+  /**
+   * Test items and fixtures injection.
+   */
   @Test
   public void testItemsAndFixturesInjection() {
     Map<Integer, Room> worldMap = engine.getWorldMap();
@@ -30,7 +44,6 @@ public class WorldEngineInjectionTest {
       Room room = entry.getValue();
       int roomNum = room.getRoomNumber();
 
-      // 检查 raw field 里有没有记录 "items"，就检查是否真的注入了
       String itemRaw = room.getRawField("items");
       if (itemRaw != null && !itemRaw.isBlank()) {
         List<Item> items = room.getItems();

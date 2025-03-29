@@ -15,7 +15,7 @@ public class WorldEngineSmokeTest{
   public static void main(String[] args) {
     try {
       // Arrange
-      String filePath = "src/resources/Museum_of_Planet_of_the_Apes.json";
+      String filePath = "src/resources/maps/Museum_of_Planet_of_the_Apes.json";
 
       WorldEngine engine = new WorldEngine();
 
