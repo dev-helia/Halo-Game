@@ -5,14 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7245979f-e6c8-4016-ba5a-d9e760a2e23b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/savegame.json" beforeDir="false" afterPath="$PROJECT_DIR$/savegame.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/enginedriver/GameEngineApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/enginedriver/GameEngineApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/core/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/core/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/ConsoleView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/ConsoleView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/model/core/PlayerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/model/core/PlayerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/savegame.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/saves/.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +70,7 @@
     "Repository.Attach.Sources": "false",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "Merging helia-controller",
+    "git-widget-placeholder": "#20 on helia-controller",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -89,7 +83,20 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.WorldEngineSmokeTest">
+  <component name="RunManager" selected="Application.GameEngineApp">
+    <configuration name="GameEngineApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="enginedriver.GameEngineApp" />
+      <module name="untitled1" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="enginedriver.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="WorldEngineSmokeTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="WorldEngineSmokeTest" />
       <module name="untitled1" />
@@ -145,8 +152,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.GameControllerTest" />
+        <item itemvalue="Application.GameEngineApp" />
         <item itemvalue="Application.WorldEngineSmokeTest" />
+        <item itemvalue="JUnit.GameControllerTest" />
         <item itemvalue="JUnit.ItemTest" />
         <item itemvalue="JUnit.WorldEngineTest" />
       </list>
