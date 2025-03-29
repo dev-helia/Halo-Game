@@ -88,7 +88,7 @@ public class ConsoleView implements View {
     // Show health status
     System.out.println("💖 Health: " + player.getHealth() + " | Status: " + player.getHealthStatus());
     System.out.println("🎖 Score: " + player.getScore());
-    System.out.println("==============================");
+    System.out.println("==============================\n");
   }
 
   /**

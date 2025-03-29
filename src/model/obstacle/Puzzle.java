@@ -1,7 +1,5 @@
 package model.obstacle;
 
-import java.io.Serializable;
-
 /**
  * Represents a puzzle in the game, which acts as an obstacle to the player.
  * Players can solve it using an item or by inputting a textual answer.

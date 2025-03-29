@@ -212,7 +212,7 @@ public class Player implements Serializable {
         puzzle.deactivate();
         updateScore(puzzle.getValue());
 
-        // ✅ Update the exit if it affects target
+        // Update the exit if it affects target
         if (puzzle.affectsTarget()) {
           int targetRoom = puzzle.getTargetRoomNumber(); // e.g., 2
           for (Map.Entry<String, Integer> entry : room.getExits().entrySet()) {

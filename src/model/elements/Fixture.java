@@ -1,6 +1,5 @@
 package model.elements;
 
-import java.io.Serializable;
 
 /**
  * The Fixture class represents immovable objects in the game.
