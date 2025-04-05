@@ -42,25 +42,6 @@ public class Item extends GameElements {
     return usesRemaining > 0;
   }
 
-  /**
-   * Drop the item.
-   */
-  public void dropItem() {
-    System.out.println("You dropped the " + getName() + ".");
-  }
-
-  /**
-   * Display detailed information about the item.
-   */
-  @Override
-  public void displayDetails() {
-    System.out.println("Item: " + getName());
-    System.out.println("Description: " + getDescription());
-    System.out.println("Weight: " + weight + "kg");
-    System.out.println("Uses remaining: " + usesRemaining);
-    System.out.println("Value: " + value);
-  }
-
   public double getWeight() {
     return weight;
   }

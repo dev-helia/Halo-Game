@@ -61,13 +61,6 @@ public class Monster extends GameObstacle {
     this.defeatItem = defeatItem;
     this.effects = effects;
 
-    // Use getDefeatItem() to log the required item
-    System.out.printf("Monster '%s' requires item '%s' to be defeated.%n", name, getDefeatItem());
-
-    // Use isDefeatedByItem() with a dummy value to ensure usage
-    if (isDefeatedByItem("DEBUG_ITEM")) {
-      System.out.printf("DEBUG_ITEM would defeat monster '%s'.%n", name);
-    }
   }
 
   /**

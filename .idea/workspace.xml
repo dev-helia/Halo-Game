@@ -83,6 +83,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
         <option value="Interface" />
       </list>
@@ -285,6 +286,7 @@
       <workItem from="1743040338539" duration="2316000" />
       <workItem from="1743082839910" duration="11655000" />
       <workItem from="1743271382881" duration="8553000" />
+      <workItem from="1743859340782" duration="5586000" />
     </task>
     <servers />
   </component>
@@ -328,6 +330,18 @@
           <line>18</line>
           <properties field="engine" class="controller.GameControllerTest" />
           <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-field">
+          <url>file://$PROJECT_DIR$/src/controller/GameController.java</url>
+          <line>45</line>
+          <properties field="HELP_KEY" class="controller.GameController" />
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-field">
+          <url>file://$PROJECT_DIR$/src/controller/GameController.java</url>
+          <line>38</line>
+          <properties field="EXAMINE_KEY" class="controller.GameController" />
+          <option name="timeStamp" value="17" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

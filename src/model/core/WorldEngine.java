@@ -26,6 +26,8 @@ import static utils.obstacleparser.PuzzleParser.parsePuzzles;
 public class WorldEngine implements Serializable {
   // fields and the default constructor
   private Map<Integer, Room> worldMap; // Whole room map: Room number -> Room object
+  private Player player;
+
 
   /**
    * Constructor (no seed default build)
@@ -60,67 +62,7 @@ public class WorldEngine implements Serializable {
 
   }
 
-  // ==== printer ====
-
-  /**
-   * Print the current world map for simple smoke testing.
-   */
-  public void printWorldMap() {
-    System.out.println("=== Game World Map ===");
-
-    for (Room room : worldMap.values()) {
-      System.out.println("Room Number: " + room.getRoomNumber());
-      System.out.println("Room Name: " + room.getName());
-      System.out.println("Room Description: " + room.getRoomDescription());
-
-      // exits
-      System.out.println("Room Exits:");
-      System.out.println("  → N: " + room.getExit("N"));
-      System.out.println("  → S: " + room.getExit("S"));
-      System.out.println("  → E: " + room.getExit("E"));
-      System.out.println("  → W: " + room.getExit("W"));
-
-      // items
-      System.out.println("Items:");
-      if (room.getItems() == null) {
-        System.out.println("  - null");
-      } else if (room.getItems().isEmpty()) {
-        System.out.println("  - (empty)");
-      } else {
-        for (Item item : room.getItems()) {
-          System.out.println("  - " + item.getName());
-        }
-      }
-
-      // fixtures
-      System.out.println("Fixtures:");
-      if (room.getFixtures() == null) {
-        System.out.println("  - null");
-      } else if (room.getFixtures().isEmpty()) {
-        System.out.println("  - (empty)");
-      } else {
-        for (Fixture fixture : room.getFixtures()) {
-          System.out.println("  - " + fixture.getName());
-        }
-      }
-
-      // obstacle
-      GameObstacle obs = room.getObstacle();
-      if (obs == null) {
-        System.out.println("Obstacle: null");
-      } else if (obs instanceof Puzzle) {
-        System.out.println("Puzzle: " + obs.getName());
-      } else if (obs instanceof Monster) {
-        System.out.println("Monster: " + obs.getName());
-      }
-
-      System.out.println("--------------------------------------------------\n");
-    }
-  }
-
-
-
-  // ==== getter ====
+  // ==== getter&setter ====
 
   /**
    * Room getter.
@@ -139,6 +81,24 @@ public class WorldEngine implements Serializable {
    */
   public Map<Integer, Room> getWorldMap() {
     return worldMap;
+  }
+
+  /**
+   * Sets player.
+   *
+   * @param player the player
+   */
+  public void setPlayer(Player player) {
+    this.player = player;
+  }
+
+  /**
+   * Gets player.
+   *
+   * @return the player
+   */
+  public Player getPlayer() {
+    return this.player;
   }
 
   // ==== game state ====
