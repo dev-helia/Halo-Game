@@ -22,13 +22,4 @@ public class Fixture extends GameElements {
     return weight;
   }
 
-  /**
-   * Displays the detailed information of the fixture.
-   */
-  @Override
-  public void displayDetails() {
-    System.out.println("Fixture: " + getName());
-    System.out.println("Description: " + getDescription());
-    System.out.println("Weight: " + getWeight() + "kg");
-  }
 }

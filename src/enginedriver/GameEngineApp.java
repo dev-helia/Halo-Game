@@ -1,7 +1,8 @@
 package enginedriver;
 
 import controller.GameController;
-import model.core.WorldEngine;
+import model.GameModel; // ✅ 使用 GameModel 替换 WorldEngine
+import model.IModel;
 import view.ConsoleView;
 import view.View;
 
@@ -10,7 +11,7 @@ import java.io.InputStreamReader;
 
 /**
  * GameEngineApp is the required entry point for the game engine.
- * It sets up the model (WorldEngine), controller, and view.
+ * It sets up the model (GameModel), controller, and view.
  * It supports both interactive and automated (smoke test) input sources.
  */
 public class GameEngineApp {
@@ -22,12 +23,14 @@ public class GameEngineApp {
    * @throws IOException if loading world fails
    */
   public GameEngineApp(Readable source) throws IOException {
-    // Load the world data from the JSON file
-    WorldEngine world = new WorldEngine();
-    // Create the view
+    //改为使用封装后的 GameModel
+    IModel model = new GameModel();
+
+    // 创建视图
     View view = new ConsoleView();
-    // Create the controller
-    this.controller = new GameController(world, view, source); // remove Player param
+
+    // 创建控制器，传入封装好的 model
+    this.controller = new GameController(model, view, source);
   }
 
   /**

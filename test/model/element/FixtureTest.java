@@ -32,14 +32,4 @@ public class FixtureTest {
     assertEquals(25, fixture.getWeight());
   }
 
-  /**
-   * Test display details.
-   */
-  @Test
-  public void testDisplayDetails() {
-    // Test the 'displayDetails' method
-    // Since displayDetails outputs to System.out, we can manually inspect or use a mock for System.out
-    fixture.displayDetails();
-    // For testing purposes, you can verify output using System.setOut to capture System.out
-  }
 }

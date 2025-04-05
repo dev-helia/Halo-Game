@@ -30,8 +30,4 @@ public abstract class GameElements implements Serializable {
     this.description = description;
   }
 
-  /**
-   * Abstract method that forces subclasses to implement a detailed display method.
-   */
-  public abstract void displayDetails();
 }

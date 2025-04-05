@@ -68,12 +68,6 @@ public class Puzzle extends GameObstacle {
     this.effects = effects;
     this.targetRoomNumber = targetRoomNumber;
     this.hintMessage = hintMessage;
-
-    // Log to trigger usage of getters
-    System.out.printf("Puzzle '%s' created. Hint: %s | Affects player: %b | Affects target: %b | Room: %d\n",
-            getName(), getHintMessage(), affectsPlayer(), affectsTarget(), getTargetRoomNumber());
-    System.out.println("Puzzle effect: " + getEffects());
-    System.out.println("Current description: " + getCurrentDescription());
   }
 
   /**
