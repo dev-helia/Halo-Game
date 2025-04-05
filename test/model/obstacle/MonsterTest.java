@@ -63,7 +63,7 @@ public class MonsterTest {
             25,
             true,
             "The teddy bear slaps you!",
-            "Slippers"
+            "Slippers", "The bear blocks your way with a menacing grin."
     );
     player = new TestPlayer("TestPlayer", dummyRoom, 100);
   }
@@ -159,7 +159,7 @@ public class MonsterTest {
             50,
             false,
             "Boo!",
-            "Candle"
+            "Candle", "Just floats in place and stares at you silently."
     );
     passiveMonster.attack(player);
     assertEquals(100, player.getHealth());

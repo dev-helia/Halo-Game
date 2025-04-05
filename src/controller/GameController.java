@@ -19,7 +19,7 @@ import java.util.Scanner;
 /**
  * The type Game controller.
  */
-public class GameController {
+public class GameController extends AbstractController {
   // Refactored GameController: Decouple Player and WorldEngine with IModel
   private final IModel model;
   private final View view;
@@ -45,12 +45,6 @@ public class GameController {
   private static final String QUIT_KEY = "Q";
   private static final String HELP_KEY = "HELP";
 
-  static {
-    try {
-      Files.createDirectories(Paths.get(new File(PathUtils.getSavePath("")).getParent()));
-    } catch (IOException ignored) { }
-  }
-
   /**
    * Instantiates a new Game controller.
    *
@@ -63,7 +57,11 @@ public class GameController {
     this.view = view;
     this.scanner = new Scanner(inputSource);
   }
-
+   public GameController(WorldEngine world, View view, Readable inputSource) {
+    super(world, null);
+    this.view = view;
+    this.scanner = new Scanner(inputSource);
+  }
   /**
    * Start game.
    *

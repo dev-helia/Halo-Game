@@ -1,19 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="halo:jar" />
+    </artifacts-to-build>
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7245979f-e6c8-4016-ba5a-d9e760a2e23b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/model/GameModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/model/IModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/controller/AbstractController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/view/Features.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2025_3_25,_15_51_[Changes]/shelved.patch" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2025_3_25__15_51__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/halo.iml" beforeDir="false" afterPath="$PROJECT_DIR$/halo.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/GameController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/enginedriver/GameEngineApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/enginedriver/GameEngineApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/core/WorldEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/core/WorldEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/core/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/core/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/core/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/core/Room.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/obstacle/GameObstacle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/obstacle/GameObstacle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/obstacle/Monster.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/obstacle/Monster.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/obstacle/Puzzle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/obstacle/Puzzle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/images/algorithms.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/images/algorithms.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/images/billboard.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/images/billboard.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/images/bridge.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/images/bridge.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/images/coming-soon.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/images/coming-soon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/images/congratulations.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/images/congratulations.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/images/courtyard.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/images/courtyard.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/images/darkness.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/images/darkness.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/images/dining.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/images/dining.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/images/east.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/images/east.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/images/entrance.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/images/entrance.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/images/exhibit-1.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/images/exhibit-1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/images/exhibit-2.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/images/exhibit-2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/images/exhibit-3.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/images/exhibit-3.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/images/foyer.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/images/foyer.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/images/golden-ticket.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/images/golden-ticket.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/images/hair-clippers.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/images/hair-clippers.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/images/hq.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/images/hq.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/images/key.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/images/key.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/images/kitchen.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/images/kitchen.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/images/lamp.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/images/lamp.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/images/library-before.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/images/library-before.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/images/library.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/images/library.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/images/livingroom.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/images/livingroom.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/images/monitor-room.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/images/monitor-room.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/images/monster-rabbit.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/images/monster-rabbit.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/images/monster-teddy.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/images/monster-teddy.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/images/museum.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/images/museum.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/images/north.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/images/north.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/images/plate.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/images/plate.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/images/profk.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/images/profk.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/images/robot.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/images/robot.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/images/secret_room.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/images/secret_room.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/images/south.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/images/south.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/images/study.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/images/study.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/images/west.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/images/west.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/maps/Align_Quest_Game_Elements.json" beforeDir="false" afterPath="$PROJECT_DIR$/resources/maps/Align_Quest_Game_Elements.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/maps/Empty_Rooms.json" beforeDir="false" afterPath="$PROJECT_DIR$/resources/maps/Empty_Rooms.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/maps/Empty_Rooms_Data.json" beforeDir="false" afterPath="$PROJECT_DIR$/resources/maps/Empty_Rooms_Data.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/maps/Museum_of_Planet_of_the_Apes.json" beforeDir="false" afterPath="$PROJECT_DIR$/resources/maps/Museum_of_Planet_of_the_Apes.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/maps/Simple_Hallway.json" beforeDir="false" afterPath="$PROJECT_DIR$/resources/maps/Simple_Hallway.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/saves/save1.json" beforeDir="false" afterPath="$PROJECT_DIR$/resources/saves/save1.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/saves/testsave.json" beforeDir="false" afterPath="$PROJECT_DIR$/resources/saves/testsave.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/fileutil/PathUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/fileutil/PathUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/obstacleparser/MonsterParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/obstacleparser/MonsterParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/obstacleparser/PuzzleParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/obstacleparser/PuzzleParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/roomparser/RoomParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/roomparser/RoomParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/ConsoleView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/ConsoleView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/model/core/PlayerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/model/core/PlayerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/model/obstacle/MonsterTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/model/obstacle/MonsterTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,13 +85,14 @@
       <list>
         <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="suGUI" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -45,7 +106,7 @@
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
     "url": "https://github.com/dev-helia/Halo-Game.git",
-    "accountId": "3a79e63b-9a11-476a-8145-75d82e2c757b"
+    "accountId": "42faf2fc-ba54-49b0-b99e-cfcb1b8b47b7"
   }
 }]]></component>
   <component name="ProblemsViewState">
@@ -89,7 +150,7 @@
     "Repository.Attach.Sources": "false",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "suGUI__with-GameEng__GameController__updated",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/hetao/Desktop/Halo_Game7",
     "node.js.detected.package.eslint": "true",
@@ -97,7 +158,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
+    "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "preferences.lookFeel",
@@ -105,8 +166,9 @@
   }
 }]]></component>
   <component name="RecentsManager">
-    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="model" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\yisua\OneDrive\Desktop\NEU CSA\Spring 2025\CS 5004\Halo-Game" />
+      <recent name="C:\Users\yisua\OneDrive\Desktop\NEU CSA\Spring 2025\CS 5004\Halo-Game\out\artifacts\halo_jar" />
     </key>
   </component>
   <component name="RunManager" selected="Application.GameEngineApp">
@@ -186,6 +248,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="halo" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.GameEngineApp" />
+      <item itemvalue="JUnit.GameControllerTest" />
+      <item itemvalue="JUnit.GameControllerTest.testPuzzleAnswerFailAndSuccess" />
+      <item itemvalue="JUnit.GameControllerTest.testSaveAndRestoreFlow" />
+      <item itemvalue="JUnit.GameControllerTest.testStartNewGame_MoveEast_QuitWithSave" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.GameEngineApp" />
@@ -195,14 +271,6 @@
         <item itemvalue="JUnit.GameControllerTest.testSaveAndRestoreFlow" />
       </list>
     </recent_temporary>
-  </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.18034.62" />
-        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.18034.62" />
-      </set>
-    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -230,12 +298,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/model/core/Room.java</url>
-          <line>72</line>
+          <line>77</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/model/core/Room.java</url>
-          <line>136</line>
+          <line>143</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -243,14 +311,10 @@
           <line>17</line>
           <option name="timeStamp" value="15" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/enginedriver/GameEngineApp.java</url>
-          <line>50</line>
-          <properties class="enginedriver.GameEngineApp" method="main">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="7" />
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/model/obstacle/Monster.java</url>
+          <line>118</line>
+          <option name="timeStamp" value="16" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/utils/obstacleparser/MonsterParser.java</url>

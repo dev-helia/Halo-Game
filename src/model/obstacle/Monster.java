@@ -27,6 +27,10 @@ public class Monster extends GameObstacle {
    * The name of the item required to defeat this monster (e.g., "Sword", "Slippers").
    */
   private final String defeatItem;
+  /**
+   * Description of the monster's effect.
+   */
+  private final String effects;
 
   /**
    * Constructs a new Monster with the specified properties.
@@ -47,13 +51,15 @@ public class Monster extends GameObstacle {
                  int damage,
                  boolean canAttack,
                  String attackMessage,
-                 String defeatItem) {
+                 String defeatItem,
+                 String effects) {
 
     super(name, description, active, value);
     this.damage = damage;
     this.canAttack = canAttack;
     this.attackMessage = attackMessage;
     this.defeatItem = defeatItem;
+    this.effects = effects;
 
   }
 
@@ -65,7 +71,7 @@ public class Monster extends GameObstacle {
   public void attack(Player player) {
     if (canAttack && isActive()) {
       double currentHealth = player.getHealth();
-      player.setHealth((int) (currentHealth - damage)); // Cast to int to fix the method mismatch
+      player.setHealth((int) (currentHealth + damage)); // Cast to int to fix the method mismatch
     }
   }
 
@@ -113,5 +119,10 @@ public class Monster extends GameObstacle {
    */
   public String getDefeatItem() {
     return defeatItem;
+  }
+
+  @Override
+  public String getEffects() {
+    return effects;
   }
 }

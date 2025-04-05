@@ -8,6 +8,7 @@ import model.elements.Fixture;
 import model.obstacle.GameObstacle;
 import model.obstacle.Monster;
 
+import java.io.PrintWriter;
 import java.util.List;
 
 /**
@@ -16,26 +17,36 @@ import java.util.List;
  */
 public class ConsoleView implements View {
 
+  private final PrintWriter out;
+
+  public ConsoleView(PrintWriter batchOutput) {
+    this.out = batchOutput;
+  }
+
+  public ConsoleView() {
+    this(new PrintWriter(System.out, true));
+  }
+
   /**
    * Displays the main welcome banner and available commands.
    */
   @Override
   public void displayMainMenu() {
-    System.out.println("===================================");
-    System.out.println("🎮 Welcome to the Adventure Game!");
-    System.out.println("To begin, enter your name.");
-    System.out.println();
-    System.out.println("Commands:");
-    System.out.println("  (N)orth, (S)outh, (E)ast or (W)est to move");
-    System.out.println("  (T)ake <item> to take an item");
-    System.out.println("  (D)rop <item> to drop an item");
-    System.out.println("  (U)se <item> to use an item");
-    System.out.println("  (X)amine <object> to inspect something");
-    System.out.println("  (A)nswer <text> to solve a puzzle");
-    System.out.println("  (I)nventory to view your items");
-    System.out.println("  (L)ook to re-describe your location");
-    System.out.println("  (Q)uit to save and exit");
-    System.out.println("===================================");
+    out.println("===================================");
+    out.println("🎮 Welcome to the Adventure Game!");
+    out.println("To begin, enter your name.");
+    out.println();
+    out.println("Commands:");
+    out.println("  (N)orth, (S)outh, (E)ast or (W)est to move");
+    out.println("  (T)ake <item> to take an item");
+    out.println("  (D)rop <item> to drop an item");
+    out.println("  (U)se <item> to use an item");
+    out.println("  (X)amine <object> to inspect something");
+    out.println("  (A)nswer <text> to solve a puzzle");
+    out.println("  (I)nventory to view your items");
+    out.println("  (L)ook to re-describe your location");
+    out.println("  (Q)uit to save and exit");
+    out.println("===================================");
   }
 
   /**
@@ -50,45 +61,45 @@ public class ConsoleView implements View {
    */
   @Override
   public void renderGame(Player player, Room room) {
-    System.out.println("\n==============================");
-    System.out.println("📍 You are standing in: " + room.getName());
-    System.out.println(room.getRoomDescription());
+    out.println("\n==============================");
+    out.println("📍 You are standing in: " + room.getName());
+    out.println(room.getRoomDescription());
 
     // Show obstacles
     GameObstacle obs = room.getObstacle();
     if (obs != null && obs.isActive()) {
       if (obs instanceof Monster) {
-        System.out.println("👹 A monster " + obs.getName() + " growls at you! You cannot get past!");
-        System.out.println(((Monster) obs).getAttackMessage());
+        out.println("👹 A monster " + obs.getName() + " growls at you! You cannot get past!");
+        out.println(((Monster) obs).getAttackMessage());
       } else {
-        System.out.println("🧩 Puzzle: " + obs.getDescription());
+        out.println("🧩 Puzzle: " + obs.getDescription());
       }
     }
 
     // Show items
     List<Item> items = room.getItems();
     if (!items.isEmpty()) {
-      System.out.print("🧸 Items you see here: ");
+      out.print("🧸 Items you see here: ");
       for (Item i : items) {
-        System.out.print(i.getName() + " ");
+        out.print(i.getName() + " ");
       }
-      System.out.println();
+      out.println();
     }
 
     // Show fixtures
     List<Fixture> fixtures = room.getFixtures();
     if (!fixtures.isEmpty()) {
-      System.out.print("🪑 Fixtures here: ");
+      out.print("🪑 Fixtures here: ");
       for (Fixture f : fixtures) {
-        System.out.print(f.getName() + " ");
+        out.print(f.getName() + " ");
       }
-      System.out.println();
+      out.println();
     }
 
     // Show health status
-    System.out.println("💖 Health: " + player.getHealth() + " | Status: " + player.getHealthStatus());
-    System.out.println("🎖 Score: " + player.getScore());
-    System.out.println("==============================\n");
+    out.println("💖 Health: " + player.getHealth() + " | Status: " + player.getHealthStatus());
+    out.println("🎖 Score: " + player.getScore());
+    out.println("==============================\n");
   }
 
   /**
