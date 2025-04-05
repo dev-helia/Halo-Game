@@ -48,9 +48,7 @@ public class GameController {
   static {
     try {
       Files.createDirectories(Paths.get(new File(PathUtils.getSavePath("")).getParent()));
-    } catch (IOException e) {
-      System.err.println("Failed to create save directory: " + e.getMessage());
-    }
+    } catch (IOException ignored) { }
   }
 
   /**
