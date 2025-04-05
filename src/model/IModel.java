@@ -16,32 +16,136 @@ import java.util.List;
  */
 public interface IModel {
 
-  // ===== World Setup =====
+  /**
+   * Generate world.
+   *
+   * @param jsonFilePath the json file path
+   * @throws IOException the io exception
+   */
+// ===== World Setup =====
   void generateWorld(String jsonFilePath) throws IOException;
 
-  // ===== Player Initialization =====
+  /**
+   * Initialize player.
+   *
+   * @param name the name
+   */
+// ===== Player Initialization =====
   void initializePlayer(String name);
 
-  // ===== Player Actions =====
+  /**
+   * Move player boolean.
+   *
+   * @param direction the direction
+   * @return the boolean
+   */
+// ===== Player Actions =====
   boolean movePlayer(String direction);
+
+  /**
+   * Pick item boolean.
+   *
+   * @param itemName the item name
+   * @return the boolean
+   */
   boolean pickItem(String itemName);  // from room -> inventory
+
+  /**
+   * Drop item boolean.
+   *
+   * @param itemName the item name
+   * @return the boolean
+   */
   boolean dropItem(String itemName);  // from inventory -> room
+
+  /**
+   * Use item string.
+   *
+   * @param itemName the item name
+   * @return the string
+   */
   String useItem(String itemName);
+
+  /**
+   * Answer puzzle boolean.
+   *
+   * @param answer the answer
+   * @return the boolean
+   */
   boolean answerPuzzle(String answer);
 
-  // ===== State Save/Load =====
+  /**
+   * Save game boolean.
+   *
+   * @param filePath the file path
+   * @return the boolean
+   */
+// ===== State Save/Load =====
   boolean saveGame(String filePath);
+
+  /**
+   * Load game boolean.
+   *
+   * @param filePath the file path
+   * @return the boolean
+   */
   boolean loadGame(String filePath);
 
-  // ===== Game Status Query =====
+  /**
+   * Gets player.
+   *
+   * @return the player
+   */
+// ===== Game Status Query =====
   Player getPlayer();
+
+  /**
+   * Gets current room.
+   *
+   * @return the current room
+   */
   Room getCurrentRoom();
+
+  /**
+   * Gets inventory.
+   *
+   * @return the inventory
+   */
   List<Item> getInventory();
+
+  /**
+   * Gets health status.
+   *
+   * @return the health status
+   */
   HealthStatus getHealthStatus();
+
+  /**
+   * Gets health.
+   *
+   * @return the health
+   */
   double getHealth();
+
+  /**
+   * Gets score.
+   *
+   * @return the score
+   */
   double getScore();
+
+  /**
+   * Gets player rank.
+   *
+   * @return the player rank
+   */
   PlayerRank getPlayerRank();
 
-  // ===== Obstacle / Entity Access (for monster attack etc.) =====
+  /**
+   * Gets player reference.
+   *
+   * @return the player reference
+   */
+// ===== Obstacle / Entity Access (for monster attack etc.) =====
   Player getPlayerReference();  // for Monster.attack(player)
 }
