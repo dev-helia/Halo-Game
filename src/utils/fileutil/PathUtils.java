@@ -8,13 +8,17 @@ import java.nio.file.Paths;
 public class PathUtils {
 
   private static final String MAP_DIR
-          = Paths.get(System.getProperty("user.dir"), "src", "resources", "maps").toString();
+          = Paths.get("resources", "maps").toString();
+
   private static final String SAVE_DIR
-          = Paths.get(System.getProperty("user.dir"), "src", "resources", "saves").toString();;
+          = Paths.get("resources", "saves").toString();
+
+  private static final String IMAGE_DIR
+          = Paths.get("resources", "images").toString();
 
   /**
-   * Concatenate map file paths (default.json suffix)
-   * @param fileName Map name without path
+   * Get the full path to a map file.
+   * @param fileName The filename (e.g., "Museum_of_Planet_of_the_Apes.json")
    * @return Full path
    */
   public static String getMapPath(String fileName) {
@@ -25,8 +29,8 @@ public class PathUtils {
   }
 
   /**
-   * Concatenate archive file paths (default.json suffix)
-   * @param fileName Map name without path
+   * Get the full path to a save file.
+   * @param fileName The save file name
    * @return Full path
    */
   public static String getSavePath(String fileName) {
@@ -34,5 +38,14 @@ public class PathUtils {
       fileName += ".json";
     }
     return Paths.get(SAVE_DIR, fileName).toString();
+  }
+
+  /**
+   * Get the full path to an image file.
+   * @param fileName The image file name (e.g. "north.png")
+   * @return Full path
+   */
+  public static String getImagePath(String fileName) {
+    return Paths.get(IMAGE_DIR, fileName).toString();
   }
 }

@@ -86,4 +86,12 @@ public abstract class GameObstacle implements Serializable {
   public String getDescription() {
     return description;
   }
+
+  public String getCurrentDescription() {
+    return getDescription();  // Default behavior for monsters
+  }
+
+  public String getEffects() {
+    return description;  // default fallback if subclass doesn’t override
+  }
 }
