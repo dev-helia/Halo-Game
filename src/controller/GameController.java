@@ -110,7 +110,7 @@ public class GameController {
 
       GameObstacle obs = model.getCurrentRoom().getObstacle();
       if (obs instanceof Monster m && m.isActive() && m.canAttack()) {
-        m.attack(model.getPlayerReference());
+        m.attack(model.getPlayer());
         view.showMessage(m.getAttackMessage());
         view.showMessage("Player takes -" + m.getDamage() + " damage!");
         if (model.getHealth() <= 0) {

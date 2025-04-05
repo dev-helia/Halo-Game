@@ -16,22 +16,26 @@ import java.util.List;
  */
 public interface IModel {
 
+  // ===== World Setup =====
+
   /**
    * Generate world.
    *
    * @param jsonFilePath the json file path
    * @throws IOException the io exception
    */
-// ===== World Setup =====
   void generateWorld(String jsonFilePath) throws IOException;
+
+  // ===== Player Initialization =====
 
   /**
    * Initialize player.
    *
    * @param name the name
    */
-// ===== Player Initialization =====
   void initializePlayer(String name);
+
+  // ===== Player Actions =====
 
   /**
    * Move player boolean.
@@ -39,7 +43,6 @@ public interface IModel {
    * @param direction the direction
    * @return the boolean
    */
-// ===== Player Actions =====
   boolean movePlayer(String direction);
 
   /**
@@ -74,13 +77,14 @@ public interface IModel {
    */
   boolean answerPuzzle(String answer);
 
+  // ===== State Save/Load =====
+
   /**
    * Save game boolean.
    *
    * @param filePath the file path
    * @return the boolean
    */
-// ===== State Save/Load =====
   boolean saveGame(String filePath);
 
   /**
@@ -91,12 +95,13 @@ public interface IModel {
    */
   boolean loadGame(String filePath);
 
+  // ===== Game Status Query =====
+
   /**
    * Gets player.
    *
    * @return the player
    */
-// ===== Game Status Query =====
   Player getPlayer();
 
   /**
@@ -140,12 +145,4 @@ public interface IModel {
    * @return the player rank
    */
   PlayerRank getPlayerRank();
-
-  /**
-   * Gets player reference.
-   *
-   * @return the player reference
-   */
-// ===== Obstacle / Entity Access (for monster attack etc.) =====
-  Player getPlayerReference();  // for Monster.attack(player)
 }
