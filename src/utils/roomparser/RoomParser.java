@@ -28,6 +28,10 @@ public class RoomParser {
     // Create a Room object using room number and name.
     Room r = new Room(num, name, description);
 
+    if (obj.has("picture") && !obj.get("picture").isJsonNull()) {
+      r.setPicture(obj.get("picture").getAsString());
+    }
+
     // Set exits (N/S/E/W) to their target room numbers
     for (String dir : List.of("N", "S", "E", "W")) {
       if (obj.has(dir) && !obj.get(dir).isJsonNull()) {

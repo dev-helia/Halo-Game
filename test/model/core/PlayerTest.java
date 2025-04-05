@@ -213,7 +213,7 @@ public class PlayerTest {
     Room foyer = new Room(3, "Foyer", "Description...");
     Monster teddy = new Monster(
             "Teddy Bear", "Fuzzy bear", true, 100, 15, true,
-            "Roar!", "Hair Clippers"
+            "Roar!", "Hair Clippers", "Blocking the path!"
     );
     foyer.setObstacle(teddy);
 
@@ -236,7 +236,7 @@ public class PlayerTest {
     Room dining = new Room(7, "Dining Room", "Description...");
     Monster rabbit = new Monster(
             "Rabbit", "Furry bunny", true, 80, 10, true,
-            "Chomp!", "Frying Pan"
+            "Chomp!", "Frying Pan", "Rabbit blocks your way!"
     );
     dining.setObstacle(rabbit);
 

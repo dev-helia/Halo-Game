@@ -99,6 +99,8 @@ public class Player implements Serializable {
     if (getTotalWeight() + item.getWeight() > MAX_WEIGHT) {
       // Return item to room if overweight
       currentRoom.addItem(item);
+      System.out.printf("Item '%s' is too heavy to carry. Current: %.1f, Limit: %d\n",
+              item.getName(), getTotalWeight(), MAX_WEIGHT);
       return false;
     }
 
@@ -212,13 +214,17 @@ public class Player implements Serializable {
         puzzle.deactivate();
         updateScore(puzzle.getValue());
 
-        // Update the exit if it affects target
+        // Fix: If the puzzle affects the current room (not a different target room)
         if (puzzle.affectsTarget()) {
-          int targetRoom = puzzle.getTargetRoomNumber(); // e.g., 2
+          int targetRoom = puzzle.getTargetRoomNumber();
+
+          // Try unblocking any negative exits that point TO this room (the puzzle's target)
           for (Map.Entry<String, Integer> entry : room.getExits().entrySet()) {
-            if (entry.getValue() == -targetRoom) {
-              room.setExit(entry.getKey(), targetRoom); // unblock path
-              break;
+            String dir = entry.getKey();
+            int val = entry.getValue();
+            if (val == -targetRoom) {
+              room.setExit(dir, targetRoom);  // unblock the exit
+              System.out.println("Unblocked exit " + dir + " to room " + targetRoom);
             }
           }
         }

@@ -36,10 +36,10 @@ public class MonsterParser {
         boolean canAttack = getAsBooleanOrDefault(m, "can_attack", false);
         String attackMessage = getAsStringOrDefault(m, "attack", "");
         String defeatItem = getAsStringOrDefault(m, "solution", "");
+        String effects = getAsStringOrDefault(m, "effects", "");  // ✅ New
         int targetRoom = parseRoomNumber(getAsStringOrDefault(m, "target", "0:Unknown"));
 
-
-        // Create a Monster object with parsed attributes
+        // ✅ Pass 'effects' to the Monster constructor
         Monster monster = new Monster(
                 name,
                 description,
@@ -48,10 +48,10 @@ public class MonsterParser {
                 damage,
                 canAttack,
                 attackMessage,
-                defeatItem
+                defeatItem,
+                effects
         );
 
-        // Assign the monster to the correct room in the world map
         Room r = worldMap.get(targetRoom);
         if (r != null) {
           r.setObstacle(monster);
@@ -61,6 +61,7 @@ public class MonsterParser {
       }
     }
   }
+
   private static String getAsStringOrDefault(JsonObject obj, String key, String defaultVal) {
     return obj.has(key) && obj.get(key).isJsonPrimitive() ? obj.get(key).getAsString() : defaultVal;
   }
@@ -72,5 +73,4 @@ public class MonsterParser {
   private static boolean getAsBooleanOrDefault(JsonObject obj, String key, boolean defaultVal) {
     return obj.has(key) && obj.get(key).isJsonPrimitive() ? obj.get(key).getAsBoolean() : defaultVal;
   }
-
 }

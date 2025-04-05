@@ -143,4 +143,5 @@ public class Puzzle extends GameObstacle {
   public String getCurrentDescription() {
     return isActive() ? effects : description;
   }
+
 }

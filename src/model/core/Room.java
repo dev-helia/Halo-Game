@@ -20,6 +20,7 @@ public class Room implements Serializable {
   private final String name;
   private String roomDescription;
 
+
   // Direction → Target room number
   private final Map<String, Integer> exits;
   private List<Item> items;
@@ -28,8 +29,11 @@ public class Room implements Serializable {
   // Used to store raw string fields before parsing
   private final Map<String, String> rawFields;
 
+  private String picture;
+
   /**
    * Constructs a new Room with room number and name.
+   *
    * @param roomNumber the unique room number
    * @param name       the name of the room
    */
@@ -42,6 +46,7 @@ public class Room implements Serializable {
     this.fixtures = new ArrayList<>();
     this.obstacle = null;
     this.rawFields = new HashMap<>();
+    this.picture = picture;
   }
 
   /**
@@ -97,6 +102,7 @@ public class Room implements Serializable {
   public List<Item> getItems() {
     return items;
   }
+
   public void setItems(List<Item> items) {
     this.items = items;
   }
@@ -122,6 +128,7 @@ public class Room implements Serializable {
   public List<Fixture> getFixtures() {
     return fixtures;
   }
+
   public void setFixtures(List<Fixture> fixtures) {
     this.fixtures = fixtures;
   }
@@ -183,12 +190,25 @@ public class Room implements Serializable {
     return roomDescription;
 
   }
+
   @Override
   public String toString() {
     return "Room " + roomNumber + ": " + name;
   }
 
+  /**
+   * Set room descriptions.
+   * @param description
+   */
   public void setDescription(String description) {
     this.roomDescription = description;
+  }
+
+  public void setPicture(String picture) {
+    this.picture = picture;
+  }
+
+  public String getPicture() {
+    return picture;
   }
 }

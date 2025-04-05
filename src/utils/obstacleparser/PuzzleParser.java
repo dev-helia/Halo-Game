@@ -22,33 +22,41 @@ public class PuzzleParser {
    * @param worldMap the map of room IDs to Room objects
    */
   public static void parsePuzzles(JsonObject root, Map<Integer, Room> worldMap) {
-    if (root.has("puzzles")) {
-      JsonArray puzzlesArray = root.getAsJsonArray("puzzles");
+    if (!root.has("puzzles") || !root.get("puzzles").isJsonArray()) {
+      System.err.println("Warning: No 'puzzles' array found.");
+      return;
+    }
 
-      for (JsonElement element : puzzlesArray) {
-        JsonObject p = element.getAsJsonObject();
+    JsonArray puzzlesArray = root.getAsJsonArray("puzzles");
 
-        // Extract basic puzzle attributes
+    for (JsonElement element : puzzlesArray) {
+      if (!element.isJsonObject()) continue;
+      JsonObject p = element.getAsJsonObject();
+
+      try {
+        // Required fields
         String name = p.get("name").getAsString();
         boolean active = p.get("active").getAsBoolean();
         int value = p.get("value").getAsInt();
-
-        // Puzzle mechanics
         String solution = p.get("solution").getAsString();
         boolean affectsTarget = p.get("affects_target").getAsBoolean();
         boolean affectsPlayer = p.get("affects_player").getAsBoolean();
         String effects = p.get("effects").getAsString();
-
-        // Room assignment & optional hint
         int targetRoom = parseRoomNumber(p.get("target").getAsString());
+
+        // Optional fields
+        String description = p.has("description") && !p.get("description").isJsonNull()
+                ? p.get("description").getAsString()
+                : "An unsolved puzzle.";
+
         String hintMessage = p.has("hintMessage") && !p.get("hintMessage").isJsonNull()
                 ? p.get("hintMessage").getAsString()
                 : "";
 
-        // Create a Puzzle object with the parsed data
+        // Create puzzle object
         Puzzle puzzle = new Puzzle(
                 name,
-                name, // using name as the description for now
+                description,
                 active,
                 value,
                 solution,
@@ -59,13 +67,16 @@ public class PuzzleParser {
                 hintMessage
         );
 
-        // Assign the puzzle to the corresponding room
+        // Attach to correct room
         Room r = worldMap.get(targetRoom);
         if (r != null) {
           r.setObstacle(puzzle);
         } else {
           System.err.printf("Room #%d not found — puzzle '%s' not assigned.%n", targetRoom, name);
         }
+
+      } catch (Exception e) {
+        System.err.println("Skipping puzzle due to parsing error: " + e.getMessage());
       }
     }
   }
