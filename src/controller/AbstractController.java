@@ -1,8 +1,7 @@
 package controller;
 
-import model.core.Player;
+import model.IModel;
 import model.core.Room;
-import model.core.WorldEngine;
 import model.elements.Fixture;
 import model.elements.Item;
 import model.obstacle.GameObstacle;
@@ -14,18 +13,13 @@ import java.util.List;
 /**
  * AbstractController defines common command handling logic shared between
  * text and GUI-based controllers (e.g., use, examine, answer).
+ * It now depends on the IModel interface for better abstraction.
  */
 public abstract class AbstractController {
-  protected final WorldEngine world;
-  protected Player player;
+  protected final IModel model;
 
-  public AbstractController(WorldEngine world, Player player) {
-    this.world = world;
-    this.player = player;
-  }
-
-  public void setPlayer(Player player) {
-    this.player = player;
+  public AbstractController(IModel model) {
+    this.model = model;
   }
 
   /**
@@ -40,17 +34,17 @@ public abstract class AbstractController {
       return "Use what?";
     }
 
-    Room currentRoom = player.getCurrentRoom();
+    Room currentRoom = model.getCurrentRoom();
     GameObstacle obstacle = currentRoom.getObstacle();
 
     // Use against monster
     if (obstacle instanceof Monster monster && monster.isActive()
             && monster.isDefeatedByItem(itemName)) {
       monster.deactivate();
-      player.updateScore(monster.getValue());
+      model.getPlayer().updateScore(monster.getValue());
       unblockRoomExits(currentRoom);
 
-      String effect = player.useItem(itemName);  // consume and show when_used
+      String effect = model.useItem(itemName);
       return "You used " + itemName + " and defeated the monster!\n" + effect;
     }
 
@@ -58,17 +52,16 @@ public abstract class AbstractController {
     if (obstacle instanceof Puzzle puzzle && puzzle.isActive()
             && puzzle.isSolved(itemName)) {
       puzzle.deactivate();
-      player.updateScore(puzzle.getValue());
+      model.getPlayer().updateScore(puzzle.getValue());
       unblockRoomExits(currentRoom);
 
-      // Actually use the item (decrement use, show effect)
-      String effect = player.useItem(itemName);
 
+      String effect = model.useItem(itemName);
       return "You used " + itemName + " and solved the puzzle!\n" + effect;
     }
 
-    // Fallback: use item normally
-    return player.useItem(itemName);
+    // fallback
+    return model.useItem(itemName);
   }
 
   /**
@@ -82,7 +75,7 @@ public abstract class AbstractController {
       return "Examine what?";
     }
 
-    Room room = player.getCurrentRoom();
+    Room room = model.getCurrentRoom();
     Item item = room.getItem(name);
     if (item != null) {
       return item.getDescription();
@@ -107,11 +100,9 @@ public abstract class AbstractController {
       return "Answer what?";
     }
 
-    Room room = player.getCurrentRoom();
-    boolean solved = player.answerCorrect(answer, room);
-
+    boolean solved = model.answerPuzzle(answer);
     if (solved) {
-      unblockRoomExits(room);  // <-- this is the key fix
+      unblockRoomExits(model.getCurrentRoom());
       return "Puzzle solved!";
     }
 
@@ -124,7 +115,7 @@ public abstract class AbstractController {
    * @return inventory description
    */
   public String showInventoryString() {
-    List<Item> inventory = player.getInventory();
+    List<Item> inventory = model.getInventory();
     if (inventory.isEmpty()) {
       return "Your inventory is empty.";
     }
@@ -158,14 +149,10 @@ public abstract class AbstractController {
    * @return the room
    */
   public Room renderGame() {
-    return player.getCurrentRoom();
+    return model.getCurrentRoom();
   }
 
-  public Player getPlayer() {
-    return player;
-  }
-
-  public WorldEngine getWorld() {
-    return world;
+  public IModel getModel() {
+    return model;
   }
 }

@@ -145,4 +145,6 @@ public interface IModel {
    * @return the player rank
    */
   PlayerRank getPlayerRank();
+
+  Player getPlayerReference();
 }

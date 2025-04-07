@@ -214,18 +214,12 @@ public class Player implements Serializable {
         puzzle.deactivate();
         updateScore(puzzle.getValue());
 
-        // Fix: If the puzzle affects the current room (not a different target room)
-        if (puzzle.affectsTarget()) {
-          int targetRoom = puzzle.getTargetRoomNumber();
-
-          // Try unblocking any negative exits that point TO this room (the puzzle's target)
-          for (Map.Entry<String, Integer> entry : room.getExits().entrySet()) {
-            String dir = entry.getKey();
-            int val = entry.getValue();
-            if (val == -targetRoom) {
-              room.setExit(dir, targetRoom);  // unblock the exit
-              System.out.println("Unblocked exit " + dir + " to room " + targetRoom);
-            }
+        // ✅ Unblock ALL negative exits after solving puzzle (simple logic)
+        for (String dir : List.of("N", "S", "E", "W")) {
+          int exit = room.getExit(dir);
+          if (exit < 0) {
+            room.setExit(dir, -exit);
+            System.out.println("Unblocked exit " + dir + " to room " + (-exit));
           }
         }
 

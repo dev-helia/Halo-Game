@@ -1,12 +1,9 @@
 package enginedriver;
 
 import controller.GameController;
-import model.GameModel; // ✅ 使用 GameModel 替换 WorldEngine
-import model.IModel;
 import controller.SwingController;
-import model.core.Player;
-import model.core.Room;
-import model.core.WorldEngine;
+import model.GameModel;
+import model.IModel;
 import utils.fileutil.PathUtils;
 import view.ConsoleView;
 import view.SwingView;
@@ -23,24 +20,6 @@ import java.io.*;
  */
 public class GameEngineApp {
 
-  /**
-   * Main entry point. Accepts:
-   *   - hallway.json -text
-   *   - hallway.json -graphics
-   *   - hallway.json -batch input.txt
-   *   - hallway.json -batch input.txt output.txt
-   */
-  public GameEngineApp(Readable source) throws IOException {
-    //改为使用封装后的 GameModel
-    IModel model = new GameModel();
-
-    // 创建视图
-    View view = new ConsoleView();
-
-    // 创建控制器，传入封装好的 model
-    this.controller = new GameController(model, view, source);
-  }
-
   public static void main(String[] args) throws IOException {
     if (args.length < 2) {
       System.out.println("Usage:");
@@ -52,31 +31,28 @@ public class GameEngineApp {
 
     String jsonFile = args[0];
     String mode = args[1];
+    IModel model = new GameModel(); // Shared model for all modes
+    model.generateWorld(jsonFile);
 
-    // === Initialize world and load map ===
-    WorldEngine world = new WorldEngine();
-    // === Shared name prompt ===
     String playerName = "Player";
 
     if (mode.equals("-graphics")) {
       playerName = JOptionPane.showInputDialog(null, "Enter your name:", "New Game", JOptionPane.PLAIN_MESSAGE);
       if (playerName == null || playerName.isBlank()) playerName = "Player";
 
-      world.generateWorld(jsonFile);
-
-      Player player = new Player(playerName, world.getRoom(1));
+      model.initializePlayer(playerName);
       SwingView gui = new SwingView();
-      new SwingController(world, player, gui);
+      new SwingController(model, gui); // No need to call start — handled by GUI
+
     } else if (mode.equals("-text")) {
       BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
       System.out.print("Enter your name: ");
       playerName = input.readLine().trim();
       if (playerName.isBlank()) playerName = "Player";
-      Player player = new Player(playerName, world.getRoom(1));
 
+      model.initializePlayer(playerName);
       View view = new ConsoleView();
-      GameController controller = new GameController(world, view, input);
-      controller.setPlayer(player); // in case constructor doesn’t already
+      GameController controller = new GameController(model, view, input);
       controller.startGame();
 
     } else if (mode.equals("-batch") && args.length >= 3) {
@@ -84,10 +60,9 @@ public class GameEngineApp {
       Reader batchInput = new FileReader(inputFile);
       PrintWriter batchOutput = (args.length == 4) ? new PrintWriter(args[3]) : new PrintWriter(System.out);
 
+      model.initializePlayer("BatchPlayer");
       View view = new ConsoleView(batchOutput);
-      Player player = new Player("BatchPlayer", world.getRoom(1));
-      GameController controller = new GameController(world, view, batchInput);
-      controller.setPlayer(player);
+      GameController controller = new GameController(model, view, batchInput);
       controller.startGame();
       batchOutput.flush();
 
