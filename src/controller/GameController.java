@@ -1,6 +1,7 @@
 package controller;
 
 import model.IModel;
+import model.core.Player;
 import model.core.Room;
 import model.obstacle.GameObstacle;
 import model.obstacle.Monster;
@@ -16,8 +17,9 @@ import java.util.Scanner;
  * It reuses shared game logic from AbstractController for consistency with GUI controller.
  */
 public class GameController extends AbstractController {
-  private final View view;
-  private final Scanner scanner;
+  private IModel model;
+  private View view;
+  private Scanner scanner;
 
   private static final String NEW_KEY = "NEW";
   private static final String RESTORE_KEY = "RESTORE";
@@ -26,8 +28,13 @@ public class GameController extends AbstractController {
 
   public GameController(IModel model, View view, Readable inputSource) {
     super(model);
+    this.model = model; // 确保 model 是 IModel 类型
     this.view = view;
     this.scanner = new Scanner(inputSource);
+  }
+
+  public Player getPlayer() {
+    return model.getPlayer();
   }
 
   public void startGame() throws IOException {

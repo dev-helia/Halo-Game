@@ -148,4 +148,7 @@ public class WorldEngine implements Serializable {
       return false;
     }
   }
+
+  public void printWorldMap() {
+  }
 }

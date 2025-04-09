@@ -53,6 +53,11 @@ public class GameModel implements IModel {
   }
 
   @Override
+  public void setCurrentRoom(Room room) {
+
+  }
+
+  @Override
   public boolean pickItem(String name) {
     return player.pickItem(name);
   }
@@ -100,6 +105,10 @@ public class GameModel implements IModel {
   @Override
   public Player getPlayerReference() {
     return player;
+  }
+
+  public GameModel() {
+    player = new Player("Xiao Hong", new Room(0, "Starting Room", "A description of the starting room"));
   }
 
 }

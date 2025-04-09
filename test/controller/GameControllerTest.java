@@ -1,6 +1,7 @@
 package controller;
 
-import model.core.WorldEngine;
+import model.GameModel;
+import model.IModel;
 import org.junit.Before;
 import org.junit.Test;
 import view.View;
@@ -16,7 +17,7 @@ import static org.junit.Assert.*;
  * The type Game controller test.
  */
 public class GameControllerTest {
-  private WorldEngine engine;
+  private GameModel engine;
   private View view;
 
   /**
@@ -24,7 +25,7 @@ public class GameControllerTest {
    */
   @Before
   public void setup() {
-    engine = new WorldEngine();
+    engine = new GameModel();
     view = new MockView();
   }
 
@@ -49,7 +50,7 @@ public class GameControllerTest {
   @Test
   public void testStartNewGame_LookAndQuit_NoSave() throws Exception {
     String input = "NEW\n1\nXiao Hong\nL\nQ\nN\n";
-    GameController controller = new GameController(engine, view, simulateInput(input));
+    GameController controller = new GameController((IModel) engine, view, simulateInput(input));
     controller.startGame();
 
     assertNotNull(controller.getPlayer());
@@ -78,7 +79,7 @@ public class GameControllerTest {
             "Y"             // Confirm overwrite!
     );
 
-    GameController controller = new GameController(engine, view, simulateInput(input));
+    GameController controller = new GameController((IModel) engine, view, simulateInput(input));
     controller.startGame();
 
     assertNotNull(controller.getPlayer());
@@ -102,7 +103,7 @@ public class GameControllerTest {
   @Test
   public void testStartAndUseHelpCommand() throws Exception {
     String input = "NEW\n1\nLia\nHELP\nQ\nN\n";
-    GameController controller = new GameController(engine, view, simulateInput(input));
+    GameController controller = new GameController((IModel) engine, view, simulateInput(input));
     controller.startGame();
 
     assertNotNull(controller.getPlayer());
@@ -120,7 +121,7 @@ public class GameControllerTest {
   @Test
   public void testInventoryEmpty() throws Exception {
     String input = "NEW\n1\nAda\nI\nQ\nN\n";
-    GameController controller = new GameController(engine, view, simulateInput(input));
+    GameController controller = new GameController((IModel) engine, view, simulateInput(input));
     controller.startGame();
 
     assertNotNull(controller.getPlayer());
@@ -138,7 +139,7 @@ public class GameControllerTest {
   @Test
   public void testUnknownCommandHandled() throws Exception {
     String input = "NEW\n1\nLuna\nWHAT\nQ\nN\n";
-    GameController controller = new GameController(engine, view, simulateInput(input));
+    GameController controller = new GameController((IModel) engine, view, simulateInput(input));
     controller.startGame();
 
     List<String> output = getOutput();
@@ -167,7 +168,7 @@ public class GameControllerTest {
     );
 
 
-    GameController controller = new GameController(engine, view, simulateInput(input));
+    GameController controller = new GameController((IModel) engine, view, simulateInput(input));
     controller.startGame();
 
     List<String> output = getOutput();
@@ -185,7 +186,7 @@ public class GameControllerTest {
   @Test
   public void testExamineUnknownItem() throws Exception {
     String input = "NEW\n1\nLily\nX unknown\nQ\nN\n";
-    GameController controller = new GameController(engine, view, simulateInput(input));
+    GameController controller = new GameController((IModel) engine, view, simulateInput(input));
     controller.startGame();
 
     List<String> output = getOutput();

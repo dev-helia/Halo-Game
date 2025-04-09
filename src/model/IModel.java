@@ -111,6 +111,8 @@ public interface IModel {
    */
   Room getCurrentRoom();
 
+  void setCurrentRoom(Room room);
+
   /**
    * Gets inventory.
    *

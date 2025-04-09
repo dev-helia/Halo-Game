@@ -1,6 +1,5 @@
 package controller;
 
-import controller.SwingController;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
