@@ -7,59 +7,42 @@ import model.obstacle.Monster;
 import view.View;
 import utils.fileutil.PathUtils;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
 /**
- * The GameController handles console-based gameplay using text input.
- * It reuses shared game logic from AbstractController for consistency with GUI controller.
+ * Handles text-based gameplay using the shared model and view interfaces.
  */
 public class GameController extends AbstractController {
   private final View view;
   private final Scanner scanner;
 
-  private static final String NEW_KEY = "NEW";
-  private static final String RESTORE_KEY = "RESTORE";
   private static final String SAVE_KEY = "SAVE";
   private static final String QUIT_KEY = "Q";
 
+  /**
+   * Constructs a GameController for text-based gameplay.
+   *
+   * @param model the game model
+   * @param view the view interface
+   * @param inputSource the input stream for reading commands
+   */
   public GameController(IModel model, View view, Readable inputSource) {
     super(model);
     this.view = view;
     this.scanner = new Scanner(inputSource);
   }
 
+  /**
+   * Starts the main game loop after player has been initialized.
+   */
   public void startGame() throws IOException {
-    view.displayMainMenu();
-    view.showMessage("Enter NEW to start or RESTORE to load:");
-
-    while (true) {
-      String input = scanner.nextLine().trim().toUpperCase();
-
-      if (input.equals(NEW_KEY)) {
-        String mapPath = selectJson("maps", "Choose a map:");
-        if (mapPath == null) return;
-        model.generateWorld(mapPath);
-        view.showMessage("Map loaded. Enter player name:");
-        String name = scanner.nextLine().trim();
-        model.initializePlayer(name);
-        break;
-
-      } else if (input.equals(RESTORE_KEY)) {
-        String savePath = selectJson("saves", "Choose a save file:");
-        if (savePath == null) return;
-        boolean success = model.loadGame(savePath);
-        view.showMessage(success ? "Game restored." : "Restore failed.");
-        if (success) break;
-      } else {
-        view.showMessage("Invalid input. Try NEW or RESTORE.");
-      }
-    }
-
     gameLoop();
   }
 
+  /**
+   * Main gameplay loop, handles commands and updates game state.
+   */
   private void gameLoop() {
     while (true) {
       Room current = model.getCurrentRoom();
@@ -104,12 +87,18 @@ public class GameController extends AbstractController {
     }
   }
 
+  /**
+   * Moves the player and re-renders the room if successful.
+   */
   private void move(String dir) {
     boolean moved = model.movePlayer(dir);
     view.showMessage(moved ? "You move " + directionFull(dir) : "You can't move that way.");
     if (moved) view.renderGame(model.getPlayer(), model.getCurrentRoom());
   }
 
+  /**
+   * Returns full direction name from shorthand.
+   */
   private String directionFull(String dir) {
     return switch (dir) {
       case "N" -> "North";
@@ -120,6 +109,9 @@ public class GameController extends AbstractController {
     };
   }
 
+  /**
+   * Handles item pickup.
+   */
   private void takeItem(String itemName) {
     if (itemName == null) {
       view.showMessage("Take what?");
@@ -129,6 +121,9 @@ public class GameController extends AbstractController {
     view.showMessage(success ? "You took: " + itemName : "Item not found or too heavy.");
   }
 
+  /**
+   * Handles item drop.
+   */
   private void dropItem(String itemName) {
     if (itemName == null) {
       view.showMessage("Drop what?");
@@ -138,40 +133,21 @@ public class GameController extends AbstractController {
     view.showMessage(success ? "You dropped: " + itemName : "You don't have that.");
   }
 
+  /**
+   * Handles item usage.
+   */
   private void useItem(String itemName) {
     view.showMessage(handleUse(itemName));
   }
 
+  /**
+   * Prompts for save file name and saves game.
+   */
   private void saveGame() {
     view.showMessage("Enter filename (without .json):");
     String fileName = scanner.nextLine().trim();
     String fullPath = PathUtils.getSavePath(fileName);
     boolean saved = model.saveGame(fullPath);
     view.showMessage(saved ? "Saved to: " + fileName : "Save failed.");
-  }
-
-  private String selectJson(String type, String prompt) {
-    File folder = new File("resources/" + type);
-    File[] files = folder.listFiles((dir, name) -> name.endsWith(".json"));
-
-    if (files == null || files.length == 0) {
-      view.showMessage("No files found in resources/" + type);
-      return null;
-    }
-
-    view.showMessage(prompt);
-    for (int i = 0; i < files.length; i++) {
-      view.showMessage((i + 1) + ". " + files[i].getName());
-    }
-
-    while (true) {
-      try {
-        int choice = Integer.parseInt(scanner.nextLine().trim());
-        if (choice >= 1 && choice <= files.length) {
-          return files[choice - 1].getPath();
-        }
-      } catch (NumberFormatException ignored) {}
-      view.showMessage("Invalid input. Enter a number between 1 and " + files.length);
-    }
   }
 }

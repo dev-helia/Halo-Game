@@ -18,6 +18,10 @@ import java.util.List;
 public abstract class AbstractController {
   protected final IModel model;
 
+  /**
+   * Constructs the controller with a given model.
+   * @param model the game model implementing IModel
+   */
   public AbstractController(IModel model) {
     this.model = model;
   }
@@ -152,6 +156,11 @@ public abstract class AbstractController {
     return model.getCurrentRoom();
   }
 
+  /**
+   * Gets the game model.
+   *
+   * @return the IModel implementation
+   */
   public IModel getModel() {
     return model;
   }

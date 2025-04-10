@@ -20,6 +20,11 @@ public class SwingController extends AbstractController implements Features {
   private final IModel model;
   private final SwingView view;
 
+  /**
+   * Constructs a swing controller
+   * @param model the game model.
+   * @param view the game view.
+   */
   public SwingController(IModel model, SwingView view) {
     super(model);
     this.model = model;
@@ -28,6 +33,9 @@ public class SwingController extends AbstractController implements Features {
     updateUI();
   }
 
+  /**
+   * Updates the view with current room, inventory, and status.
+   */
   private void updateUI() {
     Room room = model.getCurrentRoom();
     view.renderRoom(room);
@@ -42,16 +50,41 @@ public class SwingController extends AbstractController implements Features {
     );
   }
 
-  // 🔁 This method is needed by SwingView to fetch the current room
+  /**
+   * Returns the current room for rendering.
+   *
+   * @return the current Room
+   */
+  // This method is needed by SwingView to fetch the current room
   public Room getCurrentRoom() {
     return model.getCurrentRoom();
   }
 
+  /**
+   * Moves the player north.
+   */
   @Override public void moveNorth() { move("N"); }
+
+  /**
+   * Moves the player south.
+   */
   @Override public void moveSouth() { move("S"); }
+
+  /**
+   * Moves the player east.
+   */
   @Override public void moveEast()  { move("E"); }
+
+  /**
+   * Moves the player west.
+   */
   @Override public void moveWest()  { move("W"); }
 
+  /**
+   * Moves the player in a specified direction and handles encounters.
+   *
+   * @param dir the direction (N, S, E, W)
+   */
   @Override
   public void move(String dir) {
     boolean moved = model.movePlayer(dir);
@@ -80,6 +113,12 @@ public class SwingController extends AbstractController implements Features {
     }
   }
 
+  /**
+   * Returns the full name of a direction.
+   *
+   * @param dir short direction
+   * @return full name
+   */
   private String getDirectionName(String dir) {
     return switch (dir) {
       case "N" -> "North";
@@ -90,18 +129,33 @@ public class SwingController extends AbstractController implements Features {
     };
   }
 
+  /**
+   * Handles taking an item from the room.
+   *
+   * @param itemName the item name
+   */
   @Override public void takeItem(String itemName) {
     boolean success = model.pickItem(itemName);
     view.showMessage(success ? "You picked up: " + itemName : "You can't take that.");
     updateUI();
   }
 
+  /**
+   * Handles dropping an item from inventory.
+   *
+   * @param itemName the item name
+   */
   @Override public void dropItem(String itemName) {
     boolean success = model.dropItem(itemName);
     view.showMessage(success ? "You dropped: " + itemName : "You don't have that item.");
     updateUI();
   }
 
+  /**
+   * Uses an item, potentially solving puzzles or defeating monsters.
+   *
+   * @param itemName the item name
+   */
   @Override public void useItem(String itemName) {
     String result = handleUse(itemName);
     JOptionPane.showMessageDialog(null, result, "" +
@@ -111,6 +165,11 @@ public class SwingController extends AbstractController implements Features {
     updateUI();
   }
 
+  /**
+   * Examines an item, fixture, or obstacle by name.
+   *
+   * @param name name of the object to examine
+   */
   @Override public void examine(String name) {
     Room room = model.getCurrentRoom();
 
@@ -149,6 +208,11 @@ public class SwingController extends AbstractController implements Features {
     view.showMessage("You see nothing interesting about that.");
   }
 
+  /**
+   * Submits an answer for a puzzle.
+   *
+   * @param answer user's answer
+   */
   @Override public void answer(String answer) {
     boolean correct = model.answerPuzzle(answer);
     String result = correct ? "Puzzle solved!" : "That didn't work.";
@@ -156,15 +220,24 @@ public class SwingController extends AbstractController implements Features {
     updateUI();
   }
 
+  /**
+   * Re-renders the current room.
+   */
   @Override public void look() {
     view.renderRoom(model.getCurrentRoom());
   }
 
+  /**
+   * Displays the player’s current inventory.
+   */
   @Override public void showInventory() {
     String[] items = model.getInventory().stream().map(Item::getName).toArray(String[]::new);
     view.showInventory(items);
   }
 
+  /**
+   * Prompts for a save file name and saves game state.
+   */
   @Override public void saveGame() {
     String name = view.promptForSaveFile();
     if (name != null && !name.isBlank()) {
@@ -174,6 +247,9 @@ public class SwingController extends AbstractController implements Features {
     }
   }
 
+  /**
+   * Prompts for a saved file and loads game state.
+   */
   @Override public void restoreGame() {
     String filePath = view.promptForRestoreFile();
     if (filePath != null) {
@@ -188,6 +264,9 @@ public class SwingController extends AbstractController implements Features {
     }
   }
 
+  /**
+   * Quits the game with a confirmation and shows summary.
+   */
   @Override public void quitGame() {
     if (view.promptYesNo("Quit the game?")) {
       String health = model.getHealthStatus().toString();
@@ -198,6 +277,11 @@ public class SwingController extends AbstractController implements Features {
     }
   }
 
+  /**
+   * Shows a summary of the player's current status.
+   *
+   * @param title dialog title
+   */
   private void showPlayerSummary(String title) {
     String health = model.getHealthStatus().toString();
     String rank = model.getPlayerRank().toString();
@@ -205,6 +289,9 @@ public class SwingController extends AbstractController implements Features {
     JOptionPane.showMessageDialog(null, summary, title, JOptionPane.INFORMATION_MESSAGE);
   }
 
+  /**
+   * Displays the About screen.
+   */
   @Override public void showAbout() {
     view.showAbout();
   }

@@ -74,10 +74,19 @@ public class Room implements Serializable {
     return exits;
   }
 
+  /**
+   * Adds an item.
+   * @param item to be added.
+   */
   public void addItem(Item item) {
     items.add(item);
   }
 
+  /**
+   * Removes an item.
+   * @param itemName name of the item
+   * @return the item removed.
+   */
   public Item removeItem(String itemName) {
     Iterator<Item> it = items.iterator();
     while (it.hasNext()) {
@@ -90,6 +99,11 @@ public class Room implements Serializable {
     return null;
   }
 
+  /**
+   * Gets the item.
+   * @param itemName name of the item
+   * @return the item.
+   */
   public Item getItem(String itemName) {
     for (Item i : items) {
       if (i.getName().equalsIgnoreCase(itemName)) {
@@ -99,10 +113,21 @@ public class Room implements Serializable {
     return null;
   }
 
+
+  /**
+   * Returns the list of items currently in the room.
+   *
+   * @return list of items
+   */
   public List<Item> getItems() {
     return items;
   }
 
+  /**
+   * Sets the list of items in the room.
+   *
+   * @param items the new list of items
+   */
   public void setItems(List<Item> items) {
     this.items = items;
   }
@@ -112,10 +137,21 @@ public class Room implements Serializable {
   // Fixtures
   // ------------------------------------------
 
+  /**
+   * Adds a fixture to the room.
+   *
+   * @param f the fixture to add
+   */
   public void addFixture(Fixture f) {
     fixtures.add(f);
   }
 
+  /**
+   * Retrieves a fixture by name from the room.
+   *
+   * @param name the name of the fixture to retrieve
+   * @return the matching fixture, or null if not found
+   */
   public Fixture getFixture(String name) {
     for (Fixture f : fixtures) {
       if (f.getName().equalsIgnoreCase(name)) {
@@ -125,31 +161,60 @@ public class Room implements Serializable {
     return null;
   }
 
+  /**
+   * Returns the list of all fixtures in the room.
+   *
+   * @return list of fixtures
+   */
   public List<Fixture> getFixtures() {
     return fixtures;
   }
 
+  /**
+   * Sets the list of fixtures in the room.
+   *
+   * @param fixtures the list of fixtures to set
+   */
   public void setFixtures(List<Fixture> fixtures) {
     this.fixtures = fixtures;
   }
+
   // ------------------------------------------
   // Obstacles
   // ------------------------------------------
 
+  /**
+   * Sets the obstacle.
+   *
+   * @param obs the obstacle to place in the room
+   */
   public void setObstacle(GameObstacle obs) {
     this.obstacle = obs;
   }
 
+  /**
+   * Checks if the room currently has an active obstacle.
+   *
+   * @return true if an active obstacle is present, false otherwise
+   */
   public boolean hasObstacle() {
     return obstacle != null && obstacle.isActive();
   }
 
+  /**
+   * Deactivates the current obstacle, if one exists.
+   */
   public void deactivateObstacle() {
     if (obstacle != null) {
       obstacle.deactivate();
     }
   }
 
+  /**
+   * Gets the obstacle in the room.
+   *
+   * @return the current obstacle, or null if none is set
+   */
   public GameObstacle getObstacle() {
     return obstacle;
   }
@@ -178,19 +243,40 @@ public class Room implements Serializable {
     return rawFields.get(key.toLowerCase());
   }
 
+
+  /**
+   * Returns the room's number.
+   *
+   * @return the room number
+   */
   public int getRoomNumber() {
     return roomNumber;
   }
 
+  /**
+   * Returns the name of the room.
+   *
+   * @return the room name
+   */
   public String getName() {
     return name;
   }
 
+  /**
+   * Returns the room's description.
+   *
+   * @return the room description
+   */
   public String getRoomDescription() {
     return roomDescription;
 
   }
 
+  /**
+   * Returns a string representation of the room.
+   *
+   * @return formatted string with room number and name
+   */
   @Override
   public String toString() {
     return "Room " + roomNumber + ": " + name;
@@ -204,10 +290,20 @@ public class Room implements Serializable {
     this.roomDescription = description;
   }
 
+  /**
+   * Sets the image filename associated with this room.
+   *
+   * @param picture the image file name
+   */
   public void setPicture(String picture) {
     this.picture = picture;
   }
 
+  /**
+   * Gets the image filename for this room.
+   *
+   * @return the image file name
+   */
   public String getPicture() {
     return picture;
   }

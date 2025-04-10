@@ -20,9 +20,6 @@ public class WorldEngineSmokeTest{
       WorldEngine engine = new WorldEngine();
       engine.generateWorld(getMapPath("Museum_of_Planet_of_the_Apes"));
 
-      // Act
-      engine.printWorldMap();
-
     } catch (IOException e) {
       System.err.println("File loading failure: " + e.getMessage());
     }
