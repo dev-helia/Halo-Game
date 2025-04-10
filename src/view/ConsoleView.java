@@ -33,8 +33,7 @@ public class ConsoleView implements View {
   @Override
   public void displayMainMenu() {
     out.println("===================================");
-    out.println("🎮 Welcome to the Adventure Game!");
-    out.println("To begin, enter your name.");
+    out.println("Welcome to the Adventure Game!");
     out.println();
     out.println("Commands:");
     out.println("  (N)orth, (S)outh, (E)ast or (W)est to move");
@@ -62,24 +61,24 @@ public class ConsoleView implements View {
   @Override
   public void renderGame(Player player, Room room) {
     out.println("\n==============================");
-    out.println("📍 You are standing in: " + room.getName());
+    out.println("You are standing in: " + room.getName());
     out.println(room.getRoomDescription());
 
     // Show obstacles
     GameObstacle obs = room.getObstacle();
     if (obs != null && obs.isActive()) {
       if (obs instanceof Monster) {
-        out.println("👹 A monster " + obs.getName() + " growls at you! You cannot get past!");
+        out.println("A monster " + obs.getName() + " growls at you! You cannot get past!");
         out.println(((Monster) obs).getAttackMessage());
       } else {
-        out.println("🧩 Puzzle: " + obs.getDescription());
+        out.println("Puzzle: " + obs.getDescription());
       }
     }
 
     // Show items
     List<Item> items = room.getItems();
     if (!items.isEmpty()) {
-      out.print("🧸 Items you see here: ");
+      out.print("Items you see here: ");
       for (Item i : items) {
         out.print(i.getName() + " ");
       }
@@ -97,8 +96,8 @@ public class ConsoleView implements View {
     }
 
     // Show health status
-    out.println("💖 Health: " + player.getHealth() + " | Status: " + player.getHealthStatus());
-    out.println("🎖 Score: " + player.getScore());
+    out.println("Health: " + player.getHealth() + " | Status: " + player.getHealthStatus());
+    out.println("Score: " + player.getScore());
     out.println("==============================\n");
   }
 

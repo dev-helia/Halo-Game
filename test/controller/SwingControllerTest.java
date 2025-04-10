@@ -18,7 +18,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class SwingControllerTest {
 
-  // 使用手动模拟的类
   private IModel model;
   private SwingView view;
   private SwingController controller;
@@ -42,7 +41,7 @@ public class SwingControllerTest {
 
       @Override
       public HealthStatus getHealthStatus() {
-        return null;
+        return HealthStatus.AWAKE;
       }
 
       @Override
@@ -87,7 +86,7 @@ public class SwingControllerTest {
         "Heals the player."
     );
     room.addItem(item);
-    model.setCurrentRoom(room);
+    ((FakeModel) model).setCurrentRoom(room);
 
     controller.examine(itemName);
     assertEquals("Restores 50 health points.", item.getDescription());
@@ -109,7 +108,7 @@ public class SwingControllerTest {
   }
 
   abstract class FakeModel implements IModel {
-    private Room currentRoom;
+    private Room currentRoom = new Room(1, "Fake Room", "A placeholder room");
 
     @Override
     public boolean movePlayer(String direction) {
@@ -151,7 +150,6 @@ public class SwingControllerTest {
       return currentRoom;
     }
 
-    @Override
     public void setCurrentRoom(Room room) {
       this.currentRoom = room;
     }
