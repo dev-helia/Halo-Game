@@ -1,10 +1,9 @@
 package enginedriver;
 
-import controller.GameController;
+import controller.TextController;
 import controller.SwingController;
 import model.GameModel;
 import model.IModel;
-import utils.fileutil.PathUtils;
 import view.ConsoleView;
 import view.SwingView;
 import view.View;
@@ -52,7 +51,7 @@ public class GameEngineApp {
 
       model.initializePlayer(playerName);
       View view = new ConsoleView();
-      GameController controller = new GameController(model, view, input);
+      TextController controller = new TextController(model, view, input);
       controller.startGame();
 
     } else if (mode.equals("-batch") && args.length >= 3) {
@@ -62,7 +61,7 @@ public class GameEngineApp {
 
       model.initializePlayer("BatchPlayer");
       View view = new ConsoleView(batchOutput);
-      GameController controller = new GameController(model, view, batchInput);
+      TextController controller = new TextController(model, view, batchInput);
       controller.startGame();
       batchOutput.flush();
 
