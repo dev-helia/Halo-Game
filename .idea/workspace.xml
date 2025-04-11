@@ -10,16 +10,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7245979f-e6c8-4016-ba5a-d9e760a2e23b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/UML-Class.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/UML.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/game_engine_jar/halo.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/game_engine_jar/halo.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/AbstractController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/AbstractController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/SwingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/SwingController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/core/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/core/Room.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/ConsoleView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/ConsoleView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/TextController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/enginedriver/GameEngineApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/enginedriver/GameEngineApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/controller/GameControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/controller/GameControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/controller/SwingControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/controller/SwingControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/model/core/WorldEngineSmokeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/model/core/WorldEngineSmokeTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +48,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/dev-helia/Halo-Game.git&quot;,
-    &quot;accountId&quot;: &quot;42faf2fc-ba54-49b0-b99e-cfcb1b8b47b7&quot;
+    &quot;accountId&quot;: &quot;3a79e63b-9a11-476a-8145-75d82e2c757b&quot;
   }
 }</component>
   <component name="ProblemsViewState">
@@ -68,58 +64,60 @@
     <option name="showMembers" value="true" />
     <option name="showVisibilityIcons" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.GameEngineApp.executor": "Run",
-    "Application.WorldEngineSmokeTest.executor": "Run",
-    "Application.WorldEngineTest.executor": "Run",
-    "Application.model.core.WorldEngineSmokeTest.executor": "Run",
-    "Downloaded.Files.Path.Enabled": "false",
-    "JUnit.FixtureTest.executor": "Run",
-    "JUnit.GameControllerTest.executor": "Run",
-    "JUnit.GameControllerTest.testPuzzleAnswerFailAndSuccess.executor": "Run",
-    "JUnit.GameControllerTest.testSaveAndRestoreFlow.executor": "Run",
-    "JUnit.GameControllerTest.testStartAndUseHelpCommand.executor": "Run",
-    "JUnit.GameControllerTest.testStartNewGame_LookAndQuit_NoSave.executor": "Run",
-    "JUnit.GameControllerTest.testStartNewGame_MoveEast_QuitWithSave.executor": "Run",
-    "JUnit.GameObstacleTest.executor": "Run",
-    "JUnit.ItemTest.executor": "Run",
-    "JUnit.MonsterTest.executor": "Run",
-    "JUnit.PlayerTest.executor": "Run",
-    "JUnit.PuzzleTest.executor": "Run",
-    "JUnit.RoomTest.executor": "Run",
-    "JUnit.SwingControllerTest.executor": "Run",
-    "JUnit.WorldEngineInjectionTest.executor": "Run",
-    "JUnit.WorldEngineTest.executor": "Run",
-    "JUnit.WorldEngineTest.testRoomCount.executor": "Run",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/hetao/Desktop/Halo_Game7",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.GameEngineApp.executor&quot;: &quot;Run&quot;,
+    &quot;Application.WorldEngineSmokeTest.executor&quot;: &quot;Run&quot;,
+    &quot;Application.WorldEngineTest.executor&quot;: &quot;Run&quot;,
+    &quot;Application.model.core.WorldEngineSmokeTest.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;JUnit.FixtureTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GameControllerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GameControllerTest.testPuzzleAnswerFailAndSuccess.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GameControllerTest.testSaveAndRestoreFlow.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GameControllerTest.testStartAndUseHelpCommand.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GameControllerTest.testStartNewGame_LookAndQuit_NoSave.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GameControllerTest.testStartNewGame_MoveEast_QuitWithSave.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GameObstacleTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ItemTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MonsterTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PlayerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PuzzleTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.RoomTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.SwingControllerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.WorldEngineInjectionTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.WorldEngineTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.WorldEngineTest.testRoomCount.executor&quot;: &quot;Run&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/hetao/Desktop/Halo_Game7&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
+      <recent name="$PROJECT_DIR$/resources" />
       <recent name="C:\Users\yisua\OneDrive\Desktop\NEU CSA\Spring 2025\CS 5004\Halo-Game" />
       <recent name="C:\Users\yisua\OneDrive\Desktop\NEU CSA\Spring 2025\CS 5004\Halo-Game\out\artifacts\game_engine_jar" />
       <recent name="C:\Users\yisua\OneDrive\Desktop\NEU CSA\Spring 2025\CS 5004\Halo-Game\out\artifacts\halo_jar" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.GameEngineApp">
     <configuration name="GameEngineApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="enginedriver.GameEngineApp" />
       <module name="halo" />
@@ -196,13 +194,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="halo" />
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <list>
       <item itemvalue="Application.GameEngineApp" />
       <item itemvalue="JUnit.GameControllerTest" />
@@ -220,6 +211,14 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.18034.62" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.18034.62" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -235,6 +234,8 @@
       <workItem from="1743082839910" duration="11655000" />
       <workItem from="1743271382881" duration="8553000" />
       <workItem from="1743859340782" duration="5586000" />
+      <workItem from="1744398999801" duration="965000" />
+      <workItem from="1744400124146" duration="5863000" />
     </task>
     <servers />
   </component>

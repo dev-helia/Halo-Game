@@ -13,7 +13,7 @@ import java.util.Scanner;
 /**
  * Handles text-based gameplay using the shared model and view interfaces.
  */
-public class GameController extends AbstractController {
+public class TextController extends AbstractController {
   private final View view;
   private final Scanner scanner;
 
@@ -27,7 +27,7 @@ public class GameController extends AbstractController {
    * @param view the view interface
    * @param inputSource the input stream for reading commands
    */
-  public GameController(IModel model, View view, Readable inputSource) {
+  public TextController(IModel model, View view, Readable inputSource) {
     super(model);
     this.view = view;
     this.scanner = new Scanner(inputSource);

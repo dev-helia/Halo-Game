@@ -49,7 +49,7 @@ public class GameControllerTest {
     );
 
     model.initializePlayer("Tester");
-    GameController controller = new GameController(model, view, simulateInput(input));
+    TextController controller = new TextController(model, view, simulateInput(input));
     controller.startGame();
 
     List<String> output = getOutput();
@@ -69,7 +69,7 @@ public class GameControllerTest {
     );
 
     model.initializePlayer("Alice");
-    GameController controller = new GameController(model, view, simulateInput(input));
+    TextController controller = new TextController(model, view, simulateInput(input));
     controller.startGame();
 
     List<String> output = getOutput();
@@ -90,7 +90,7 @@ public class GameControllerTest {
     );
 
     model.initializePlayer("Bob");
-    GameController controller = new GameController(model, view, simulateInput(input));
+    TextController controller = new TextController(model, view, simulateInput(input));
     controller.startGame();
 
     List<String> output = getOutput();
@@ -106,7 +106,7 @@ public class GameControllerTest {
     );
 
     model.initializePlayer("NoItems");
-    GameController controller = new GameController(model, view, simulateInput(input));
+    TextController controller = new TextController(model, view, simulateInput(input));
     controller.startGame();
 
     List<String> output = getOutput();
@@ -121,7 +121,7 @@ public class GameControllerTest {
     );
 
     model.initializePlayer("Examiner");
-    GameController controller = new GameController(model, view, simulateInput(input));
+    TextController controller = new TextController(model, view, simulateInput(input));
     controller.startGame();
 
     List<String> output = getOutput();
@@ -136,7 +136,7 @@ public class GameControllerTest {
     );
 
     model.initializePlayer("Confused");
-    GameController controller = new GameController(model, view, simulateInput(input));
+    TextController controller = new TextController(model, view, simulateInput(input));
     controller.startGame();
 
     List<String> output = getOutput();
